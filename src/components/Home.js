@@ -12,7 +12,7 @@ export default function Home({ defaultValue = { name: "Tel Aviv", key: "215854" 
     setCity(city);
   }
   return (
-    <div className={'mainContent'} style={{maxWidth: '720px'}}>
+    <div className={'mainContent'} style={{maxWidth: '1080px'}}>
       <SearchBox defaultValue={defaultValue.name} onTargetLocked={handleCityTargetLocked}/>
       <Weather city={city}/>
     </div>

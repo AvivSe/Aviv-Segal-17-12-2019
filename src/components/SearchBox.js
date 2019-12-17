@@ -14,6 +14,7 @@ import Popper from "@material-ui/core/Popper";
 
 const StyledAutocomplete = styled(Autocomplete)`
   width: 100%;
+  max-width: 520px;
 `;
 
 const PaperContent = styled(Paper)`
@@ -81,7 +82,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
       }
       fetchCities().catch(() => dispatch(openSnackbar("Something went wrong.")));
     },
-    [error, debouncedSearchTerm, dispatch]
+    [debouncedSearchTerm, dispatch]
   );
 
   useEffect(
