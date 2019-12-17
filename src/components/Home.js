@@ -1,11 +1,13 @@
-import React from "react";
+import React, {useEffect} from "react";
+import SearchBox from "./SearchBox";
+import useGeolocation from "react-hook-geolocation";
 
-function Home() {
+export default function Home() {
+  const geolocation = useGeolocation();
+  console.log(geolocation);
   return (
-    <>
-      home works!
-    </>
+    <div className={'mainContent'}>
+      <SearchBox value={{name:"Israel"}}/>
+    </div>
   );
 }
-
-export default Home;

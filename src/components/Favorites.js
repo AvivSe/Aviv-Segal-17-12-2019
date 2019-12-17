@@ -1,11 +1,9 @@
 import React from "react";
 
-function Favorites() {
+export default function Favorites() {
   return (
-    <>
+    <div className={'mainContent'}>
       favorites works!
-    </>
+    </div>
   );
 }
-
-export default Favorites;
