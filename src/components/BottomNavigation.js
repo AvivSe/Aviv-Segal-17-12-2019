@@ -11,10 +11,10 @@ const StyledMuiBottomNavigation = styled(MuiBottomNavigation)`
   position: fixed;
   width: 100vw;
 
-  display: none;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    display: flex;
-  }
+  // display: none;
+  // ${({ theme }) => theme.breakpoints.down("sm")} {
+  //   display: flex;
+  // }
 
   background-color: ${({ theme }) => theme.palette.primary.main} !important;
   .MuiSvgIcon-root {

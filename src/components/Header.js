@@ -18,9 +18,9 @@ const StyledButton = styled(Button)`
 `;
 
 const UpperNavigation = styled.div`
-  display: block;
-  ${({theme}) => theme.breakpoints.down("sm")} {
-    display: none;
+  // display: block;
+  // ${({theme}) => theme.breakpoints.down("sm")} {
+  //   display: none;
   }
 `;
 
@@ -33,7 +33,7 @@ function Header({width}) {
     <AppBar position="static">
       <StyledToolBar>
         <div>
-          <Typography variant="h6" style={{cursor: 'default'}}>Herolo Weather Task</Typography>
+          <Typography variant="h6" style={{cursor: 'pointer'}} onClick={()=>navigate('/')}>Herolo Weather Task</Typography>
         </div>
         <UpperNavigation>
           {pathNames.map(pathName => {
