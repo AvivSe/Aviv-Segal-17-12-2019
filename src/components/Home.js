@@ -6,9 +6,10 @@ import Weather from "./Weather";
 export default function Home() {
   const geolocation = useGeolocation();
   console.log(geolocation);
+
   return (
-    <div className={'mainContent'}>
-      <SearchBox value={{name:"Israel"}}/>
+    <div className={'mainContent'} style={{maxWidth: '720px'}}>
+      <SearchBox/>
       <Weather/>
     </div>
   );

@@ -2,7 +2,7 @@ import {CLOSE_SNACKBAR, NAVIGATE, OPEN_SNACKBAR} from "./ui.actions";
 
 export const uiInitialState = {
   snackbar: { open: false, message: "", duration: 3000 },
-  path: "/",
+  path: window.location.pathname,
 };
 
 function uiReducer(state = uiInitialState, { type, payload }) {

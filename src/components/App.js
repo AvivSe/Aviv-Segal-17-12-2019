@@ -13,7 +13,7 @@ const StyledGitHub = styled(GitHub)`
   fill: ${({theme}) => theme.palette.common.white};
  `;
 
-const SimpleLink = styled.a`
+const WaterMark = styled.a`
 color: ${({ theme }) => theme.palette.primary.light};
   
   `;
@@ -26,8 +26,8 @@ export default function App() {
             <BrowserRouter>
               <Header />
               <MainContent />
-              <StyledGitHub/><SimpleLink
-                href={'https://github.com/avivse/'}>github.com/avivse</SimpleLink>
+              <StyledGitHub/><WaterMark
+                href={'https://github.com/avivse/'}>github.com/avivse</WaterMark>
               <Snackbar />
               <BottomNavigation />
             </BrowserRouter>

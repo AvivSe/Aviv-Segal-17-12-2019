@@ -1,64 +1,73 @@
-import React, { useEffect, useState } from "react";
-import "isomorphic-fetch";
+import React, {useCallback, useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import styled from "styled-components";
-
+import weatherService from "../AccuWeatherService";
+import {useDebounce} from "../hooks/useDebounce";
+import {useDispatch} from "react-redux";
+import {openSnackbar} from "../redux/ui/ui.actions";
 const StyledAutocomplete = styled(Autocomplete)`
-  width: 720px;
-
-  ${({ theme }) => theme.breakpoints.down("md")} {
-    width: 600px;
-  }
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    width: 300px;
-  }
+  width: 100%;
 `;
 
-export default function SearchBox({ value, onChange }) {
+export default function SearchBox({ defaultValue = "", onTargetLocked }) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
-  const loading = open && options.length === 0;
+  const [loading, setLoading] = useState(false);
+  const [searchTerm, setSearchTerm] = useState(defaultValue);
+  const dispatch = useDispatch();
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const [error, setError]= useState(null);
 
-  useEffect(() => {
-    let active = true;
+  const isValid = useCallback(function(searchTerm) {
+    console.log(searchTerm);
+    return !searchTerm || options.find(validWord=>validWord===searchTerm);
+  }, [options]);
 
-    if (!loading) {
-      return undefined;
+  useEffect( function(){
+       async function fetchCities() {
+         setLoading(true);
+         const cities = (await weatherService.autocompleteSearchCities(debouncedSearchTerm)).data;
+         if(!!cities && Array.isArray(cities)) {
+           setOptions(cities.map(({LocalizedName, Key}) => LocalizedName));
+         }
+         setLoading(false);
+       }
+       fetchCities().catch(dispatch(openSnackbar("Something went wrong.")));
+  }, [error, debouncedSearchTerm, dispatch]);
+
+  useEffect( function(){
+    if(searchTerm && searchTerm !== defaultValue && !error && !open && !isValid()) {
+      dispatch(openSnackbar("You must pick from list"))
     }
+  }, [defaultValue, error,open, isValid, dispatch, searchTerm]);
 
-    (async () => {
-      const response = await fetch("https://country.register.gov.uk/records.json?page-size=5000");
-      const countries = await response.json();
-
-      if (active) {
-        setOptions(Object.keys(countries).map(key => countries[key].item[0]));
-      }
-    })();
-
-    return () => {
-      active = false;
-    };
-  }, [loading]);
-
-  React.useEffect(() => {
-    if (!open) {
-      setOptions([]);
+  useEffect(()=> {
+    if(!isValid(debouncedSearchTerm)){
+      setError("Please select from list");
+    } else {
+      setError(null);
     }
-  }, [open]);
-
-  const handleOptionSelected = () => {
-    return (option, value) => option.name === value.name;
-  };
-
-  const handleOptionChange = (event, value) => {
-    if (!!onChange) {
+  }, [debouncedSearchTerm, isValid]);
+   function handleOptionChange(event, value){
+     if (!!onChange) {
       onChange();
     }
-  };
+  }
 
-  return (
+  function handleInputChange({ target: { value: searchTerm } }){
+    console.log("Setting term", searchTerm);
+    setSearchTerm(searchTerm);
+    if(!isValid(searchTerm)){
+      setError("Please select from list");
+    } else {
+      setError(null);
+    }
+  }
+
+  return (<>
+    {!!error && !!options && options.length !== 0 && <div style={{color:"red"}}>{error}</div>}
     <StyledAutocomplete
       open={open}
       onOpen={() => {
@@ -67,18 +76,20 @@ export default function SearchBox({ value, onChange }) {
       onClose={() => {
         setOpen(false);
       }}
-      value={value}
-      getOptionSelected={handleOptionSelected}
-      getOptionLabel={option => option.name}
+      value={searchTerm}
+      getOptionSelected={(option, value)=> option.indexOf(value) !== -1}
+      getOptionLabel={option => option}
       options={options}
       loading={loading}
       onChange={handleOptionChange}
+      freeSolo
       renderInput={params => (
         <TextField
           {...params}
           label="Choose City"
           fullWidth
           variant="outlined"
+          onChange={handleInputChange}
           InputProps={{
             ...params.InputProps,
             endAdornment: (
@@ -90,6 +101,6 @@ export default function SearchBox({ value, onChange }) {
           }}
         />
       )}
-    />
+    /></>
   );
 }
