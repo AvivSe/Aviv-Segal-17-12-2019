@@ -6,29 +6,59 @@ import styled from "styled-components";
 import weatherService from "../AccuWeatherService";
 import { useDebounce } from "../hooks/useDebounce";
 import { useDispatch } from "react-redux";
-import {closeSnackbar, openSnackbar} from "../redux/ui/ui.actions";
+import { closeSnackbar, openSnackbar } from "../redux/ui/ui.actions";
+import { ErrorOutline } from "@material-ui/icons";
+import Fade from "@material-ui/core/Fade";
+import Paper from "@material-ui/core/Paper";
+import Popper from "@material-ui/core/Popper";
+
 const StyledAutocomplete = styled(Autocomplete)`
   width: 100%;
 `;
 
+const PaperContent = styled(Paper)`
+  font-weight: bolder;
+  padding: 1rem;
+  min-width: 300px;
+  color: ${({ theme }) => theme.palette.primary.main};
+  display: flex;
+  align-items: center;
+  margin-bottom: -1rem;
+
+`;
+
+const StyledLocationCity = styled(ErrorOutline)`
+  fill: ${({ theme }) => theme.palette.primary.main};
+  width: 30px;
+  height: 30px;
+`;
+
+
 export default function SearchBox({ defaultValue, onTargetLocked }) {
-  const [open, setOpen] = useState(false);
+  const tooltipEnchorElRef = React.useRef();
+  const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
   const [options, setOptions] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [searchTerm, setSearchTerm] = useState(defaultValue);
-  const dispatch = useDispatch();
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  const [error, setError] = useState(null);
+
   const [locked, setLocked] = useState(false);
-  const zeroErrors = useCallback(()=> {
-      setError(null);
-      dispatch(closeSnackbar());
-      setOpen(false);
-  },[dispatch]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [searchTerm, setSearchTerm] = useState(defaultValue);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
+  const dispatch = useDispatch();
+
+  const zeroErrors = useCallback(() => {
+    setError(null);
+    dispatch(closeSnackbar());
+    setIsAutocompleteOpen(false);
+  }, [dispatch]);
 
   const isValid = useCallback(
     function(searchTerm) {
-      return !searchTerm || options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase());
+      return (
+        !searchTerm || options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase())
+      );
     },
     [options]
   );
@@ -50,21 +80,21 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
 
   useEffect(
     function() {
-      if (searchTerm && searchTerm !== defaultValue && !error && !open && !isValid()) {
+      if (searchTerm && searchTerm !== defaultValue && !error && !isAutocompleteOpen && !isValid()) {
         dispatch(openSnackbar("You must pick from list"));
       }
     },
-    [defaultValue, error, open, isValid, dispatch, searchTerm]
+    [defaultValue, error, isAutocompleteOpen, isValid, dispatch, searchTerm]
   );
 
   useEffect(() => {
     if (!isValid(debouncedSearchTerm)) {
       setError("Please select from list");
-      setOpen(true);
+      setIsAutocompleteOpen(true);
     } else {
       zeroErrors();
     }
-  }, [debouncedSearchTerm, setOpen, zeroErrors, isValid]);
+  }, [debouncedSearchTerm, setIsAutocompleteOpen, zeroErrors, isValid]);
 
   useEffect(() => {
     if (isValid(searchTerm)) {
@@ -86,16 +116,25 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
     setSearchTerm(searchTerm);
   }
 
+  const isTooltipOpen = !locked && !!error && !!options && options.length !== 0;
+
   return (
     <>
-      {!locked && !!error && !!options && options.length !== 0 && <div>{error}</div>}
+      <Popper open={isTooltipOpen} anchorEl={tooltipEnchorElRef.current} placement={"top"} transition>
+        {({ TransitionProps }) => (
+          <Fade {...TransitionProps} timeout={350}>
+            <Paper><PaperContent><StyledLocationCity/>{error}</PaperContent></Paper>
+          </Fade>
+        )}
+      </Popper>
       <StyledAutocomplete
-        open={open && !locked}
+        ref={tooltipEnchorElRef}
+        open={isAutocompleteOpen && !locked}
         onOpen={() => {
-          setOpen(true);
+          setIsAutocompleteOpen(true);
         }}
         onClose={() => {
-          setOpen(false);
+          setIsAutocompleteOpen(false);
         }}
         value={searchTerm}
         getOptionSelected={(option, value) => option.indexOf(value) !== -1}
