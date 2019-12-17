@@ -8,14 +8,14 @@ import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 
 
-export default function Weather() {
+export default function Weather({ city }) {
   return (
     <Card className={'weather'}>
       <CardActionArea>
         <CardMedia image="http://cdn.taboola.com/libtrc/static/thumbnails/103a47baec9e704e04df27fe07e5c588.jpg" title="Contemplative Reptile" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lizard
+            Showing data on {city}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
             Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents

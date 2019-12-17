@@ -11,7 +11,7 @@ const StyledAutocomplete = styled(Autocomplete)`
   width: 100%;
 `;
 
-export default function SearchBox({ defaultValue = "", onTargetLocked }) {
+export default function SearchBox({ defaultValue, onTargetLocked }) {
   const [open, setOpen] = useState(false);
   const [options, setOptions] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -34,7 +34,7 @@ export default function SearchBox({ defaultValue = "", onTargetLocked }) {
          }
          setLoading(false);
        }
-       fetchCities().catch(dispatch(openSnackbar("Something went wrong.")));
+       fetchCities().catch(()=>dispatch(openSnackbar("Something went wrong.")));
   }, [error, debouncedSearchTerm, dispatch]);
 
   useEffect( function(){
@@ -50,16 +50,23 @@ export default function SearchBox({ defaultValue = "", onTargetLocked }) {
       setError(null);
     }
   }, [debouncedSearchTerm, isValid]);
-   function handleOptionChange(event, value){
-     if (!!onChange) {
-      onChange();
+
+  useEffect(()=> {
+    if(isValid(searchTerm)){
+      setError(null);
     }
+  }, [searchTerm, isValid]);
+   function handleOptionChange(event, value){
+     if (!!onTargetLocked) {
+      onTargetLocked(value);
+       setError(null);
+     }
   }
 
   function handleInputChange({ target: { value: searchTerm } }){
-    console.log("Setting term", searchTerm);
     setSearchTerm(searchTerm);
     if(!isValid(searchTerm)){
+      dispatch(openSnackbar(searchTerm + " is not valid."));
       setError("Please select from list");
     } else {
       setError(null);
