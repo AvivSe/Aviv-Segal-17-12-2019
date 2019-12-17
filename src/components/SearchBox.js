@@ -17,7 +17,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(defaultValue);
   const dispatch = useDispatch();
-  const debouncedSearchTerm = useDebounce(searchTerm, 1500);
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [error, setError] = useState(null);
   const [locked, setLocked] = useState(false);
   const zeroErrors = useCallback(()=> {
@@ -28,7 +28,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
 
   const isValid = useCallback(
     function(searchTerm) {
-      return !searchTerm || options.find(validWord => validWord === searchTerm);
+      return !searchTerm || options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase());
     },
     [options]
   );
