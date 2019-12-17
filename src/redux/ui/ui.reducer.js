@@ -1,0 +1,21 @@
+import { CLOSE_SNACKBAR, OPEN_SNACKBAR } from "./ui.actions";
+
+export const uiInitialState = {
+  snackbar: { open: false, message: "", duration: 3000 }
+};
+
+function uiReducer(state = uiInitialState, { type, payload }) {
+  switch (type) {
+    case OPEN_SNACKBAR:
+      return { ...state, snackbar: { ...state.snackbar, ...payload, open: true } };
+    case CLOSE_SNACKBAR:
+      return {
+        ...state,
+        snackbar: { ...state.snackbar, open: false }
+      };
+    default:
+      return state;
+  }
+}
+
+export default uiReducer;
