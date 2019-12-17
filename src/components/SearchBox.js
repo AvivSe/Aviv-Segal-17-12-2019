@@ -38,6 +38,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
   const tooltipEnchorElRef = React.useRef();
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
   const [options, setOptions] = useState([]);
+  const [cityLabelToKeyMap, setCityLabelToNameMap]= useState({});
 
   const [locked, setLocked] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -69,7 +70,12 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
         setLoading(true);
         const cities = (await weatherService.autocompleteSearchCities(debouncedSearchTerm)).data;
         if (!!cities && Array.isArray(cities)) {
-          setOptions(cities.map(({ LocalizedName, Key }) => LocalizedName));
+          const _cityLabelToKeyMap = {};
+          setOptions(cities.map(({ LocalizedName, Key }) => {
+            _cityLabelToKeyMap[LocalizedName] = Key;
+            return LocalizedName
+          }));
+          setCityLabelToNameMap(_cityLabelToKeyMap);
         }
         setLoading(false);
       }
@@ -80,7 +86,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
 
   useEffect(
     function() {
-      if (searchTerm && searchTerm !== defaultValue && !error && !isAutocompleteOpen && !isValid()) {
+      if (searchTerm && searchTerm !== defaultValue.name && !error && !isAutocompleteOpen && !isValid()) {
         dispatch(openSnackbar("You must pick from list"));
       }
     },
@@ -104,7 +110,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
 
   function handleOptionChange(event, value) {
     if (!!onTargetLocked) {
-      onTargetLocked(value);
+      onTargetLocked({name: value, key: cityLabelToKeyMap[value]});
       setLocked(true);
       zeroErrors();
     }

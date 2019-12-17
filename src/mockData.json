@@ -1,4 +1,29 @@
 {
+  "result_for_tlv": [
+    {
+      "LocalObservationDateTime": "2019-12-18T02:30:00+08:00",
+      "EpochTime": 1576607400,
+      "WeatherText": "Some clouds",
+      "WeatherIcon": 36,
+      "HasPrecipitation": false,
+      "PrecipitationType": null,
+      "IsDayTime": false,
+      "Temperature": {
+        "Metric": {
+          "Value": 31.1,
+          "Unit": "C",
+          "UnitType": 17
+        },
+        "Imperial": {
+          "Value": 88,
+          "Unit": "F",
+          "UnitType": 18
+        }
+      },
+      "MobileLink": "http://m.accuweather.com/en/au/king-leopold-ranges/3494517/current-weather/3494517?lang=en-us",
+      "Link": "http://www.accuweather.com/en/au/king-leopold-ranges/3494517/current-weather/3494517?lang=en-us"
+    }
+  ],
   "result_for_autocomplete_q_is_tel": [
     {
       "Version": 1,

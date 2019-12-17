@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import CardActionArea from "@material-ui/core/CardActionArea";
@@ -6,20 +6,37 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
+import {useDispatch, useSelector} from "react-redux";
+import {getCurrentWeather} from "../redux/weather/weather.selectors";
+import {fetchCurrentWeather} from "../redux/weather/weather.actions";
+import styled from "styled-components";
 
+const StyledCard = styled(Card)`
 
-export default function Weather({ city }) {
+  margin: .5rem;
+  .MuiCardMedia-root {
+    height: 240px;
+  }
+`;
+
+export default function Weather({ city: { name, key } }) {
+  const dispatch = useDispatch();
+  const currentWeather = useSelector(getCurrentWeather(key));
+
+  useEffect(()=> {
+    dispatch(fetchCurrentWeather(key));
+  }, [dispatch, key]);
+
   return (
-    <Card className={'weather'}>
+    <StyledCard className={'weather'}>
       <CardActionArea>
         <CardMedia image="http://cdn.taboola.com/libtrc/static/thumbnails/103a47baec9e704e04df27fe07e5c588.jpg" title="Contemplative Reptile" />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Showing data on {city}
+            Showing data on {name} key: {key}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000 species, ranging across all continents
-            except Antarctica
+            {JSON.stringify(currentWeather)}
           </Typography>
         </CardContent>
       </CardActionArea>
@@ -31,6 +48,6 @@ export default function Weather({ city }) {
           Learn More
         </Button>
       </CardActions>
-    </Card>
+    </StyledCard>
   );
 }

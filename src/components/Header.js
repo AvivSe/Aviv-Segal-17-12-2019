@@ -18,9 +18,9 @@ const StyledButton = styled(Button)`
 `;
 
 const UpperNavigation = styled.div`
-  // display: block;
-  // ${({theme}) => theme.breakpoints.down("sm")} {
-  //   display: none;
+  display: block;
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    display: none;
   }
 `;
 
