@@ -5,9 +5,10 @@ import WeatherMiniature from "./WeatherMiniature";
 import styled from "styled-components"
 
 const Flex = styled.div`
+  margin: auto;
   display: flex;
   flex-wrap: wrap;
-  align-content: flex-start;
+  justify-content: center;
 `;
 export default function Favorites() {
   const dispatch = useDispatch();

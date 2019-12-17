@@ -8,10 +8,6 @@ body {
 
 .mainContent {
   margin-top: 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 0 1rem;
 }
 
 @media screen and (min-width: 500px) {

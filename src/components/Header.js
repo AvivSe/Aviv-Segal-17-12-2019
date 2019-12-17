@@ -7,7 +7,7 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { Home, Bookmark } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
-import withWidth, { isWidthDown, isWidthUp } from "@material-ui/core/withWidth";
+import withWidth, { isWidthDown } from "@material-ui/core/withWidth";
 
 const StyledToolBar = styled(Toolbar)`
   display: flex;
