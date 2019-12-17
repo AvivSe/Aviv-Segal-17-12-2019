@@ -12,6 +12,6 @@ body {
 
 @media screen and (min-width: 500px) {
   .mainContent {
-    padding: 0 5rem;
+    padding: 0 2rem 56px 2rem;
   }
 }
