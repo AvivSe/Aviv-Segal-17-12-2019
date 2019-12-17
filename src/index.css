@@ -11,4 +11,11 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 1rem;
+}
+
+@media screen and (min-width: 500px) {
+  .mainContent {
+    padding: 0 5rem;
+  }
 }

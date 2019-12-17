@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import SearchBox from "./SearchBox";
 import useGeolocation from "react-hook-geolocation";
+import Weather from "./Weather";
 
 export default function Home() {
   const geolocation = useGeolocation();
@@ -8,6 +9,7 @@ export default function Home() {
   return (
     <div className={'mainContent'}>
       <SearchBox value={{name:"Israel"}}/>
+      <Weather/>
     </div>
   );
 }
