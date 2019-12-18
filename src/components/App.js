@@ -26,6 +26,7 @@ export const darkThemeOptions = {
 export default function App() {
   const isDarkTheme = useSelector(getIsDarkMode);
   const theme = createMuiTheme(isDarkTheme ? darkThemeOptions : lightThemeOptions);
+  console.log(isDarkTheme);
   return (
     <StylesProvider jss={create({ plugins: [...jssPreset().plugins] })}>
       <StylesProvider injectFirst>
