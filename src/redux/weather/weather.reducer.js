@@ -1,13 +1,13 @@
-import { CURRENT_WEATHER_SUCCESS, CURRENT_WEATHER_ERROR, CURRENT_WEATHER_REQUEST, REMOVE_FROM_MY_FAVORITES, ADD_TO_MY_FAVORITES } from "./weather.actions";
+import { CURRENT_WEATHER_SUCCESS, CURRENT_WEATHER_ERROR, CURRENT_WEATHER_REQUEST, REMOVE_FROM_MY_BOOKMARKS, ADD_TO_MY_BOOKMARKS } from "./weather.actions";
 
 export const INITIAL_STATE = {
   map: {},
   pending: false,
-  favorites: [], // ids only
+  bookmarks: [], // ids only
 };
 
 function userReducer(state = INITIAL_STATE, { type, payload }) {
-  let favorites = [...state.favorites];
+  let bookmarks = [...state.bookmarks];
 
   switch (type) {
     case CURRENT_WEATHER_SUCCESS:
@@ -16,14 +16,15 @@ function userReducer(state = INITIAL_STATE, { type, payload }) {
       return { ...state, pending: false };
     case CURRENT_WEATHER_REQUEST:
       return { ...state, pending: true };
-    case REMOVE_FROM_MY_FAVORITES:
-      favorites = favorites.filter(key => key !== payload);
-      return { ...state, favorites};
-    case ADD_TO_MY_FAVORITES:
-      if(favorites.indexOf(payload) === -1) {
-        favorites.push(payload);
+    case REMOVE_FROM_MY_BOOKMARKS:
+      bookmarks = bookmarks.filter(key => key !== payload);
+      return { ...state, bookmarks};
+    case ADD_TO_MY_BOOKMARKS:
+      console.log(payload);
+      if(bookmarks.indexOf(payload)) {
+        bookmarks.push(payload);
       }
-      return { ...state, favorites};
+      return { ...state, bookmarks};
     default:
       return state;
   }

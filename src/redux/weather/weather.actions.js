@@ -5,8 +5,8 @@ export const CURRENT_WEATHER_REQUEST = "CURRENT_WEATHER_REQUEST";
 export const CURRENT_WEATHER_SUCCESS = "CURRENT_WEATHER_SUCCESS";
 export const CURRENT_WEATHER_ERROR = "CURRENT_WEATHER_REQUEST";
 
-export const ADD_TO_MY_FAVORITES = "ADD_TO_MY_FAVORITES";
-export const REMOVE_FROM_MY_FAVORITES = "REMOVE_FROM_MY_FAVORITES";
+export const ADD_TO_MY_BOOKMARKS = "ADD_TO_MY_BOOKMARKS";
+export const REMOVE_FROM_MY_BOOKMARKS = "REMOVE_FROM_MY_BOOKMARKS";
 
 export const fetchCurrentWeather = cityKey => async  dispatch => {
   try {
@@ -18,11 +18,12 @@ export const fetchCurrentWeather = cityKey => async  dispatch => {
   }
 };
 
-export const addToMyFavorites = cityKey => dispath => {
-  dispath(openSnackbar(""))
-  return { type: ADD_TO_MY_FAVORITES, payload: cityKey }
+export const addToMyBookmarks = ({key, name}) => dispatch => {
+  // dispatch(openSnackbar(`${name} added to your bookmarks`));
+  dispatch({ type: ADD_TO_MY_BOOKMARKS, payload: key })
 };
 
-export const removeFromMyFavorites = cityKey => {
-  return { type: REMOVE_FROM_MY_FAVORITES, payload: cityKey }
+export const removeFromMyBookmarks = ({key , name}) => dispatch => {
+  // dispatch(openSnackbar(`${name} removed from bookmarks, todo undo.`));
+  dispatch({ type: REMOVE_FROM_MY_BOOKMARKS, payload: key });
 };

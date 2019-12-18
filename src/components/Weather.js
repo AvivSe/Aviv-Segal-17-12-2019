@@ -7,10 +7,10 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { useDispatch, useSelector } from "react-redux";
-import {getCurrentWeather, getIsOneOfMyFavorite, gwtMyFavorites} from "../redux/weather/weather.selectors";
-import {addToMyFavorites, fetchCurrentWeather, removeFromMyFavorites} from "../redux/weather/weather.actions";
+import {getCurrentWeather, getIsOneOfMyBookmark} from "../redux/weather/weather.selectors";
+import {addToMyBookmarks, fetchCurrentWeather, removeFromMyBookmarks} from "../redux/weather/weather.actions";
 import styled from "styled-components";
-import { FavoriteBorder, Favorite } from "@material-ui/icons";
+import { BookmarkBorder, Bookmark } from "@material-ui/icons";
 
 const StyledCard = styled(Card)`
   margin: 0.5rem;
@@ -23,18 +23,18 @@ export default function Weather({ city: { name, key } }) {
   const dispatch = useDispatch();
   const currentWeather = useSelector(getCurrentWeather(key));
 
-  const isOneOfMyFavorites = useSelector(getIsOneOfMyFavorite(key));
-  const FavoriteIcon = isOneOfMyFavorites ? Favorite : FavoriteBorder;
+  const isOneOfMyBookmarks = useSelector(getIsOneOfMyBookmark(key));
+  const BookmarkIcon = isOneOfMyBookmarks ? Bookmark : BookmarkBorder;
 
   useEffect(() => {
     dispatch(fetchCurrentWeather(key));
   }, [dispatch, key]);
 
-  function handleFavoriteToggled() {
-    if(isOneOfMyFavorites) {
-      dispatch(removeFromMyFavorites(key));
+  function handleBookmarkToggled() {
+    if(isOneOfMyBookmarks) {
+      dispatch(removeFromMyBookmarks({name, key}));
     } else {
-      dispatch(addToMyFavorites(key))
+      dispatch(addToMyBookmarks({name, key}));
     }
   }
 
@@ -55,11 +55,8 @@ export default function Weather({ city: { name, key } }) {
         </CardContent>
       </CardActionArea>
       <CardActions>
-        <Button size="small" color="primary">
-          <FavoriteIcon onClick={handleFavoriteToggled}/>
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
+        <Button size="large" color="primary">
+          <BookmarkIcon onClick={handleBookmarkToggled}/>
         </Button>
       </CardActions>
     </StyledCard>

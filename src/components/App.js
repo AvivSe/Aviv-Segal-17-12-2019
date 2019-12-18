@@ -1,35 +1,38 @@
 import React from "react";
-import Header from "./Header";
-import MainContent from "./MainContent";
-import {create} from 'jss';
-import { jssPreset, StylesProvider, ThemeProvider as MuiThemeProvider } from "@material-ui/styles";
-import { theme } from "../theme";
-import styled, { ThemeProvider as ScThemeProvider } from "styled-components";
-import { BrowserRouter } from "react-router-dom";
-import Snackbar from "./Snackbar";
-import BottomNavigation from "./BottomNavigation";
-import {GitHub} from "@material-ui/icons";
-const StyledGitHub = styled(GitHub)`
-  fill: ${({theme}) => theme.palette.common.white};
- `;
+import {create} from "jss";
+import {ThemeProvider as ScThemeProvider} from "styled-components";
+import {BrowserRouter} from "react-router-dom";
+import Main from "./Main";
+import {createMuiTheme, jssPreset, StylesProvider, ThemeProvider as MuiThemeProvider} from "@material-ui/core";
+import {useSelector} from "react-redux";
+import {getIsDarkMode} from "../redux/ui/ui.selectors";
+import {deepPurple, grey} from "@material-ui/core/colors";
 
-const WaterMark = styled.a`
-color: ${({ theme }) => theme.palette.primary.light};
-  
-  `;
+export const lightThemeOptions = {
+  palette: {
+    primary: deepPurple,
+    secondary: deepPurple
+  }
+};
+
+export const darkThemeOptions = {
+  palette: {
+    type: "dark",
+    primary: grey,
+    secondary: grey
+  }
+};
+
 export default function App() {
+  const isDarkTheme = useSelector(getIsDarkMode);
+  const theme = createMuiTheme(isDarkTheme ? darkThemeOptions : lightThemeOptions);
   return (
     <StylesProvider jss={create({ plugins: [...jssPreset().plugins] })}>
       <StylesProvider injectFirst>
         <MuiThemeProvider theme={theme}>
           <ScThemeProvider theme={theme}>
             <BrowserRouter>
-              <Header />
-              <MainContent />
-              <StyledGitHub/><WaterMark
-                href={'https://github.com/avivse/'}>github.com/avivse</WaterMark>
-              <Snackbar />
-              <BottomNavigation />
+              <Main />
             </BrowserRouter>
           </ScThemeProvider>
         </MuiThemeProvider>
