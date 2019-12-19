@@ -11,6 +11,7 @@ const StyledIconButton = styled(IconButton)`
     fill: #ffffff
   }
 `;
+
 export default function Snackbar (){
   const dispatch = useDispatch();
   const { open, message, duration , onDismiss, onAccept} = useSelector(getSnackbar);

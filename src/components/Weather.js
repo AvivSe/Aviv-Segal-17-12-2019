@@ -82,8 +82,8 @@ export default function Weather({city: {name, key}}) {
           </BottomSection>
         </CardContent>
       <CardActions>
-        <Button size="large" color="primary">
-          <BookmarkIcon onClick={handleBookmarkToggled}/>
+        <Button onClick={handleBookmarkToggled} size="large" color="primary">
+          <BookmarkIcon/>
         </Button>
       </CardActions>
     </StyledCard>

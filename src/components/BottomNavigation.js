@@ -1,9 +1,10 @@
 import MuiBottomNavigation from "@material-ui/core/BottomNavigation";
 import React from "react";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
+
 import styled from "styled-components";
 import useNavigator from "../hooks/useNavigator";
-import {pathMap, pathNames} from "../configurations/routes";
+import {pathMap, pathNames, pathnameToIcon} from "../configurations/routes";
 
 const StyledMuiBottomNavigation = styled(MuiBottomNavigation)`
   top: auto !important;
@@ -29,19 +30,20 @@ const StyledMuiBottomNavigation = styled(MuiBottomNavigation)`
 `;
 
 export default function BottomNavigation() {
-  const [path, navigate] = useNavigator();
+  const [currentPathname, navigate] = useNavigator();
 
   return (
     <StyledMuiBottomNavigation
-      value={path}
+      value={currentPathname}
       onChange={(event, newValue) => {
         navigate(newValue);
       }}
       showLabels
     >
-      {pathNames.map(pathName => {
-        const { label, Icon } = pathMap[pathName];
-        return <BottomNavigationAction key={label} label={label} value={pathName} className={path===pathName ? 'Mui-selected' : null} icon={<Icon />} />;
+      {pathNames.map(pathname => {
+        const { label } = pathMap[pathname];
+        const Icon = pathname===currentPathname?pathnameToIcon[pathname].selected : pathnameToIcon[pathname].default;
+        return <BottomNavigationAction key={label} label={label} value={pathname} icon={<Icon/>} />;
       })}
     </StyledMuiBottomNavigation>
   );

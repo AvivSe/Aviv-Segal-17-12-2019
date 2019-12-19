@@ -1,3 +1,4 @@
-export const getSnackbar = ({ui}) => ui.snackbar;
-export const getCurrentPath = ({ui}) => ui.path;
-export const getIsDarkMode = ({ui}) => ui.isDarkMode;
+export const getSnackbar = ({ui: {snackbar }}) => snackbar;
+export const getCurrentPath = ({ui: { path}}) => path;
+export const getIsDarkMode = ({ui: { isDarkMode }}) => isDarkMode;
+export const getDialog = ({ui: { dialog }}) => dialog;

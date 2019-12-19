@@ -1,9 +1,10 @@
-import {CLOSE_SNACKBAR, NAVIGATE, OPEN_SNACKBAR, TOGGLE_DARK_MODE} from "./ui.actions";
+import { CLOSE_SNACKBAR, NAVIGATE, OPEN_SNACKBAR, TOGGLE_DARK_MODE, CLOSE_DIALOG, OPEN_DIALOG } from "./ui.actions";
 
 export const uiInitialState = {
   snackbar: { open: false, message: "", duration: 3000 },
   path: window.location.pathname,
   isDarkMode: true,
+  dialog: { open: false, name: "404" }
 };
 
 function uiReducer(state = uiInitialState, { type, payload }) {
@@ -18,8 +19,11 @@ function uiReducer(state = uiInitialState, { type, payload }) {
         snackbar: { ...state.snackbar, open: false }
       };
     case TOGGLE_DARK_MODE:
-      console.log(state);
       return { ...state, isDarkMode: !state.isDarkMode };
+    case CLOSE_DIALOG:
+      return { ...state, dialog: { open: false } };
+    case OPEN_DIALOG:
+      return { ...state, dialog: { name: payload, open: true } };
     default:
       return state;
   }
