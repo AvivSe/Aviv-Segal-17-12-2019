@@ -6,22 +6,7 @@ import Main from "./Main";
 import {createMuiTheme, jssPreset, StylesProvider, ThemeProvider as MuiThemeProvider} from "@material-ui/core";
 import {useSelector} from "react-redux";
 import {getIsDarkMode} from "../redux/ui/ui.selectors";
-import {deepPurple, grey} from "@material-ui/core/colors";
-
-export const lightThemeOptions = {
-  palette: {
-    primary: deepPurple,
-    secondary: deepPurple
-  }
-};
-
-export const darkThemeOptions = {
-  palette: {
-    type: "dark",
-    primary: grey,
-    secondary: grey
-  }
-};
+import {darkThemeOptions, lightThemeOptions} from "../configurations/theme";
 
 export default function App() {
   const isDarkTheme = useSelector(getIsDarkMode);

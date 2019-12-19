@@ -19,11 +19,11 @@ export const fetchCurrentWeather = cityKey => async  dispatch => {
 };
 
 export const addToMyBookmarks = ({key, name}) => dispatch => {
-  // dispatch(openSnackbar(`${name} added to your bookmarks`));
+  dispatch(openSnackbar(`${name} added to your bookmarks`));
   dispatch({ type: ADD_TO_MY_BOOKMARKS, payload: key })
 };
 
 export const removeFromMyBookmarks = ({key , name}) => dispatch => {
-  // dispatch(openSnackbar(`${name} removed from bookmarks, todo undo.`));
+  dispatch(openSnackbar(`${name} removed from bookmarks, todo undo.`));
   dispatch({ type: REMOVE_FROM_MY_BOOKMARKS, payload: key });
 };

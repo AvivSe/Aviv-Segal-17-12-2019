@@ -6,13 +6,16 @@ import Button from "@material-ui/core/Button";
 import styled from "styled-components";
 import useNavigator from "../hooks/useNavigator";
 import { pathMap, pathNames } from "../configurations/routes";
-import { Brightness7 as DarkMode, Brightness4 as LightMode } from "@material-ui/icons";
-import Fab from "@material-ui/core/Fab";
+import {Brightness7 as DarkMode, Brightness4 as LightMode, GitHub} from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsDarkMode } from "../redux/ui/ui.selectors";
 import { toggleDarkTheme } from "../redux/ui/ui.actions";
 import Tooltip from "@material-ui/core/Tooltip";
+
+const StyledGitHub = styled(GitHub)`
+  fill: ${({theme}) => theme.palette.common.white};
+ `;
 
 const StyledToolBar = styled(Toolbar)`
   display: flex;
