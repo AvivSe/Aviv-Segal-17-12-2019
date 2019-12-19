@@ -19,8 +19,7 @@
     "redux": "^4.0.4",
     "redux-devtools-extension": "^2.13.8",
     "redux-thunk": "^2.3.0",
-    "styled-components": "^4.4.1",
-    "express": "^4.17.1"
+    "styled-components": "^4.4.1"
   },
   "devDependencies": {
     "prettier": "^1.19.1"

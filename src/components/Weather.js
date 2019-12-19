@@ -63,7 +63,6 @@ export default function Weather({city: {name, key}}) {
   const temp = isFahrenheit ? imperial : metric;
   return (
     <StyledCard className={"weather"}>
-      <CardActionArea>
         <CardContent>
           <TopSection>
             <img alt={text} height={96} src={`https://developer.accuweather.com/sites/default/files/${iconId}-s.png`}/>
@@ -82,7 +81,6 @@ export default function Weather({city: {name, key}}) {
           </Typography>
           </BottomSection>
         </CardContent>
-      </CardActionArea>
       <CardActions>
         <Button size="large" color="primary">
           <BookmarkIcon onClick={handleBookmarkToggled}/>
