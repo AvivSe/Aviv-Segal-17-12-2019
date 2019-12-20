@@ -11,6 +11,7 @@ import { ErrorOutline } from "@material-ui/icons";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
+import {fetchCurrentWeather, setSelectedCity} from "../redux/weather/weather.actions";
 
 const StyledAutocomplete = styled(Autocomplete)`
   width: 100%;
@@ -35,7 +36,7 @@ const StyledLocationCity = styled(ErrorOutline)`
 `;
 
 
-export default function SearchBox({ defaultValue, onTargetLocked }) {
+export default function SearchBox({ fallbackCity: defaultValue }) {
   const tooltipEnchorElRef = React.useRef();
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
   const [options, setOptions] = useState([]);
@@ -110,17 +111,19 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
   }, [searchTerm, isValid]);
 
   function handleOptionChange(event, value) {
-    if (!!onTargetLocked) {
-      onTargetLocked({name: value, key: cityLabelToKeyMap[value]});
-      setLocked(true);
-      zeroErrors();
-    }
+    dispatch(setSelectedCity({name: value, key: cityLabelToKeyMap[value]}));
+    setLocked(true);
+    zeroErrors();
   }
 
   function handleInputChange({ target: { value: searchTerm } }) {
     setLocked(false);
     zeroErrors();
     setSearchTerm(searchTerm);
+  }
+
+  function handleInputClick() {
+    setIsAutocompleteOpen(true);
   }
 
   const isTooltipOpen = !locked && !!error && !!options && options.length !== 0;
@@ -136,7 +139,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
       </Popper>
       <StyledAutocomplete
         ref={tooltipEnchorElRef}
-        open={isAutocompleteOpen && !locked}
+        open={isAutocompleteOpen}
         onOpen={() => {
           setIsAutocompleteOpen(true);
         }}
@@ -157,6 +160,7 @@ export default function SearchBox({ defaultValue, onTargetLocked }) {
             fullWidth
             variant="outlined"
             onChange={handleInputChange}
+            onClick={handleInputClick}
             InputProps={{
               ...params.InputProps,
               endAdornment: (

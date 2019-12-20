@@ -4,8 +4,8 @@ import React from "react";
 
 const IOSSwitch = withStyles(theme => ({
   root: {
-    width: 40,
-    height: 24,
+    width: 42,
+    height: 26,
     padding: 0,
     margin: theme.spacing(1)
   },
@@ -26,13 +26,12 @@ const IOSSwitch = withStyles(theme => ({
     }
   },
   thumb: {
-    width: 22,
-    height: 22,
+    width: 24,
+    height: 24,
     color: `${theme.palette.primary.dark}`
   },
   track: {
     borderRadius: 24 / 2,
-    border: `1px solid ${theme.palette.grey[400]}`,
     backgroundColor: theme.palette.grey[50],
     opacity: 1,
     transition: theme.transitions.create(["background-color", "border"])

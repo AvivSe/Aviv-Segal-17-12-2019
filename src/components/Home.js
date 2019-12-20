@@ -1,20 +1,13 @@
-import React, {useState} from "react";
+import React from "react";
 import SearchBox from "./SearchBox";
-import useGeolocation from "react-hook-geolocation";
 import Weather from "./Weather";
 
-export default function Home({ defaultValue = { name: "Tel Aviv", key: "215854" }}) {
-  const geolocation = useGeolocation();
-  const [city, setCity] = useState(defaultValue);
-  console.log(geolocation);
+export default function Home({ fallbackCity = { name: "Tel Aviv", key: "215854" }}) {
 
-  function handleCityTargetLocked(city){
-    setCity(city);
-  }
   return (
     <div className={'mainContent'} style={{maxWidth: '1080px'}}>
-      <SearchBox defaultValue={defaultValue.name} onTargetLocked={handleCityTargetLocked}/>
-      <Weather city={city}/>
+      <SearchBox fallbackCity={fallbackCity.name}/>
+      <Weather/>
     </div>
   );
 }

@@ -4,7 +4,7 @@ export const uiInitialState = {
   snackbar: { open: false, message: "", duration: 3000 },
   path: window.location.pathname,
   isDarkMode: true,
-  dialog: { open: false, name: "404" }
+  dialog: { open: false, name: "404", fullScreen: false }
 };
 
 function uiReducer(state = uiInitialState, { type, payload }) {
@@ -23,7 +23,7 @@ function uiReducer(state = uiInitialState, { type, payload }) {
     case CLOSE_DIALOG:
       return { ...state, dialog: { open: false } };
     case OPEN_DIALOG:
-      return { ...state, dialog: { name: payload, open: true } };
+      return { ...state, dialog: { name: payload.name, fullScreen: payload.fullScreen, open: true } };
     default:
       return state;
   }

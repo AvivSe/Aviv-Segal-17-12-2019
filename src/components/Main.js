@@ -17,6 +17,7 @@ const Wrapper = styled.div`
 const dialogs = {
   '404': <div>Hello 404</div>,
   moreSettings: <div>Hello More Settings</div>,
+  github: <div>Hello github</div>,
 };
 
 export default function Main() {
@@ -32,7 +33,7 @@ export default function Main() {
       <Header />
       <MainContent />
       <Snackbar />
-      <Dialog open={dialog.open} content={dialogs[dialog.name]} onClose={handleDialogClose}/>
+      <Dialog fullScreen={dialog.fullScreen} open={dialog.open} content={dialogs[dialog.name]} onClose={handleDialogClose}/>
       <BottomNavigation />
     </Wrapper>
   );

@@ -26,6 +26,6 @@ export const closeDialog = () => {
   return { type: CLOSE_DIALOG }
 };
 
-export const openDialog = dialogName => {
-  return { type: OPEN_DIALOG , payload: dialogName }
+export const openDialog = (name, fullScreen) => {
+  return { type: OPEN_DIALOG , payload: {name, fullScreen }}
 };
