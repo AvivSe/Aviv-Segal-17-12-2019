@@ -14,7 +14,6 @@ import Tooltip from "./Tooltip";
 import { iconMap } from "./AccuWeatherIcons";
 import Grow from "@material-ui/core/Grow";
 import Fade from "@material-ui/core/Fade";
-import Divider from "@material-ui/core/Divider";
 
 const StyledCard = styled(Card)`
   margin: 0.5rem;
@@ -28,8 +27,8 @@ const StyledCard = styled(Card)`
   }
 
   width: 100%;
-  
-  background-color: rgba(0,0,0,.04); // TODO: Blur
+
+  background-color: rgba(0, 0, 0, 0.04); // TODO: Blur
 `;
 
 const TopSection = styled.div`
@@ -54,56 +53,68 @@ const StyledMainIcon = styled.svg`
 const ResponsiveText = styled.div`
   font-size: ${({ fontSize = 2 }) => `${fontSize}rem`};
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    font-size: ${({ fontSize = 2 }) => `${fontSize/1.5}rem`};
+    font-size: ${({ fontSize = 2 }) => `${fontSize / 1.5}rem`};
   }
   ${({ theme }) => theme.breakpoints.down("xs")} {
-    font-size: ${({ fontSize = 2 }) => `${fontSize/2}rem`};
+    font-size: ${({ fontSize = 2 }) => `${fontSize / 2}rem`};
   }
-`;
-
-const StyledDivider = styled(Divider)`
-  margin: 1rem 0;
 `;
 
 const StyledDailyIcon = styled.svg`
   max-width: 5rem;
+  height: unset;
   ${({ theme }) => theme.breakpoints.down("sm")} {
     max-width: 4rem;
   }
   ${({ theme }) => theme.breakpoints.down("xs")} {
     max-width: 40px;
   }
-  
-  height: unset;
-  margin-inline-end: 2.5rem;
 `;
 
 const DailyForecasts = styled.div`
   display: flex;
   justify-content: space-between;
   max-width: 50rem;
-  margin: auto; 
+  margin: auto;
   margin-block-start: 2rem;
-  
+
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-block-start: .5rem;
+    margin-block-start: 0.5rem;
   }
   ${({ theme }) => theme.breakpoints.down("xs")} {
-    margin-block-start: .2rem;
+    margin-block-start: 0.2rem;
   }
   > * {
-    min-width: 50px;
-    max-width: 300px;
     display: flex;
     flex-direction: column;
-    margin: .2rem;
-    background-color: rgba(0,0,0,.05);
-    padding: .75rem;
+    margin-inline-end: 0.1rem;
+    padding: 0.5rem 0;
+    background-color: rgba(0, 0, 0, 0.05);
     border-radius: 1rem;
+    align-items: center;
+    min-width: 10rem;
+
+    ${({ theme }) => theme.breakpoints.down("md")} {
+      min-width: 7rem;
+    }
+    ${({ theme }) => theme.breakpoints.down("sm")} {
+      min-width: 6rem;
+    }
+
+    ${({ theme }) => theme.breakpoints.down("xs")} {
+      min-width: 3rem;
+    }
+
+    .dailyTime {
+      background-color: rgba(0, 0, 0, 0.05);
+      width: 100%;
+      text-align: center;
+      margin: 0.5rem 0;
+    }
   }
 `;
 
-
+const weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 export function Weather({ weather, miniature }) {
   const dispatch = useDispatch();
   const isOneOfMyBookmarks = useSelector(getIsOneOfMyBookmark(weather && weather["key"]));
@@ -126,7 +137,7 @@ export function Weather({ weather, miniature }) {
   function renderDailyForecasts() {
     return dailyForecasts.map(function(
       {
-        Date,
+        Date: dateString,
         Temperature: {
           Minimum: { Value: minimumFahrenheit },
           Maximum: { Value: maximumFahrenheit }
@@ -136,16 +147,24 @@ export function Weather({ weather, miniature }) {
       },
       i
     ) {
+      const date = new Date(dateString);
       return (
-        <Grow key={`${i}_${date}`} in timeout={750*(i+1)}>
-        <div>
-          <div>Temp: {maximumFahrenheit} to {maximumFahrenheit}</div>
-          <div>Day - {dayTimeText}</div>
-          <StyledDailyIcon as={iconMap[dayTimeIcon]}/>
-          <StyledDivider/>
-          <div>Night - {nightTimeText}</div>
-          <StyledDailyIcon as={iconMap[nightTimeIcon]}/>
-        </div>
+        <Grow key={`${i}_${date}`} in timeout={750 * (i + 1)}>
+          <div>
+            <ResponsiveText fontSize={0.9}>{weekDay[date.getDay()]}</ResponsiveText>
+            <ResponsiveText fontSize={1.1}>
+              {minimumFahrenheit}°F~{maximumFahrenheit}°F
+            </ResponsiveText>
+            <div className="dailyTime">
+              <ResponsiveText fontSize={1}>Day</ResponsiveText>
+              <ResponsiveText fontSize={1.1}>{dayTimeText}</ResponsiveText>
+              <StyledDailyIcon as={iconMap[dayTimeIcon]} />
+            </div>
+            <ResponsiveText fontSize={1}>Night</ResponsiveText>
+            <ResponsiveText fontSize={1.1}>{nightTimeText}</ResponsiveText>
+            <StyledDailyIcon as={iconMap[nightTimeIcon]} />
+            <ResponsiveText fontSize={0.8}>({date.toLocaleDateString()})</ResponsiveText>
+          </div>
         </Grow>
       );
     });
@@ -174,9 +193,7 @@ export function Weather({ weather, miniature }) {
             <TopSection>
               <StyledMainIcon as={MainIcon} />
               <div>
-                <ResponsiveText fontSize={2}>
-                  {name}
-                </ResponsiveText>
+                <ResponsiveText fontSize={2}>{name}</ResponsiveText>
                 <Tooltip
                   title={`${!isFahrenheit ? imperial : metric} °${!isFahrenheit ? "F" : "C"}`}
                   aria-label="celsius / fahrenheit"
@@ -188,17 +205,11 @@ export function Weather({ weather, miniature }) {
               </div>
             </TopSection>
             <BottomSection>
-              <ResponsiveText fontSize={3}>
-                {text}
-              </ResponsiveText>
-              <ResponsiveText fontSize={1.5}>
-                {headlineText}
-              </ResponsiveText>
+              <ResponsiveText fontSize={3}>{text}</ResponsiveText>
+              <ResponsiveText fontSize={1.5}>{headlineText}</ResponsiveText>
             </BottomSection>
             <Fade in>
-            <DailyForecasts>
-              {renderDailyForecasts()}
-            </DailyForecasts>
+              <DailyForecasts>{renderDailyForecasts()}</DailyForecasts>
             </Fade>
           </CardContent>
           <StyledCardActions>
