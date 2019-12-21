@@ -1,39 +1,15 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import styled from "styled-components";
 import weatherService from "../AccuWeatherService";
-import { useDebounce } from "../hooks/useDebounce";
-import { useDispatch } from "react-redux";
-import { closeSnackbar, openSnackbar } from "../redux/ui/ui.actions";
-import { ErrorOutline } from "@material-ui/icons";
+import {useDebounce} from "../hooks/useDebounce";
+import {useDispatch} from "react-redux";
+import {closeSnackbar, openSnackbar} from "../redux/ui/ui.actions";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
 import {setSelectedCity} from "../redux/weather/weather.actions";
-
-const StyledAutocomplete = styled(Autocomplete)`
-  width: 100%;
-  max-width: 520px;
-`;
-
-const PaperContent = styled(Paper)`
-  font-weight: bolder;
-  padding: 1rem;
-  min-width: 300px;
-  color: ${({ theme }) => theme.palette.primary.main};
-  display: flex;
-  align-items: center;
-  margin-bottom: -1rem;
-
-`;
-
-const StyledLocationCity = styled(ErrorOutline)`
-  fill: ${({ theme }) => theme.palette.primary.main};
-  width: 30px;
-  height: 30px;
-`;
+import {PaperContent, StyledAutocomplete, StyledLocationCity} from "./styled";
 
 export default function SearchBox({ fallbackCity: defaultValue }) {
   const tooltipEnchorElRef = React.useRef();

@@ -1,23 +1,9 @@
 import React  from "react";
-import MuiSnackbar from "@material-ui/core/Snackbar";
 import {useDispatch, useSelector} from "react-redux";
 import {getSnackbar} from "../redux/ui/ui.selectors";
 import {closeSnackbar} from "../redux/ui/ui.actions";
-import IconButton from "@material-ui/core/IconButton";
 import { ThumbUp, Close } from "@material-ui/icons"
-import styled from "styled-components";
-const StyledIconButton = styled(IconButton)`
-  svg {
-    fill: #ffffff
-  }
-`;
-
-const StyledMuiSnackbar = styled(MuiSnackbar)`
-  .MuiSnackbarContent-message {
-    font-size: 1.75rem;
-  }
-`;
-
+import {StyledIconButton, StyledMuiSnackbar} from "./styled";
 
 export default function Snackbar (){
   const dispatch = useDispatch();

@@ -1,33 +1,8 @@
-import MuiBottomNavigation from "@material-ui/core/BottomNavigation";
 import React from "react";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
-
-import styled from "styled-components";
 import useNavigator from "../hooks/useNavigator";
 import {pathMap, pathNames, pathnameToIcon} from "../configurations/routes";
-
-const StyledMuiBottomNavigation = styled(MuiBottomNavigation)`
-  top: auto !important;
-  bottom: 0 !important;
-  position: fixed;
-  width: 100vw;
-
-  display: none;
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    display: flex;
-  }
-
-  background-color: ${({ theme }) => theme.palette.primary.main} !important;
-  .MuiSvgIcon-root {
-    fill: ${({ theme }) => theme.palette.primary.contrastText};
-  }
-  .MuiBottomNavigationAction-label {
-    color: ${({ theme }) => theme.palette.primary.contrastText};
-  }
-  .Mui-selected {
-    background-color: ${({ theme }) => theme.palette.primary.dark};
-  }
-`;
+import {StyledMuiBottomNavigation} from "./styled";
 
 export default function BottomNavigation() {
   const [currentPathname, navigate] = useNavigator();

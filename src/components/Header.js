@@ -9,22 +9,18 @@ import { Brightness4 as LightMode, Brightness7 as DarkMode, GitHub, MoreVert } f
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { getDialog, getIsDarkMode } from "../redux/ui/ui.selectors";
-import { closeDialog, closeSnackbar, openDialog, openSnackbar, toggleDarkTheme } from "../redux/ui/ui.actions";
+import { closeDialog, openDialog, toggleDarkTheme } from "../redux/ui/ui.actions";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import IOSSwitch from "./standalone/IOSSwitch";
 import Tooltip from "./standalone/Tooltip";
 import { getIsFahrenheit } from "../redux/weather/weather.selectors";
 import { toggleIsFahrenheit } from "../redux/weather/weather.actions";
+import {Row} from "./styled";
 
 const StyledToolBar = styled(Toolbar)`
   display: flex;
   justify-content: space-between;
-`;
-
-const Row = styled.div`
-  display: flex;
-  align-items: center;
 `;
 
 const StyledIconButton = styled(IconButton)`
