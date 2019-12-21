@@ -4,13 +4,15 @@ import {
   CURRENT_WEATHER_REQUEST,
   REMOVE_FROM_MY_BOOKMARKS,
   ADD_TO_MY_BOOKMARKS,
-  SET_SELECTED_CITY
+  SET_SELECTED_CITY,
+  TOGGLE_IS_FAHRENHEIT,
 } from "./weather.actions";
 
 export const INITIAL_STATE = {
   ids: [],
   map: {},
   pending: false,
+  isFahrenheit: false,
   selectedCity: { name: "Tel Aviv", key: "215854" },
   bookmarks: [] // ids only
 };
@@ -53,6 +55,8 @@ function userReducer(state = INITIAL_STATE, { type, payload }) {
       return { ...state, bookmarks };
     case SET_SELECTED_CITY:
       return { ...state, selectedCity: payload };
+    case TOGGLE_IS_FAHRENHEIT:
+      return  {...state, isFahrenheit: !state.isFahrenheit };
     default:
       return state;
   }

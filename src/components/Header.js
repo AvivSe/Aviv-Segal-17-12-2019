@@ -9,11 +9,13 @@ import { Brightness4 as LightMode, Brightness7 as DarkMode, GitHub, MoreVert } f
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { getDialog, getIsDarkMode } from "../redux/ui/ui.selectors";
-import { closeDialog, openDialog, toggleDarkTheme } from "../redux/ui/ui.actions";
+import { closeDialog, closeSnackbar, openDialog, openSnackbar, toggleDarkTheme } from "../redux/ui/ui.actions";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
-import IOSSwitch from "./IOSSwitch";
-import Tooltip from "./Tooltip";
+import IOSSwitch from "./standalone/IOSSwitch";
+import Tooltip from "./standalone/Tooltip";
+import { getIsFahrenheit } from "../redux/weather/weather.selectors";
+import { toggleIsFahrenheit } from "../redux/weather/weather.actions";
 
 const StyledToolBar = styled(Toolbar)`
   display: flex;
@@ -40,11 +42,15 @@ const UpperNavigation = styled.div`
 `;
 
 function Header() {
-  const [currentPathname, navigate] = useNavigator();
-  const isDarkMode = useSelector(getIsDarkMode);
-  const { component: dialogContent } = useSelector(getDialog);
-  const dispatch = useDispatch();
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const [currentPathname, navigate] = useNavigator();
+
+  const isDarkMode = useSelector(getIsDarkMode);
+  const isFahrenheit = useSelector(getIsFahrenheit);
+  const { component: dialogContent } = useSelector(getDialog);
+
+  const dispatch = useDispatch();
 
   const handleClick = event => {
     setAnchorEl(event.currentTarget);
@@ -67,6 +73,9 @@ function Header() {
     dispatch(!!dialogContent ? closeDialog() : openDialog("github", true));
   }
 
+  function handleFahrenheitToggle() {
+    dispatch(toggleIsFahrenheit());
+  }
   return (
     <AppBar position="static">
       <StyledToolBar>
@@ -111,11 +120,10 @@ function Header() {
             </IconButton>
           </Tooltip>
           <Menu id="moreMenu" anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleClose}>
-            <MenuItem><IOSSwitch/></MenuItem>
-            <MenuItem><IOSSwitch/></MenuItem>
-            <MenuItem><IOSSwitch/></MenuItem>
-            <MenuItem><IOSSwitch/></MenuItem>
-            <MenuItem><IOSSwitch/></MenuItem>
+            <MenuItem onClick={handleFahrenheitToggle}>
+              <IOSSwitch value={isFahrenheit} />
+              Use Fahrenheit
+            </MenuItem>
           </Menu>
         </Row>
       </StyledToolBar>

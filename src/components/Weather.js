@@ -5,13 +5,13 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsOneOfMyBookmark, getIsPending } from "../redux/weather/weather.selectors";
+import {getIsFahrenheit, getIsOneOfMyBookmark, getIsPending} from "../redux/weather/weather.selectors";
 import { addToMyBookmarks, removeFromMyBookmarks } from "../redux/weather/weather.actions";
 import styled from "styled-components";
 import { Bookmark, BookmarkBorder } from "@material-ui/icons";
 import { openSnackbar } from "../redux/ui/ui.actions";
-import Tooltip from "./Tooltip";
-import { iconMap } from "./AccuWeatherIcons";
+import Tooltip from "./standalone/Tooltip";
+import { iconMap } from "./standalone/AccuWeatherIcons";
 import Grow from "@material-ui/core/Grow";
 import Fade from "@material-ui/core/Fade";
 
@@ -51,7 +51,7 @@ const StyledMainIcon = styled.svg`
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     width: 3rem;
-    margin-inline-end: .5rem;
+    margin-inline-end: 0.5rem;
   }
 `;
 
@@ -120,12 +120,13 @@ const DailyForecasts = styled.div`
 `;
 
 const weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
-const toCelsius  = fahrenheit => ((5/9)*(fahrenheit-32)).toFixed(1);
+const toCelsius = fahrenheit => ((5 / 9) * (fahrenheit - 32)).toFixed(1);
 
 export function Weather({ weather, miniature }) {
   const dispatch = useDispatch();
   const isOneOfMyBookmarks = useSelector(getIsOneOfMyBookmark(weather && weather["key"]));
   const isPending = useSelector(getIsPending);
+  const isFahrenheit = useSelector(getIsFahrenheit);
 
   const {
     WeatherIcon: iconId,
@@ -160,7 +161,8 @@ export function Weather({ weather, miniature }) {
           <div>
             <ResponsiveText fontSize={0.9}>{weekDay[date.getDay()]}</ResponsiveText>
             <ResponsiveText fontSize={1.1}>
-              {isFahrenheit?`${minimumFahrenheit}°F`:`${toCelsius(minimumFahrenheit)}°C`}~{isFahrenheit?`${maximumFahrenheit}°F`:`${toCelsius(maximumFahrenheit)}°C`}
+              {isFahrenheit ? `${minimumFahrenheit}°F` : `${toCelsius(minimumFahrenheit)}°C`}~
+              {isFahrenheit ? `${maximumFahrenheit}°F` : `${toCelsius(maximumFahrenheit)}°C`}
             </ResponsiveText>
             <div className="dailyTime">
               <ResponsiveText fontSize={1}>Day</ResponsiveText>
@@ -177,7 +179,6 @@ export function Weather({ weather, miniature }) {
     });
   }
 
-  const isFahrenheit = false;
   const BookmarkIcon = isOneOfMyBookmarks ? Bookmark : BookmarkBorder;
 
   function handleBookmarkToggled() {

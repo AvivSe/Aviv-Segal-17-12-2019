@@ -5,7 +5,7 @@ import { useSelector } from "react-redux";
 import { getIsPending, getSelectedCity, getSelectedCityWeather } from "../redux/weather/weather.selectors";
 import Zoom from "@material-ui/core/Zoom";
 import styled from "styled-components";
-import HeroloAnimation from "./HeroloAnimation";
+import HeroloAnimation from "./standalone/HeroloAnimation";
 
 const Wrapper = styled.div`
   display: flex;

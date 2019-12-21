@@ -31,3 +31,4 @@ export const getSelectedCity = () => ({ weather: { selectedCity }}) => selectedC
 export const gwtMyBookmarks = ({ weather: { map, bookmarks } }) => bookmarks.map(key => map[key]);
 export const getIsOneOfMyBookmark = key => ({ weather: { map, bookmarks } }) => bookmarks.indexOf(key) !== -1;
 export const getIsPending = ({ weather: { pending }}) => pending;
+export const getIsFahrenheit  = ({ weather: { isFahrenheit } }) => isFahrenheit;

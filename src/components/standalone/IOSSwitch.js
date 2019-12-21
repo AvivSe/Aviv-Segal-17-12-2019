@@ -28,11 +28,11 @@ const IOSSwitch = withStyles(theme => ({
   thumb: {
     width: 24,
     height: 24,
-    color: `${theme.palette.primary.dark}`
+    color: `${theme.palette.common.white}`
   },
   track: {
     borderRadius: 24 / 2,
-    backgroundColor: theme.palette.grey[50],
+    backgroundColor: '#52d869',
     opacity: 1,
     transition: theme.transitions.create(["background-color", "border"])
   },

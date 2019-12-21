@@ -9,6 +9,7 @@ export const ADD_TO_MY_BOOKMARKS = "ADD_TO_MY_BOOKMARKS";
 export const REMOVE_FROM_MY_BOOKMARKS = "REMOVE_FROM_MY_BOOKMARKS";
 
 export const SET_SELECTED_CITY = "SET_SELECTED_CITY";
+export const TOGGLE_IS_FAHRENHEIT  = "TOGGLE_IS_FAHRENHEIT";
 
 export const fetchCurrentWeather = (city, with5DayForecasts) => async dispatch => {
   try {
@@ -39,4 +40,8 @@ export const setSelectedCity = city => dispatch => {
   } else {
     dispatch({ type: SET_SELECTED_CITY, payload: { key: null, name: null} });
   }
+};
+
+export const toggleIsFahrenheit = () => {
+  return { type: TOGGLE_IS_FAHRENHEIT }
 };

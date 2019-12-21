@@ -1,5 +1,5 @@
 import React from "react";
-import heroloPng from "../assets/herolo.png"
+import heroloPng from "../../assets/herolo.png"
 import styled from "styled-components";
 
 const Wrapper = styled.div`
