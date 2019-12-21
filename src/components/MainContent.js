@@ -12,6 +12,7 @@ const Wrapper = styled.div`
     align-items: center;
     min-height: 100%;
   }
+  padding: 0 .5rem;
   .mainContent > * {
     margin-bottom: 2rem;
 }

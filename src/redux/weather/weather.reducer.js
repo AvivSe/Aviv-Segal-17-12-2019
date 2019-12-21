@@ -8,18 +8,36 @@ import {
 } from "./weather.actions";
 
 export const INITIAL_STATE = {
-  selectedCity: { name: "Tel Aviv", key: "215854" },
+  ids: [],
   map: {},
   pending: false,
+  selectedCity: { name: "Tel Aviv", key: "215854" },
   bookmarks: [] // ids only
 };
 
 function userReducer(state = INITIAL_STATE, { type, payload }) {
   let bookmarks = [...state.bookmarks];
-
+  const ids = [...state.ids];
+  const map = {...state.map};
   switch (type) {
     case CURRENT_WEATHER_SUCCESS:
-      return { ...state, pending: false, map: { ...state.map, [payload.key]: payload } };
+      if(!ids.indexOf(payload.key)) {
+        ids.push(payload.key);
+      }
+      map[payload.key] = {
+        ...payload,
+        uniqId: JSON.stringify({
+          key: payload["key"],
+          epochTime: payload["EpochTime"],
+          version: payload["Version"]
+        })
+      };
+      return {
+        ...state,
+        pending: false,
+        ids,
+        map,
+      };
     case CURRENT_WEATHER_ERROR:
       return { ...state, pending: false };
     case CURRENT_WEATHER_REQUEST:

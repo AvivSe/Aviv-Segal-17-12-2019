@@ -8,6 +8,8 @@ import Dialog from "./Dialog";
 import {useDispatch, useSelector} from "react-redux";
 import {getDialog} from "../redux/ui/ui.selectors";
 import {closeDialog} from "../redux/ui/ui.actions";
+import LinearProgress from "./LinearProgress";
+import {getIsPending} from "../redux/weather/weather.selectors";
 
 const Wrapper = styled.div`
   background-color: ${({theme})=>theme.palette.primary.contrastText};
@@ -23,6 +25,7 @@ const dialogs = {
 export default function Main() {
   const dialog = useSelector(getDialog);
   const dispatch = useDispatch();
+  const isPending = useSelector(getIsPending); // please extend with more indicator if needed
 
   function handleDialogClose() {
     dispatch(closeDialog());
@@ -31,6 +34,7 @@ export default function Main() {
   return (
     <Wrapper>
       <Header />
+      {isPending && <LinearProgress/>}
       <MainContent />
       <Snackbar />
       <Dialog fullScreen={dialog.fullScreen} open={dialog.open} content={dialogs[dialog.name]} onClose={handleDialogClose}/>

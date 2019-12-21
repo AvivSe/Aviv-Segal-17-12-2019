@@ -12,6 +12,13 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
+const StyledMuiSnackbar = styled(MuiSnackbar)`
+  .MuiSnackbarContent-message {
+    font-size: 1.75rem;
+  }
+`;
+
+
 export default function Snackbar (){
   const dispatch = useDispatch();
   const { open, message, duration , onDismiss, onAccept} = useSelector(getSnackbar);
@@ -32,7 +39,7 @@ export default function Snackbar (){
     dispatch(closeSnackbar());
   };
   return (
-    <MuiSnackbar
+    <StyledMuiSnackbar
       variant={"error"}
       open={open}
       color={"secondary"}
@@ -44,6 +51,6 @@ export default function Snackbar (){
         !!onDismiss && <StyledIconButton onClick={handleDismissClick}><Close/></StyledIconButton>
       ]}
     >
-    </MuiSnackbar>
+    </StyledMuiSnackbar>
   );
 };

@@ -11,7 +11,7 @@ import { ErrorOutline } from "@material-ui/icons";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import {fetchCurrentWeather, setSelectedCity} from "../redux/weather/weather.actions";
+import {setSelectedCity} from "../redux/weather/weather.actions";
 
 const StyledAutocomplete = styled(Autocomplete)`
   width: 100%;
@@ -34,7 +34,6 @@ const StyledLocationCity = styled(ErrorOutline)`
   width: 30px;
   height: 30px;
 `;
-
 
 export default function SearchBox({ fallbackCity: defaultValue }) {
   const tooltipEnchorElRef = React.useRef();
@@ -59,9 +58,7 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
 
   const isValid = useCallback(
     function(searchTerm) {
-      return (
-        !searchTerm || options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase())
-      );
+      return options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase())
     },
     [options]
   );
@@ -86,23 +83,14 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
     [debouncedSearchTerm, dispatch]
   );
 
-  useEffect(
-    function() {
-      if (searchTerm && searchTerm !== defaultValue.name && !error && !isAutocompleteOpen && !isValid()) {
-        dispatch(openSnackbar("You must pick from list"));
-      }
-    },
-    [defaultValue, error, isAutocompleteOpen, isValid, dispatch, searchTerm]
-  );
-
   useEffect(() => {
     if (!isValid(debouncedSearchTerm)) {
       setError("Please select from list");
-      setIsAutocompleteOpen(true);
+      setIsAutocompleteOpen(!locked);
     } else {
       zeroErrors();
     }
-  }, [debouncedSearchTerm, setIsAutocompleteOpen, zeroErrors, isValid]);
+  }, [debouncedSearchTerm, setIsAutocompleteOpen, zeroErrors, isValid, locked]);
 
   useEffect(() => {
     if (isValid(searchTerm)) {
@@ -111,9 +99,15 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
   }, [searchTerm, isValid]);
 
   function handleOptionChange(event, value) {
-    dispatch(setSelectedCity({name: value, key: cityLabelToKeyMap[value]}));
-    setLocked(true);
-    zeroErrors();
+    if(!value) {
+      dispatch(setSelectedCity(null));
+    } else if(options.find(validWord => validWord.toLowerCase() === value.toLowerCase())) {
+      dispatch(setSelectedCity({name: value, key: cityLabelToKeyMap[value]}));
+      setLocked(true);
+      zeroErrors();
+    } else {
+      setError("Please select from list");
+    }
   }
 
   function handleInputChange({ target: { value: searchTerm } }) {

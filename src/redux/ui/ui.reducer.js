@@ -3,7 +3,7 @@ import { CLOSE_SNACKBAR, NAVIGATE, OPEN_SNACKBAR, TOGGLE_DARK_MODE, CLOSE_DIALOG
 export const uiInitialState = {
   snackbar: { open: false, message: "", duration: 3000 },
   path: window.location.pathname,
-  isDarkMode: true,
+  isDarkMode: false,
   dialog: { open: false, name: "404", fullScreen: false }
 };
 

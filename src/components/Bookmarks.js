@@ -1,6 +1,9 @@
-import React from "react";
+import React, {useEffect} from "react";
+import styled from "styled-components";
+import {useDispatch, useSelector} from "react-redux";
+import {gwtMyBookmarks} from "../redux/weather/weather.selectors";
 import WeatherMiniature from "./WeatherMiniature";
-import styled from "styled-components"
+import {openSnackbar} from "../redux/ui/ui.actions";
 
 const Flex = styled.div`
   margin: auto;
@@ -8,13 +11,21 @@ const Flex = styled.div`
   flex-wrap: wrap;
   justify-content: center;
 `;
+
 export default function Bookmarks() {
-  //const dispatch = useDispatch();
+  const bookmarks = useSelector(gwtMyBookmarks);
+  const dispatch = useDispatch();
+  const noBookmarks = !bookmarks || bookmarks.length === 0;
+  useEffect(function () {
+    if(noBookmarks) {
+      dispatch(openSnackbar(`No bookmarks found`));
+    }
+  }, [dispatch, noBookmarks]);
   return (
     <div className={"mainContent"}>
       <Flex>
-        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 3, 3, 3, 3, 3, 24, 2, 125, 1, 25, 1, 3, 1, 34, 213, 4].map((item,i) => (
-          <WeatherMiniature key={item + ' ' + i} />
+        {bookmarks.map(weather => (
+          <WeatherMiniature key={weather.uniqId} weather={weather} />
         ))}
       </Flex>
     </div>

@@ -3,18 +3,21 @@ import { openSnackbar } from "../ui/ui.actions";
 
 export const CURRENT_WEATHER_REQUEST = "CURRENT_WEATHER_REQUEST";
 export const CURRENT_WEATHER_SUCCESS = "CURRENT_WEATHER_SUCCESS";
-export const CURRENT_WEATHER_ERROR = "CURRENT_WEATHER_REQUEST";
+export const CURRENT_WEATHER_ERROR = "CURRENT_WEATHER_ERROR";
 
 export const ADD_TO_MY_BOOKMARKS = "ADD_TO_MY_BOOKMARKS";
 export const REMOVE_FROM_MY_BOOKMARKS = "REMOVE_FROM_MY_BOOKMARKS";
 
 export const SET_SELECTED_CITY = "SET_SELECTED_CITY";
 
-export const fetchCurrentWeather = city => async dispatch => {
+export const fetchCurrentWeather = (city, with5DayForecasts) => async dispatch => {
   try {
-    const response = await accuWeatherService.fetchCurrentWeather(city.key);
+    dispatch({ type: CURRENT_WEATHER_REQUEST,});
+    let response = await accuWeatherService.fetchCurrentWeather(city.key);
+    if(with5DayForecasts) {
+      response = {...response, ...await accuWeatherService.fetchFiveDaysOfDailyForecasts(city.key)};
+    }
     dispatch({ type: CURRENT_WEATHER_SUCCESS, payload: { ...response, ...city } });
-    dispatch(openSnackbar(`Showing result for ${city.name}`));
   } catch (e) {
     dispatch({ type: CURRENT_WEATHER_ERROR });
     dispatch(openSnackbar(e.message || "Something got occurred"));
@@ -30,6 +33,10 @@ export const removeFromMyBookmarks = key => dispatch => {
 };
 
 export const setSelectedCity = city => dispatch => {
-  dispatch(fetchCurrentWeather(city));
-  dispatch({ type: SET_SELECTED_CITY, payload: city });
+  if(!!city && city !== "") {
+    dispatch(fetchCurrentWeather(city, true));
+    dispatch({ type: SET_SELECTED_CITY, payload: city });
+  } else {
+    dispatch({ type: SET_SELECTED_CITY, payload: { key: null, name: null} });
+  }
 };

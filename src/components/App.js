@@ -8,7 +8,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIsDarkMode} from "../redux/ui/ui.selectors";
 import {darkThemeOptions, lightThemeOptions} from "../configurations/theme";
 import useGeolocation from "react-hook-geolocation";
-import {fetchCurrentWeather} from "../redux/weather/weather.actions";
+import { setSelectedCity} from "../redux/weather/weather.actions";
 
 export default function App() {
   const dispatch = useDispatch();
@@ -19,7 +19,7 @@ export default function App() {
   console.log(geolocation);
 
   useEffect(() => {
-    dispatch(fetchCurrentWeather({ name: 'Tel Aviv' ,key: '215854'}));
+    dispatch(setSelectedCity({ name: 'Tel Aviv' ,key: '215854'}));
   },[dispatch]);
 
   return (

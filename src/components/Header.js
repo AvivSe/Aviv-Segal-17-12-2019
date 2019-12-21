@@ -5,15 +5,15 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import useNavigator from "../hooks/useNavigator";
 import { pathMap, pathNames, pathnameToIcon } from "../configurations/routes";
-import { Brightness4 as LightMode, Brightness7 as DarkMode, Settings, GitHub, MoreVert } from "@material-ui/icons";
+import { Brightness4 as LightMode, Brightness7 as DarkMode, GitHub, MoreVert } from "@material-ui/icons";
 import IconButton from "@material-ui/core/IconButton";
 import { useDispatch, useSelector } from "react-redux";
 import { getDialog, getIsDarkMode } from "../redux/ui/ui.selectors";
 import { closeDialog, openDialog, toggleDarkTheme } from "../redux/ui/ui.actions";
-import Tooltip from "@material-ui/core/Tooltip";
 import MenuItem from "@material-ui/core/MenuItem";
 import Menu from "@material-ui/core/Menu";
 import IOSSwitch from "./IOSSwitch";
+import Tooltip from "./Tooltip";
 
 const StyledToolBar = styled(Toolbar)`
   display: flex;
@@ -61,10 +61,6 @@ function Header() {
 
   function handleDarkModeToggle() {
     dispatch(toggleDarkTheme());
-  }
-
-  function handleSettingsToggle() {
-    dispatch(!!dialogContent ? closeDialog() : openDialog("moreSettings", true));
   }
 
   function handleGithubClick() {
