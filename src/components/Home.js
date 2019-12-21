@@ -13,7 +13,7 @@ const Wrapper = styled.div`
   width: 100%;
 `;
 export default function Home() {
-  const selectedCity = useSelector(getSelectedCity());
+  const selectedCity = useSelector(getSelectedCity);
   const weather = useSelector(getSelectedCityWeather());
   const isPending = useSelector(getIsPending);
   return (

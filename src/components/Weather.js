@@ -5,7 +5,7 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { useDispatch, useSelector } from "react-redux";
-import {getIsFahrenheit, getIsOneOfMyBookmark, getIsPending} from "../redux/weather/weather.selectors";
+import { getIsFahrenheit, getIsOneOfMyBookmark, getIsPending } from "../redux/weather/weather.selectors";
 import { addToMyBookmarks, removeFromMyBookmarks } from "../redux/weather/weather.actions";
 import styled from "styled-components";
 import { Bookmark, BookmarkBorder } from "@material-ui/icons";
@@ -14,6 +14,7 @@ import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
 import Grow from "@material-ui/core/Grow";
 import Fade from "@material-ui/core/Fade";
+import Slide from "@material-ui/core/Slide";
 
 const StyledCard = styled(Card)`
   margin: 0.5rem;
@@ -157,7 +158,7 @@ export function Weather({ weather, miniature }) {
     ) {
       const date = new Date(dateString);
       return (
-        <Grow key={`${i}_${date}`} in timeout={750 * (i + 1)}>
+        <Grow key={`${i}_${date}`} in timeout={500 * (i + 1)}>
           <div>
             <ResponsiveText fontSize={0.9}>{weekDay[date.getDay()]}</ResponsiveText>
             <ResponsiveText fontSize={1.1}>
@@ -199,38 +200,60 @@ export function Weather({ weather, miniature }) {
         <StyledCard className={"weather"}>
           <CardContent>
             <TopSection>
-              <StyledMainIcon as={MainIcon} />
+              <Slide in timeout={500} direction={"right"}>
+                <div>
+                  <StyledMainIcon as={MainIcon} />
+                </div>
+              </Slide>
               <div>
-                <ResponsiveText fontSize={2}>{name}</ResponsiveText>
-                <Tooltip
-                  title={`${!isFahrenheit ? imperial : metric} °${!isFahrenheit ? "F" : "C"}`}
-                  aria-label="celsius / fahrenheit"
-                >
-                  <Typography gutterBottom variant="h6" component="h6">
-                    {isFahrenheit ? imperial : metric} °{isFahrenheit ? "F" : "C"}
-                  </Typography>
-                </Tooltip>
+                <Slide in timeout={500} direction={"left"}>
+                  <ResponsiveText fontSize={2}>{name}</ResponsiveText>
+                </Slide>
+                <Slide in timeout={500} direction={"down"}>
+                  <div>
+                    <Tooltip
+                      title={`${!isFahrenheit ? imperial : metric} °${!isFahrenheit ? "F" : "C"}`}
+                      aria-label="celsius / fahrenheit"
+                    >
+                      <Typography gutterBottom variant="h6" component="h6">
+                        {isFahrenheit ? imperial : metric} °{isFahrenheit ? "F" : "C"}
+                      </Typography>
+                    </Tooltip>
+                  </div>
+                </Slide>
               </div>
             </TopSection>
             <BottomSection>
-              <ResponsiveText fontSize={3}>{text}</ResponsiveText>
-              <ResponsiveText fontSize={1.5}>{headlineText}</ResponsiveText>
+              <Grow in timeout={1000}>
+                <ResponsiveText fontSize={3}>{text}</ResponsiveText>
+              </Grow>
+              <Grow in timeout={2000}>
+                <ResponsiveText fontSize={1.5}>{headlineText}</ResponsiveText>
+              </Grow>
             </BottomSection>
             <Fade in>
               <DailyForecasts>{renderDailyForecasts()}</DailyForecasts>
             </Fade>
           </CardContent>
           <StyledCardActions>
-            <Tooltip title={isOneOfMyBookmarks ? `Remove ${name} from bookmarks` : `Save ${name} as a bookmark`}>
-              <Button onClick={handleBookmarkToggled} size="large" color="primary">
-                <BookmarkIcon />
-              </Button>
-            </Tooltip>
-            <Tooltip title={date.toString()} aria-label="full date time">
+            <Slide direction={"right"} in timeout={750}>
               <div>
-                {date.toLocaleDateString()} {date.toLocaleTimeString()}
+                <Tooltip title={isOneOfMyBookmarks ? `Remove ${name} from bookmarks` : `Save ${name} as a bookmark`}>
+                  <Button onClick={handleBookmarkToggled} size="large" color="primary">
+                    <BookmarkIcon />
+                  </Button>
+                </Tooltip>
               </div>
-            </Tooltip>
+            </Slide>
+            <Slide direction={"up"} in timeout={750}>
+              <div>
+                <Tooltip title={date.toString()} aria-label="full date time">
+                  <div>
+                    {date.toLocaleDateString()} {date.toLocaleTimeString()}
+                  </div>
+                </Tooltip>
+              </div>
+            </Slide>
           </StyledCardActions>
         </StyledCard>
       )}

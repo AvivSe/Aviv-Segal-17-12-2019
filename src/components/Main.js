@@ -5,21 +5,21 @@ import BottomNavigation from "./BottomNavigation";
 import React from "react";
 import styled from "styled-components";
 import Dialog from "./standalone/Dialog";
-import {useDispatch, useSelector} from "react-redux";
-import {getDialog} from "../redux/ui/ui.selectors";
-import {closeDialog} from "../redux/ui/ui.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getDialog } from "../redux/ui/ui.selectors";
+import { closeDialog } from "../redux/ui/ui.actions";
 import LinearProgress from "./standalone/LinearProgress";
-import {getIsPending} from "../redux/weather/weather.selectors";
+import { getIsPending } from "../redux/weather/weather.selectors";
 
 const Wrapper = styled.div`
-  background-color: ${({theme})=>theme.palette.primary.contrastText};
+  background-color: ${({ theme }) => theme.palette.primary.contrastText};
   min-height: 100vh;
 `;
 
 const dialogs = {
-  '404': <div>Hello 404</div>,
+  "404": <div>Hello 404</div>,
   moreSettings: <div>Hello More Settings</div>,
-  github: <div>Hello github</div>,
+  github: <div>Hello github</div>
 };
 
 export default function Main() {
@@ -34,10 +34,15 @@ export default function Main() {
   return (
     <Wrapper>
       <Header />
-      {isPending && <LinearProgress/>}
+      {isPending && <LinearProgress />}
       <MainContent />
       <Snackbar />
-      <Dialog fullScreen={dialog.fullScreen} open={dialog.open} content={dialogs[dialog.name]} onClose={handleDialogClose}/>
+      <Dialog
+        fullScreen={dialog.fullScreen}
+        open={dialog.open}
+        content={dialogs[dialog.name]}
+        onClose={handleDialogClose}
+      />
       <BottomNavigation />
     </Wrapper>
   );
