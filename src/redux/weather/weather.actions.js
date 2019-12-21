@@ -42,11 +42,11 @@ export const fetchManyCurrentWeather = cities => async dispatch => {
   }
 };
 
-export const addToMyBookmarks = key => dispatch => {
+export const addToMyFavorites = key => dispatch => {
   dispatch({ type: ADD_TO_MY_BOOKMARKS, payload: key });
 };
 
-export const removeFromMyBookmarks = key => dispatch => {
+export const removeFromMyFavorites = key => dispatch => {
   dispatch({ type: REMOVE_FROM_MY_BOOKMARKS, payload: key });
 };
 

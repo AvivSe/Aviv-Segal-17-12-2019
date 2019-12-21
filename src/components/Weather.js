@@ -5,10 +5,10 @@ import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import Card from "@material-ui/core/Card";
 import { useDispatch, useSelector } from "react-redux";
-import { getIsFahrenheit, getIsOneOfMyBookmark, getIsPending } from "../redux/weather/weather.selectors";
-import { addToMyBookmarks, removeFromMyBookmarks } from "../redux/weather/weather.actions";
+import { getIsFahrenheit, getIsOneOfMyFavorite, getIsPending } from "../redux/weather/weather.selectors";
+import { addToMyFavorites, removeFromMyFavorites } from "../redux/weather/weather.actions";
 import styled from "styled-components";
-import { Bookmark, BookmarkBorder } from "@material-ui/icons";
+import { Favorite, FavoriteBorder } from "@material-ui/icons";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
@@ -125,7 +125,7 @@ const toCelsius = fahrenheit => ((5 / 9) * (fahrenheit - 32)).toFixed(1);
 
 export function Weather({ weather, miniature }) {
   const dispatch = useDispatch();
-  const isOneOfMyBookmarks = useSelector(getIsOneOfMyBookmark(weather && weather["key"]));
+  const isOneOfMyFavorites = useSelector(getIsOneOfMyFavorite(weather && weather["key"]));
   const isPending = useSelector(getIsPending);
   const isFahrenheit = useSelector(getIsFahrenheit);
 
@@ -180,15 +180,15 @@ export function Weather({ weather, miniature }) {
     });
   }
 
-  const BookmarkIcon = isOneOfMyBookmarks ? Bookmark : BookmarkBorder;
+  const FavoriteIcon = isOneOfMyFavorites ? Favorite : FavoriteBorder;
 
-  function handleBookmarkToggled() {
-    if (isOneOfMyBookmarks) {
-      dispatch(removeFromMyBookmarks(key));
-      dispatch(openSnackbar(`${name} removed from bookmarks, todo undo.`));
+  function handleFavoriteToggled() {
+    if (isOneOfMyFavorites) {
+      dispatch(removeFromMyFavorites(key));
+      dispatch(openSnackbar(`${name} removed from favorites, todo undo.`));
     } else {
-      dispatch(addToMyBookmarks(key));
-      dispatch(openSnackbar(`${name} added to your bookmarks`));
+      dispatch(addToMyFavorites(key));
+      dispatch(openSnackbar(`${name} added to your favorites`));
     }
   }
   const date = new Date(localObservationDateTime);
@@ -238,9 +238,9 @@ export function Weather({ weather, miniature }) {
           <StyledCardActions>
             <Slide direction={"right"} in timeout={750}>
               <div>
-                <Tooltip title={isOneOfMyBookmarks ? `Remove ${name} from bookmarks` : `Save ${name} as a bookmark`}>
-                  <Button onClick={handleBookmarkToggled} size="large" color="primary">
-                    <BookmarkIcon />
+                <Tooltip title={isOneOfMyFavorites ? `Remove ${name} from favorites` : `Save ${name} as a favorite`}>
+                  <Button onClick={handleFavoriteToggled} size="large" color="primary">
+                    <FavoriteIcon />
                   </Button>
                 </Tooltip>
               </div>

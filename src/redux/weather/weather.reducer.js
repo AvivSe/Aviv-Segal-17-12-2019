@@ -14,11 +14,11 @@ export const INITIAL_STATE = {
   pending: false,
   isFahrenheit: false,
   selectedCity: { name: "Tel Aviv", key: "215854" },
-  bookmarks: [] // ids only
+  favorites: [] // ids only
 };
 
 function userReducer(state = INITIAL_STATE, { type, payload }) {
-  let bookmarks = [...state.bookmarks];
+  let favorites = [...state.favorites];
   const ids = [...state.ids];
   const map = { ...state.map };
   switch (type) {
@@ -39,14 +39,14 @@ function userReducer(state = INITIAL_STATE, { type, payload }) {
     case CURRENT_WEATHER_REQUEST:
       return { ...state, pending: true };
     case REMOVE_FROM_MY_BOOKMARKS:
-      bookmarks = bookmarks.filter(key => key !== payload);
-      return { ...state, bookmarks };
+      favorites = favorites.filter(key => key !== payload);
+      return { ...state, favorites };
     case ADD_TO_MY_BOOKMARKS:
       console.log(payload);
-      if (bookmarks.indexOf(payload)) {
-        bookmarks.push(payload);
+      if (favorites.indexOf(payload)) {
+        favorites.push(payload);
       }
-      return { ...state, bookmarks };
+      return { ...state, favorites };
     case SET_SELECTED_CITY:
       return { ...state, selectedCity: payload };
     case TOGGLE_IS_FAHRENHEIT:

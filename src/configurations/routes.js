@@ -1,20 +1,20 @@
 import Home from "../components/Home";
 import {
-  Bookmarks as BookmarksIcon,
-  BookmarksOutlined as BookmarksOutlinedIcon,
+  Favorite as FavoritesIcon,
+  FavoriteOutlined as FavoritesOutlinedIcon,
   Home as HomeIcon,
   HomeOutlined as HomeIconOutlined
 } from "@material-ui/icons";
-import Bookmarks from "../components/Bookmarks";
+import Favorites from "../components/Favorites";
 
 export const pathMap = {
   "/": { label: "Home", component: Home },
-  "/bookmarks": { label: "Bookmarks", component: Bookmarks }
+  "/favorites": { label: "Favorites", component: Favorites }
 };
 
 export const pathnameToIcon = {
   "/": { default: HomeIconOutlined, selected: HomeIcon },
-  "/bookmarks": { default: BookmarksOutlinedIcon, selected: BookmarksIcon }
+  "/favorites": { default: FavoritesOutlinedIcon, selected: FavoritesIcon }
 };
 
 export const pathNames = Object.keys(pathMap);

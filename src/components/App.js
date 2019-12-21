@@ -8,13 +8,12 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIsDarkMode} from "../redux/ui/ui.selectors";
 import {darkThemeOptions, lightThemeOptions} from "../configurations/theme";
 import useGeolocation from "react-hook-geolocation";
-import { setSelectedCity} from "../redux/weather/weather.actions";
+import {setSelectedCity} from "../redux/weather/weather.actions";
 
 export default function App() {
   const dispatch = useDispatch();
   const isDarkTheme = useSelector(getIsDarkMode);
   const theme = createMuiTheme(isDarkTheme ? darkThemeOptions : lightThemeOptions);
-
   const geolocation = useGeolocation();
   console.log(geolocation);
 

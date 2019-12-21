@@ -1,7 +1,7 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Home from "./Home";
-import Bookmarks from "./Bookmarks";
+import Favorites from "./Favorites";
 import styled from "styled-components";
 
 const Wrapper = styled.div`
@@ -24,7 +24,7 @@ export default function MainContent() {
   return (
     <Wrapper>
       <Switch>
-        <Route path={"/bookmarks"} component={Bookmarks} />
+        <Route path={"/favorites"} component={Favorites} />
         <Route path={"/"} exact={true} component={Home} />
         <Route path={"*"} exact={true} component={() => <div>404</div>} />
       </Switch>
