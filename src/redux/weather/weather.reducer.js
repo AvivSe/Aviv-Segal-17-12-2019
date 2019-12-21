@@ -5,7 +5,7 @@ import {
   REMOVE_FROM_MY_BOOKMARKS,
   ADD_TO_MY_BOOKMARKS,
   SET_SELECTED_CITY,
-  TOGGLE_IS_FAHRENHEIT,
+  TOGGLE_IS_FAHRENHEIT
 } from "./weather.actions";
 
 export const INITIAL_STATE = {
@@ -20,25 +20,19 @@ export const INITIAL_STATE = {
 function userReducer(state = INITIAL_STATE, { type, payload }) {
   let bookmarks = [...state.bookmarks];
   const ids = [...state.ids];
-  const map = {...state.map};
+  const map = { ...state.map };
   switch (type) {
     case CURRENT_WEATHER_SUCCESS:
-      if(!ids.indexOf(payload.key)) {
+      console.log("im here", ids.indexOf(payload.key));
+      if (ids.indexOf(payload.key) === -1) {
         ids.push(payload.key);
       }
-      map[payload.key] = {
-        ...payload,
-        uniqId: JSON.stringify({
-          key: payload["key"],
-          epochTime: payload["EpochTime"],
-          version: payload["Version"]
-        })
-      };
+      map[payload.key] = { ...payload };
       return {
         ...state,
         pending: false,
         ids,
-        map,
+        map
       };
     case CURRENT_WEATHER_ERROR:
       return { ...state, pending: false };
@@ -56,7 +50,7 @@ function userReducer(state = INITIAL_STATE, { type, payload }) {
     case SET_SELECTED_CITY:
       return { ...state, selectedCity: payload };
     case TOGGLE_IS_FAHRENHEIT:
-      return  {...state, isFahrenheit: !state.isFahrenheit };
+      return { ...state, isFahrenheit: !state.isFahrenheit };
     default:
       return state;
   }

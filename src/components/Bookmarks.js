@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
-import { getSelectedCity, gwtMyBookmarks } from "../redux/weather/weather.selectors";
+import {getSelectedCity, getMyBookmarks, getBookmarkCities} from "../redux/weather/weather.selectors";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import Weather from "./Weather";
 import Zoom from "@material-ui/core/Zoom";
 import { Add } from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
-import { addToMyBookmarks } from "../redux/weather/weather.actions";
+import {addToMyBookmarks, fetchManyCurrentWeather} from "../redux/weather/weather.actions";
 
 const Flex = styled.div`
   display: flex;
@@ -21,11 +21,17 @@ const FirstBookmark = styled.div`
   color: ${({ theme }) => theme.palette.primary.main};
 `;
 export default function Bookmarks() {
-  const bookmarks = useSelector(gwtMyBookmarks);
+  const bookmarks = useSelector(getMyBookmarks);
+  const bookmarkCities = useSelector(getBookmarkCities);
   const dispatch = useDispatch();
   const selectedCity = useSelector(getSelectedCity);
 
   const noBookmarks = !bookmarks || bookmarks.length === 0;
+
+  useEffect(function() {
+    dispatch(fetchManyCurrentWeather(bookmarks));
+  },[]);
+
   useEffect(
     function() {
       if (noBookmarks) {
@@ -52,7 +58,7 @@ export default function Bookmarks() {
               </Flex>
             )}
             {bookmarks.map(weather => (
-              <Weather key={weather.uniqId} weather={weather} />
+              <Weather key={weather.name} weather={weather} />
             ))}
           </div>
         </Flex>

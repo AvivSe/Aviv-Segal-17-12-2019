@@ -196,7 +196,7 @@ export function Weather({ weather, miniature }) {
   return (
     <>
       {isPending && <div>Loading....</div>}
-      {!isPending && !!weather.uniqId && (
+      {!isPending && (
         <StyledCard className={"weather"}>
           <CardContent>
             <TopSection>
