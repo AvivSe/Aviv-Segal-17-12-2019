@@ -13,10 +13,10 @@ const Wrapper = styled.div`
     min-height: 100%;
   }
 
-  ${({ theme }) => theme.breakpoints.up("sm")} {
+  ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0 0.5rem;
     .mainContent {
-      padding: 0 2rem 56px 2rem;
+      padding-block-end: 56px;
     }
   }
 `;

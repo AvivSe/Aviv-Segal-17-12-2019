@@ -48,6 +48,11 @@ const StyledMainIcon = styled.svg`
   width: 7rem;
   height: unset;
   margin-inline-end: 2.5rem;
+
+  ${({ theme }) => theme.breakpoints.down("sm")} {
+    width: 3rem;
+    margin-inline-end: .5rem;
+  }
 `;
 
 const ResponsiveText = styled.div`
@@ -95,10 +100,10 @@ const DailyForecasts = styled.div`
     min-width: 10rem;
 
     ${({ theme }) => theme.breakpoints.down("md")} {
-      min-width: 7rem;
+      min-width: 9.5rem;
     }
     ${({ theme }) => theme.breakpoints.down("sm")} {
-      min-width: 6rem;
+      min-width: 6.5rem;
     }
 
     ${({ theme }) => theme.breakpoints.down("xs")} {
@@ -115,6 +120,8 @@ const DailyForecasts = styled.div`
 `;
 
 const weekDay = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+const toCelsius  = fahrenheit => ((5/9)*(fahrenheit-32)).toFixed(1);
+
 export function Weather({ weather, miniature }) {
   const dispatch = useDispatch();
   const isOneOfMyBookmarks = useSelector(getIsOneOfMyBookmark(weather && weather["key"]));
@@ -153,7 +160,7 @@ export function Weather({ weather, miniature }) {
           <div>
             <ResponsiveText fontSize={0.9}>{weekDay[date.getDay()]}</ResponsiveText>
             <ResponsiveText fontSize={1.1}>
-              {minimumFahrenheit}°F~{maximumFahrenheit}°F
+              {isFahrenheit?`${minimumFahrenheit}°F`:`${toCelsius(minimumFahrenheit)}°C`}~{isFahrenheit?`${maximumFahrenheit}°F`:`${toCelsius(maximumFahrenheit)}°C`}
             </ResponsiveText>
             <div className="dailyTime">
               <ResponsiveText fontSize={1}>Day</ResponsiveText>
