@@ -46,8 +46,8 @@ export default function FiveDaysOfDailyForecasts() {
           title={`${!isFahrenheit ? degrees : toCelsius(degrees)}° ${!isFahrenheit ? "F" : "c"}`}
           aria-label="celsius / fahrenheit"
         >
-          <Typography variant={"body1"} color={"secondary"} className={"dailyText degree"}>
-            {isFahrenheit ? `${degrees}` : `${toCelsius(degrees)}`}° {isFahrenheit ? "F" : "c"}
+          <Typography variant={"h4"} color={"secondary"} className={"dailyText degree"}>
+            {isFahrenheit ? `${degrees}` : `${toCelsius(degrees)}`}° {isFahrenheit ? "f" : "c"}
           </Typography>
         </Tooltip>
         <div>
@@ -88,10 +88,10 @@ export default function FiveDaysOfDailyForecasts() {
             const isToday = date.getDay() === new Date().getDay();
             return (
               <Grow in timeout={500 * (i + 1)} key={`${i}_${date}`}>
-                <div className={`day ${isToday ? "contrast" : ""}`}>
+                <div className={`day`}>
                   <Typography
                     variant={"body1"}
-                    color={isToday ? "primary" : "secondary"}
+                    color={"secondary"}
                     className={`dayName ${isToday ? " today" : ""}`}
                   >
                     {isToday ? "Today" : `${weekDay[date.getDay()]}`}, {formattedDate}

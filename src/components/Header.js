@@ -87,7 +87,7 @@ function Header() {
   return (
     <AppBar position="static">
       <StyledToolBar>
-        <Typography className={'logo'} variant={'body1'} onClick={handleLogoClick}>Weather Client</Typography>
+        <Typography className={'logo'} variant={'h3'} onClick={handleLogoClick}>Weather Client</Typography>
         <Row>
           <UpperNavigation>
             {pathNames.map(pathname => {

@@ -135,6 +135,11 @@ export const IconHelper = styled.svg`
   width: ${({ size }) => size || 2}rem;
   fill: ${({ theme, fill }) => fill || theme.palette.primary.contrastText};
 `;
+
+export const FavoriteIconHelper = styled.svg`
+    fill: ${({ theme: { type, palette } }) => type==="dark" ? "#ff374a" : palette.primary.main};
+`;
+
 export const StyledMainIcon = styled.svg`
   width: 7rem;
   height: unset;
@@ -204,6 +209,7 @@ export const DailyForecasts = styled.div`
     }
     .today {
       font-weight: bold;
+      color: ${({ theme: { palette, type } }) => (type === "dark" ? palette.primary.text : palette.primary.main)};
     }
     .dayName {
       font-size: 1.1rem;
@@ -283,5 +289,9 @@ export const LookingAhead = styled.div`
   > :not(:first-child) {
     text-align: center;
     width: 100%;
+
+    ${({ theme }) => theme.breakpoints.up("md")} {
+      margin-top: -1rem;
+    }
   }
 `;

@@ -9,7 +9,7 @@ import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
 import Slide from "@material-ui/core/Slide";
-import { Column, CurrentWeatherHelper, IconHelper, Row, StyledMainIcon } from "./styled";
+import {Column, CurrentWeatherHelper, FavoriteIconHelper, IconHelper, Row, StyledMainIcon} from "./styled";
 import Typography from "@material-ui/core/Typography";
 
 export function CurrentWeather({ city, miniature }) {
@@ -94,7 +94,7 @@ export function CurrentWeather({ city, miniature }) {
                 title={isOneOfMyFavorites ? `Remove ${city.name} from favorites` : `Save ${city.name} as a favorite`}
               >
                 <Button onClick={handleFavoriteToggled} size="large" color="primary">
-                  <IconHelper as={FavoriteIcon} style={{fill:"#ff374a"}}  />
+                  <FavoriteIconHelper as={FavoriteIcon} />
                 </Button>
               </Tooltip>
             </div>
