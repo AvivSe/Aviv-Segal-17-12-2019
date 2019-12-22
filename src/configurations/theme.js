@@ -36,7 +36,10 @@ const extraProps = {
     },
     h6: {
       fontFamily: "Roboto, sans-serif"
-    }
+    },
+    body1: {
+      fontFamily: "Roboto, sans-serif"
+    },
   },
   overrides: {
     MuiCssBaseline: {

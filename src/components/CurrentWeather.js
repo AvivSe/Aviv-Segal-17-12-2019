@@ -68,10 +68,10 @@ export function CurrentWeather({ city, miniature }) {
               <Slide in timeout={500} direction={"down"}>
                 <div>
                   <Tooltip
-                    title={`${!isFahrenheit ? weather.imperial : weather.metric} °${isFahrenheit ? "F" : "c"}`}
+                    title={`${!isFahrenheit ? weather.imperial : weather.metric} °${!isFahrenheit ? "F" : "c"}`}
                     aria-label="celsius / fahrenheit"
                   >
-                    <Typography variant="h5" color={"secondary"}>
+                    <Typography variant="h4" color={"secondary"}>
                       {isFahrenheit ? weather.imperial : weather.metric}° {isFahrenheit ? "F" : "c"}
                     </Typography>
                   </Tooltip>

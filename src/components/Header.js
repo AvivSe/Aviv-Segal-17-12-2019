@@ -87,7 +87,7 @@ function Header() {
   return (
     <AppBar position="static">
       <StyledToolBar>
-        <Typography className={'logo'} variant={'div'} onClick={handleLogoClick}>Weather Client</Typography>
+        <Typography className={'logo'} variant={'body1'} onClick={handleLogoClick}>Weather Client</Typography>
         <Row>
           <UpperNavigation>
             {pathNames.map(pathname => {
@@ -115,9 +115,9 @@ function Header() {
           </Tooltip>
           <CelsiusIcon />
           <FahrenheitIcon/>
-          <Tooltip title={`Toggle Dark Mode ${isDarkMode ? "Off" : "On"}`} aria-label="toggle dark mode on / off">
+          <Tooltip title={`Switch to ${isFahrenheit?"celsius":"fahrenheits"}`} aria-label="toggle dark mode on / off">
             <IconButton color="inherit" onClick={handleFahrenheitToggle}>
-              <IconHelper as={isFahrenheit ? CelsiusIcon : FahrenheitIcon}/>
+              <IconHelper as={isFahrenheit ? FahrenheitIcon : CelsiusIcon}/>
             </IconButton>
           </Tooltip>
           <Tooltip title={"GitHub repository"} aria-label="more">

@@ -134,7 +134,6 @@ export default function SearchBox() {
         loading={loading}
         onChange={handleOptionChange}
         freeSolo
-        autoFocus
         renderInput={params => (
           <TextField
             {...params}
@@ -145,7 +144,6 @@ export default function SearchBox() {
             onClick={handleInputClick}
             InputProps={{
               ...params.InputProps,
-              autoFocus: true,
               endAdornment: (
                 <div>
                   {loading ? <CircularProgress color="inherit" size={20} /> : null}

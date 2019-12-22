@@ -6,19 +6,9 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Paper from "@material-ui/core/Paper";
 import { ErrorOutline } from "@material-ui/icons";
 import Card from "@material-ui/core/Card";
-import { Typography } from "@material-ui/core";
 
 const lowTransparent = "rgba(0,0,0,.05)";
 const transparent = "rgba(0,0,0,.2)";
-export const ResponsiveText = styled.span`
-  font-size: ${({ fontSize = 2 }) => `${fontSize}rem`};
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    font-size: ${({ fontSize = 2 }) => `${fontSize / 1.5}rem`};
-  }
-  ${({ theme }) => theme.breakpoints.down("xs")} {
-    font-size: ${({ fontSize = 2 }) => `${fontSize / 2}rem`};
-  }
-`;
 
 export const Row = styled.div`
   display: flex;
@@ -31,9 +21,7 @@ export const Row = styled.div`
     }
   }
 `;
-export const DailyForecastsHelper = styled.div`
-  background-color: rgba(0, 0, 0, 0.01);
-`;
+
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -88,6 +76,23 @@ export const StyledMuiBottomNavigation = styled(MuiBottomNavigation)`
 export const StyledAutocomplete = styled(Autocomplete)`
   width: 100%;
   max-width: 520px;
+  ${({ theme: { type } }) => type !== "dark"} {
+    .MuiInputLabel-outlined {
+      color: ${({ theme }) => theme.palette.primary.contrastText} !important;
+    }
+    .MuiTextField-root {
+      background-color: ${({
+        theme: {
+          palette: {
+            primary: { dark }
+          }
+        }
+      }) => dark} !important;
+    }
+    .MuiInputBase-root {
+      color: ${({ theme }) => theme.palette.primary.contrastText} !important;
+    }
+  }
 `;
 
 export const PaperContent = styled(Paper)`
@@ -260,7 +265,7 @@ export const FlexibleColumn = styled.div`
   }
 `;
 
-export const LookingAhead = styled(Typography)`
+export const LookingAhead = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -272,7 +277,8 @@ export const LookingAhead = styled(Typography)`
   > :first-child {
     color: ${({ theme }) => theme.palette.primary.contrastText};
     background-color: ${({ theme }) => theme.palette.secondary.dark};
-    padding: 0.5rem;
+    font-size: 0.7rem;
+    padding: 0.4rem;
   }
   > :not(:first-child) {
     text-align: center;
