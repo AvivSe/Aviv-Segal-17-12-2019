@@ -16,11 +16,14 @@ import IOSSwitch from "./standalone/IOSSwitch";
 import Tooltip from "./standalone/Tooltip";
 import { getIsFahrenheit } from "../redux/weather/weather.selectors";
 import { toggleIsFahrenheit } from "../redux/weather/weather.actions";
-import {Row} from "./styled";
+import { Row } from "./styled";
 
 const StyledToolBar = styled(Toolbar)`
   display: flex;
   justify-content: space-between;
+  > * {
+    align-items: center;
+  }
 `;
 
 const StyledIconButton = styled(IconButton)`

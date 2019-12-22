@@ -1,13 +1,13 @@
 import React, {useEffect} from "react";
 import styled from "styled-components";
-import {useDispatch, useSelector} from "react-redux";
-import {openSnackbar} from "../redux/ui/ui.actions";
-import Weather from "./Weather";
+import { useDispatch, useSelector } from "react-redux";
+import CurrentWeather from "./CurrentWeather";
 import Zoom from "@material-ui/core/Zoom";
-import {Add} from "@material-ui/icons";
+import { Add } from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
-import {addToMyFavorites} from "../redux/weather/weather.actions";
-import {getFavoritesAsWeather, getSelectedCity} from "../redux/weather/weather.selectors";
+import { addToFavorites } from "../redux/weather/weather.actions";
+import {getFavoriteCities, getSelectedCity} from "../redux/weather/weather.selectors";
+import Grid from "@material-ui/core/Grid";
 
 const Flex = styled.div`
   display: flex;
@@ -23,40 +23,32 @@ const FirstFavorite = styled.div`
 
 export default function Favorites() {
   const dispatch = useDispatch();
-  const selectedCity = useSelector(getSelectedCity);
-  const favorites = useSelector(getFavoritesAsWeather);
-
-  const noFavorites = !favorites || favorites.length === 0;
-
-  useEffect(
-    function() {
-      if (noFavorites) {
-        dispatch(openSnackbar(`No favorites found`));
-      }
-    },
-    [dispatch, noFavorites]
-  );
-
+  const city = useSelector(getSelectedCity);
+  const favoriteCities = useSelector(getFavoriteCities);
+  console.log(favoriteCities);
+  
   function handleAddSelectedAsFavorite() {
-    dispatch(addToMyFavorites(selectedCity.key));
+    dispatch(addToFavorites(city.key));
   }
+
   return (
     <div className={"mainContent"}>
       <Zoom in timeout={1500}>
         <Flex>
           <div>
-            {favorites.length === 0 && (
+            {city && favoriteCities.length === 0 && (
               <Flex>
                 <Fab onClick={handleAddSelectedAsFavorite} color="primary" aria-label="add">
                   <Add />
                 </Fab>
-                <FirstFavorite>Add {selectedCity.name} as your first favorite!</FirstFavorite>
+                <FirstFavorite>Add {city.name} as your first favorite!</FirstFavorite>
               </Flex>
             )}
-            {favorites.map(weather => {
-              console.log(weather);
-              return (<Weather key={weather.name} weather={weather} />);
-            })}
+            <Grid container>
+              {favoriteCities.map(city => {
+                return <CurrentWeather miniature city={city} />;
+              })}
+            </Grid>
           </div>
         </Flex>
       </Zoom>

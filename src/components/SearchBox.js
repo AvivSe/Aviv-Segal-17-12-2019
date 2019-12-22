@@ -1,30 +1,35 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import weatherService from "../AccuWeatherService";
-import {useDebounce} from "../hooks/useDebounce";
-import {useDispatch} from "react-redux";
-import {closeSnackbar, openSnackbar} from "../redux/ui/ui.actions";
+import { useDebounce } from "../hooks/useDebounce";
+import { useDispatch } from "react-redux";
+import { closeSnackbar, openSnackbar } from "../redux/ui/ui.actions";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import {setSelectedCity} from "../redux/weather/weather.actions";
-import {PaperContent, StyledAutocomplete, StyledLocationCity} from "./styled";
+import { addToMap, setSelectedCity } from "../redux/weather/weather.actions";
+import { PaperContent, StyledAutocomplete, StyledLocationCity } from "./styled";
+import { getCityDisplayName } from "../utils/tiny";
 
-export default function SearchBox({ fallbackCity: defaultValue }) {
+export default function SearchBox() {
   const tooltipEnchorElRef = React.useRef();
   const [isAutocompleteOpen, setIsAutocompleteOpen] = useState(false);
   const [options, setOptions] = useState([]);
-  const [cityLabelToKeyMap, setCityLabelToNameMap]= useState({});
+  const [cityLabelToKeyMap, setCityLabelToNameMap] = useState({});
 
   const [locked, setLocked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const [searchTerm, setSearchTerm] = useState(defaultValue);
+  const [searchTerm, setSearchTerm] = useState(null);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const dispatch = useDispatch();
+
+  //TODO: Use geo location
+  //const selectedCity = useSelector(getSelectedCity);
+  // const geolocation = useGeolocation();
 
   const zeroErrors = useCallback(() => {
     setError(null);
@@ -34,27 +39,34 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
 
   const isValid = useCallback(
     function(searchTerm) {
-      return options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase())
+      return options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase());
     },
     [options]
   );
-
   useEffect(
     function() {
-      async function fetchCities() {
-        setLoading(true);
-        const cities = (await weatherService.autocompleteSearchCities(debouncedSearchTerm)).data;
-        if (!!cities && Array.isArray(cities)) {
-          const _cityLabelToKeyMap = {};
-          setOptions(cities.map(({ LocalizedName, Key }) => {
-            _cityLabelToKeyMap[LocalizedName] = Key;
-            return LocalizedName
-          }));
-          setCityLabelToNameMap(_cityLabelToKeyMap);
+      if (!!debouncedSearchTerm && debouncedSearchTerm !== "") {
+        async function fetchCities() {
+          setLoading(true);
+          const cities = await weatherService.autocompleteSearchCities(debouncedSearchTerm);
+          if (!!cities && Array.isArray(cities)) {
+            const _cityLabelToKeyMap = {};
+            setOptions(
+              cities.map(city => {
+                dispatch(addToMap(city));
+                const label = getCityDisplayName(city);
+                _cityLabelToKeyMap[label] = city.key;
+                return label;
+              })
+            );
+            setCityLabelToNameMap(_cityLabelToKeyMap);
+          }
+          setLoading(false);
         }
-        setLoading(false);
+        fetchCities().catch(e => {
+          dispatch(openSnackbar(e));
+        });
       }
-      fetchCities().catch(() => dispatch(openSnackbar("Something went wrong.")));
     },
     [debouncedSearchTerm, dispatch]
   );
@@ -62,7 +74,7 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
   useEffect(() => {
     if (!isValid(debouncedSearchTerm)) {
       setError("Please select from list");
-      setIsAutocompleteOpen(!locked);
+      setIsAutocompleteOpen(true);
     } else {
       zeroErrors();
     }
@@ -75,10 +87,10 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
   }, [searchTerm, isValid]);
 
   function handleOptionChange(event, value) {
-    if(!value) {
+    if (!value) {
       dispatch(setSelectedCity(null));
-    } else if(options.find(validWord => validWord.toLowerCase() === value.toLowerCase())) {
-      dispatch(setSelectedCity({name: value, key: cityLabelToKeyMap[value]}));
+    } else if (options.find(validWord => validWord.toLowerCase() === value.toLowerCase())) {
+      dispatch(setSelectedCity(cityLabelToKeyMap[value]));
       setLocked(true);
       zeroErrors();
     } else {
@@ -103,7 +115,12 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
       <Popper open={isTooltipOpen} anchorEl={tooltipEnchorElRef.current} placement={"top"} transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
-            <Paper><PaperContent><StyledLocationCity/>{error}</PaperContent></Paper>
+            <Paper>
+              <PaperContent>
+                <StyledLocationCity />
+                {error}
+              </PaperContent>
+            </Paper>
           </Fade>
         )}
       </Popper>
@@ -123,6 +140,7 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
         loading={loading}
         onChange={handleOptionChange}
         freeSolo
+        autoFocus
         renderInput={params => (
           <TextField
             {...params}
@@ -133,6 +151,7 @@ export default function SearchBox({ fallbackCity: defaultValue }) {
             onClick={handleInputClick}
             InputProps={{
               ...params.InputProps,
+              autoFocus: true,
               endAdornment: (
                 <div>
                   {loading ? <CircularProgress color="inherit" size={20} /> : null}

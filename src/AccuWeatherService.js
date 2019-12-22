@@ -1,4 +1,9 @@
 import axios from "axios";
+import {
+  accuWeatherCurrentWeatherResponseToMyWeather,
+  accWeatherCityToMyCity,
+  accWeatherFiveDayOfDailyForecastsToMyForecast
+} from "./utils/tiny";
 const apikey = "HyA6A3Q5IRGMw6uMxao1GEyB5KLpMRV3";
 const ACCU_WEATHER_API_ROOT = "https://dataservice.accuweather.com";
 const LOCATIONS_API = `${ACCU_WEATHER_API_ROOT}/locations/v1/cities`;
@@ -7,22 +12,21 @@ const FIVE_DAYS_OF_DAILY_FORECASTS_API = `${ACCU_WEATHER_API_ROOT}/forecasts/v1/
 
 class AccuWeatherService {
   async autocompleteSearchCities(q) {
-    return axios.get(`${LOCATIONS_API}/autocomplete`, { params: { q, apikey }})
-  }
-
-  async fetchCurrentWeather(city) {
-    return axios.get(`${CURRENT_WEATHER_API}/${city.key}`, { params: { apikey }}).then(async res => {
-      return {...res.data[0], ...await this.fetchFiveDaysOfDailyForecasts(city.key), ...city}
+    return axios.get(`${LOCATIONS_API}/autocomplete`, { params: { q, apikey } }).then(response => {
+      return response.data.map(accWeatherCityToMyCity);
     });
   }
 
-  async fetchManyCurrentWeather(cities) {
-    const promises = cities.map(city => this.fetchCurrentWeather(city));
-    return Promise.all(promises);
+  async fetchCurrentWeather(city) {
+    return axios.get(`${CURRENT_WEATHER_API}/${city.key}`, { params: { apikey } }).then(async res => {
+      return { ...accuWeatherCurrentWeatherResponseToMyWeather(res.data[0]) };
+    });
   }
 
-  async fetchFiveDaysOfDailyForecasts(cityKey) {
-    return axios.get(`${FIVE_DAYS_OF_DAILY_FORECASTS_API}/${cityKey}`, { params: { apikey }}).then(res => res.data);
+  async fetchFiveDaysOfDailyForecasts(city) {
+    return axios
+      .get(`${FIVE_DAYS_OF_DAILY_FORECASTS_API}/${city.key}`, { params: { apikey } })
+      .then(res => accWeatherFiveDayOfDailyForecastsToMyForecast(res.data));
   }
 }
 const instance = new AccuWeatherService();

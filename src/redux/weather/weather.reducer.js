@@ -1,59 +1,66 @@
 import {
-  CURRENT_WEATHER_SUCCESS,
-  CURRENT_WEATHER_ERROR,
-  CURRENT_WEATHER_REQUEST,
-  REMOVE_FROM_MY_BOOKMARKS,
-  ADD_TO_MY_BOOKMARKS,
+  REMOVE_FROM_FAVORITES,
+  ADD_TO_FAVORITES,
   SET_SELECTED_CITY,
-  TOGGLE_IS_FAHRENHEIT
+  TOGGLE_IS_FAHRENHEIT,
+  REMOVE_FROM_HISTORY,
+  ADD_TO_HISTORY,
+  ADD_TO_MAP
 } from "./weather.actions";
 
 export const INITIAL_STATE = {
-  ids: [],
-  map: {},
-  pending: false,
+  onPending: { home: false },
   isFahrenheit: false,
-  selectedCity: { name: "Tel Aviv", key: "215854" },
-  favorites: [] // ids only
+  selectedCity: "215854",
+
+  //on follow
+  ids: [],
+  history: [],
+  favorites: [], // cityKey
+
+  // maps:
+  map: {
+    "215854": {
+      name: "Tel Aviv",
+      key: "215854",
+      countryName: "Israel",
+      countryId: "IL"
+    }
+  } // map<cityKey, cityName>
 };
 
-function userReducer(state = INITIAL_STATE, { type, payload }) {
-  let favorites = [...state.favorites];
-  const ids = [...state.ids];
-  const map = { ...state.map };
+function weatherReducer(state = INITIAL_STATE, { type, payload }) {
   switch (type) {
-    case CURRENT_WEATHER_SUCCESS:
-      console.log("im here", ids.indexOf(payload.key));
-      if (ids.indexOf(payload.key) === -1) {
-        ids.push(payload.key);
+    case REMOVE_FROM_FAVORITES:
+      state.favorites = state.favorites.filter(key => key !== payload);
+      return { ...state };
+    case ADD_TO_FAVORITES:
+      if (state.favorites.indexOf(payload) === -1) {
+        state.favorites.push(payload);
       }
-      map[payload.key] = { ...payload };
-      return {
-        ...state,
-        pending: false,
-        ids,
-        map
-      };
-    case CURRENT_WEATHER_ERROR:
-      return { ...state, pending: false };
-    case CURRENT_WEATHER_REQUEST:
-      return { ...state, pending: true };
-    case REMOVE_FROM_MY_BOOKMARKS:
-      favorites = favorites.filter(key => key !== payload);
-      return { ...state, favorites };
-    case ADD_TO_MY_BOOKMARKS:
-      console.log(payload);
-      if (favorites.indexOf(payload)) {
-        favorites.push(payload);
+      return { ...state };
+    case REMOVE_FROM_HISTORY:
+      state.history = state.history.filter(key => key !== payload);
+      return { ...state };
+    case ADD_TO_HISTORY:
+      if (state.history.indexOf(payload)) {
+        state.history.push(payload);
       }
-      return { ...state, favorites };
+      return { ...state };
     case SET_SELECTED_CITY:
       return { ...state, selectedCity: payload };
+    case ADD_TO_MAP:
+      if (state.ids.indexOf(payload.key) === -1) {
+        state.ids.push(payload.key);
+      }
+      state.map[payload.key] = { ...payload };
+      return { ...state };
     case TOGGLE_IS_FAHRENHEIT:
       return { ...state, isFahrenheit: !state.isFahrenheit };
+
     default:
       return state;
   }
 }
 
-export default userReducer;
+export default weatherReducer;

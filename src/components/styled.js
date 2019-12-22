@@ -4,11 +4,10 @@ import MuiSnackbar from "@material-ui/core/Snackbar";
 import MuiBottomNavigation from "@material-ui/core/BottomNavigation";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Paper from "@material-ui/core/Paper";
-import {ErrorOutline} from "@material-ui/icons";
+import { ErrorOutline } from "@material-ui/icons";
 import Card from "@material-ui/core/Card";
-import CardActions from "@material-ui/core/CardActions";
 
-export const ResponsiveText = styled.div`
+export const ResponsiveText = styled.span`
   font-size: ${({ fontSize = 2 }) => `${fontSize}rem`};
   ${({ theme }) => theme.breakpoints.down("sm")} {
     font-size: ${({ fontSize = 2 }) => `${fontSize / 1.5}rem`};
@@ -20,9 +19,13 @@ export const ResponsiveText = styled.div`
 
 export const Row = styled.div`
   display: flex;
-  align-items: ${({alignItems})=>alignItems};
+  align-items: ${({ alignItems }) => alignItems};
+  justify-content: ${({ justifyContent }) => justifyContent};
+  align-content: ${({ alignContent }) => alignContent};
 `;
-
+export const DailyForecastsHelper = styled.div`
+  background-color: rgba(0, 0, 0, 0.01);
+`;
 export const Column = styled.div`
   display: flex;
   flex-direction: column;
@@ -41,7 +44,7 @@ export const StyledDailyIcon = styled.svg`
 
 export const StyledIconButton = styled(IconButton)`
   svg {
-    fill: #ffffff
+    fill: #ffffff;
   }
 `;
 
@@ -87,7 +90,6 @@ export const PaperContent = styled(Paper)`
   display: flex;
   align-items: center;
   margin-bottom: -1rem;
-
 `;
 
 export const StyledLocationCity = styled(ErrorOutline)`
@@ -96,7 +98,10 @@ export const StyledLocationCity = styled(ErrorOutline)`
   height: 30px;
 `;
 
-
+export const CurrentWeatherHelper = styled.div`
+  padding: ${({ miniature }) => (miniature ? 0.5 : 2)}rem;
+  max-width: ${({ miniature }) => (miniature ? "320px" : null)};
+`;
 export const StyledCard = styled(Card)`
   margin: 0.5rem;
   .MuiCardMedia-root {
@@ -113,19 +118,6 @@ export const StyledCard = styled(Card)`
   background-color: rgba(0, 0, 0, 0.04); // TODO: Blur
 `;
 
-export const TopSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-export const BottomSection = styled.div`
-  text-align: center;
-`;
-export const StyledCardActions = styled(CardActions)`
-  justify-content: flex-end;
-  padding-inline-end: 2rem;
-`;
-
 export const StyledMainIcon = styled.svg`
   width: 7rem;
   height: unset;
@@ -134,49 +126,6 @@ export const StyledMainIcon = styled.svg`
   ${({ theme }) => theme.breakpoints.down("sm")} {
     width: 3rem;
     margin-inline-end: 0.5rem;
-  }
-`;
-
-export const DailyForecasts = styled.div`
-  display: flex;
-  justify-content: space-between;
-  max-width: 50rem;
-  margin: auto;
-  margin-block-start: 2rem;
-
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    margin-block-start: 0.5rem;
-  }
-  ${({ theme }) => theme.breakpoints.down("xs")} {
-    margin-block-start: 0.2rem;
-  }
-  > * {
-    display: flex;
-    flex-direction: column;
-    margin-inline-end: 0.1rem;
-    padding: 0.5rem 0;
-    background-color: rgba(0, 0, 0, 0.05);
-    border-radius: 1rem;
-    align-items: center;
-    min-width: 10rem;
-
-    ${({ theme }) => theme.breakpoints.down("md")} {
-      min-width: 9.5rem;
-    }
-    ${({ theme }) => theme.breakpoints.down("sm")} {
-      min-width: 6.5rem;
-    }
-
-    ${({ theme }) => theme.breakpoints.down("xs")} {
-      min-width: 3rem;
-    }
-
-    .dailyTime {
-      background-color: rgba(0, 0, 0, 0.05);
-      width: 100%;
-      text-align: center;
-      margin: 0.5rem 0;
-    }
   }
 `;
 

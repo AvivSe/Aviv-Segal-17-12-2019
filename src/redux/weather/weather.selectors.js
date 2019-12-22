@@ -1,7 +1,13 @@
-export const getSelectedCityWeather = () => ({ weather: { map, selectedCity: { key } } }) => (!!key && map[key]) || null;
-export const getSelectedCity = ({ weather: { selectedCity }}) => selectedCity;
-export const getFavoritesAsWeather = ({ weather: { map, favorites } }) => favorites.map(key => map[key]);
-export const getFavoriteedCities = ({ weather: { map, favorites } }) => favorites.map(key => ({key, name: map[key].name}));
-export const getIsOneOfMyFavorite = key => ({ weather: { map, favorites } }) => favorites.indexOf(key) !== -1;
-export const getIsPending = ({ weather: { pending }}) => pending;
-export const getIsFahrenheit  = ({ weather: { isFahrenheit } }) => isFahrenheit;
+export const getSelectedCityWeather = () => ({
+  weather: {
+    map,
+    selectedCity: { key }
+  }
+}) => (!!key && map[key]) || null;
+export const getSelectedCity = ({ weather: { selectedCity, map } }) => map[selectedCity];
+export const getFavoriteCities = ({ weather: { ids, map, favorites } }) => ids.filter(cityKey=> favorites.indexOf(cityKey) !== -1).map(cityKey => map[cityKey]);
+export const getIsOneOfMyFavorite = ({key}) => ({ weather: { favorites } }) => favorites.indexOf(key) !== -1;
+export const getIsPending = key => ({ weather: { onPending } }) => onPending[key];
+export const getIsFahrenheit = ({ weather: { isFahrenheit } }) => isFahrenheit;
+export const getFiveDaysOfDailyForecasts = key => ({ fiveDaysOfDailyForecasts }) => fiveDaysOfDailyForecasts[key];
+export const getCityMap = key => ({ weather: { map } }) => map;

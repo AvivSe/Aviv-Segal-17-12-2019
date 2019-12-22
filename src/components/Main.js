@@ -6,10 +6,9 @@ import React from "react";
 import styled from "styled-components";
 import Dialog from "./standalone/Dialog";
 import { useDispatch, useSelector } from "react-redux";
-import { getDialog } from "../redux/ui/ui.selectors";
+import {getDialog, getIsSomeOnePending} from "../redux/ui/ui.selectors";
 import { closeDialog } from "../redux/ui/ui.actions";
 import LinearProgress from "./standalone/LinearProgress";
-import { getIsPending } from "../redux/weather/weather.selectors";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.palette.primary.contrastText};
@@ -25,7 +24,7 @@ const dialogs = {
 export default function Main() {
   const dialog = useSelector(getDialog);
   const dispatch = useDispatch();
-  const isPending = useSelector(getIsPending); // please extend with more indicator if needed
+  const isSomeOnePending = useSelector(getIsSomeOnePending);
 
   function handleDialogClose() {
     dispatch(closeDialog());
@@ -34,7 +33,7 @@ export default function Main() {
   return (
     <Wrapper>
       <Header />
-      {isPending && <LinearProgress />}
+      {isSomeOnePending && <LinearProgress />}
       <MainContent />
       <Snackbar />
       <Dialog

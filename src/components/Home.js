@@ -1,30 +1,22 @@
 import React from "react";
 import SearchBox from "./SearchBox";
-import Weather from "./Weather";
+import CurrentWeather from "./CurrentWeather";
+import FiveDaysOfDailyForecasts from "./5DaysOfDailyFrorecasts";
+import { StyledCard } from "./styled";
 import { useSelector } from "react-redux";
-import { getIsPending, getSelectedCity, getSelectedCityWeather } from "../redux/weather/weather.selectors";
-import Zoom from "@material-ui/core/Zoom";
-import styled from "styled-components";
-import HeroloAnimation from "./standalone/HeroloAnimation";
+import { getSelectedCity } from "../redux/weather/weather.selectors";
 
-const Wrapper = styled.div`
-  display: flex;
-  align-content: center;
-  width: 100%;
-`;
 export default function Home() {
-  const selectedCity = useSelector(getSelectedCity);
-  const weather = useSelector(getSelectedCityWeather());
-  const isPending = useSelector(getIsPending);
+  const city = useSelector(getSelectedCity);
   return (
     <div className={"mainContent"} style={{ maxWidth: "1080px" }}>
-      <SearchBox fallbackCity={selectedCity.name} />
-      {isPending && <HeroloAnimation text="Loading..." />}
-      {!!weather && !isPending && (
-        <Zoom in={!!weather}>
-          <Wrapper>{<Weather weather={weather} />}</Wrapper>
-        </Zoom>
-      )}
+      {/*{isHomePending && <HeroloAnimation text="Loading..." />}*/}
+
+      <SearchBox />
+      <StyledCard>
+        <CurrentWeather city={city} />
+        <FiveDaysOfDailyForecasts city={city} />
+      </StyledCard>
     </div>
   );
 }
