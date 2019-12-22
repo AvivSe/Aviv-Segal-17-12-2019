@@ -1,6 +1,6 @@
 import React from "react";
-import { Dialog as MuiDialog, IconButton, Toolbar } from "@material-ui/core";
-import { Close } from "@material-ui/icons";
+import {Dialog as MuiDialog, IconButton, Toolbar} from "@material-ui/core";
+import {Close} from "@material-ui/icons";
 import styled from "styled-components";
 
 const MainContent = styled.div`

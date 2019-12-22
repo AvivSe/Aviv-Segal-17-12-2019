@@ -1,16 +1,17 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, {useCallback, useEffect, useState} from "react";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import weatherService from "../AccuWeatherService";
-import { useDebounce } from "../hooks/useDebounce";
-import { useDispatch } from "react-redux";
-import { closeSnackbar, openSnackbar } from "../redux/ui/ui.actions";
+import {useDebounce} from "../hooks/useDebounce";
+import {useDispatch} from "react-redux";
+import {closeSnackbar, openSnackbar} from "../redux/ui/ui.actions";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import { addToMap, setSelectedCity } from "../redux/weather/weather.actions";
-import { PaperContent, StyledAutocomplete, StyledLocationCity } from "./styled";
-import { getCityDisplayName } from "../utils/tiny";
+import {addToMap, setSelectedCity} from "../redux/weather/weather.actions";
+import {PaperContent, StyledAutocomplete, StyledLocationCity} from "./styled";
+import {getCityDisplayName} from "../utils/tiny";
+import {Clear} from "@material-ui/icons";
 
 export default function SearchBox() {
   const tooltipEnchorElRef = React.useRef();

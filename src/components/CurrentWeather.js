@@ -3,17 +3,19 @@ import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
 import { addToFavorites, addToHistory, removeFromFavorites } from "../redux/weather/weather.actions";
-import { Favorite, FavoriteBorder } from "@material-ui/icons";
+import { Favorite, FavoriteBorder , Refresh} from "@material-ui/icons";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
 import Slide from "@material-ui/core/Slide";
-import {Column, CurrentWeatherHelper, FavoriteIconHelper, IconHelper, Row, StyledMainIcon} from "./styled";
+import { Column, CurrentWeatherHelper, FavoriteIconHelper, Row, StyledMainIcon } from "./styled";
 import Typography from "@material-ui/core/Typography";
+import IconButton from "@material-ui/core/IconButton";
 
 export function CurrentWeather({ city, miniature }) {
   const dispatch = useDispatch();
+  const [version, setVersion] = useState(0);
   const [weather, setWeather] = useState(null);
 
   const isFahrenheit = useSelector(getIsFahrenheit);
@@ -34,13 +36,33 @@ export function CurrentWeather({ city, miniature }) {
     [dispatch, city]
   );
 
+  useEffect(
+    function() {
+      if (!!city && version !== 0) {
+        (async function() {
+          try {
+            setWeather(await weatherService.fetchCurrentWeather(city));
+            dispatch(openSnackbar("Fetching data"));
+          } catch (e) {
+            dispatch(openSnackbar(e));
+          }
+        })();
+      }
+    },
+    [dispatch, city, version]
+  );
+
   const isOneOfMyFavorites = useSelector(getIsOneOfMyFavorite(city));
   const FavoriteIcon = isOneOfMyFavorites ? Favorite : FavoriteBorder;
+
+  function handleRefresh() {
+    setVersion(version+1)
+  }
 
   function handleFavoriteToggled() {
     if (isOneOfMyFavorites) {
       dispatch(removeFromFavorites(city.key));
-      dispatch(openSnackbar(`${city.name} removed from favorites, todo undo.`));
+      dispatch(openSnackbar(`${city.name} removed from favorites`));
     } else {
       dispatch(addToFavorites(city.key));
       dispatch(openSnackbar(`${city.name} added to your favorites`));
@@ -81,7 +103,8 @@ export function CurrentWeather({ city, miniature }) {
                 <div>
                   <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
-                      {date.toLocaleTimeString()}
+                      <span>{date.toLocaleTimeString()}</span>
+                      <span><IconButton onClick={handleRefresh} color={"primary"}><Refresh /></IconButton></span>
                     </Typography>
                   </Tooltip>
                 </div>

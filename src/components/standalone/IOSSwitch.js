@@ -1,4 +1,4 @@
-import { withStyles } from "@material-ui/core";
+import {withStyles} from "@material-ui/core";
 import Switch from "@material-ui/core/Switch";
 import React from "react";
 

@@ -5,10 +5,11 @@ import BottomNavigation from "./BottomNavigation";
 import React from "react";
 import styled from "styled-components";
 import Dialog from "./standalone/Dialog";
-import { useDispatch, useSelector } from "react-redux";
-import { getDialog, getIsSomeOnePending } from "../redux/ui/ui.selectors";
-import { closeDialog } from "../redux/ui/ui.actions";
+import {useDispatch, useSelector} from "react-redux";
+import {getDialog, getIsSomeOnePending} from "../redux/ui/ui.selectors";
+import {closeDialog} from "../redux/ui/ui.actions";
 import LinearProgress from "./standalone/LinearProgress";
+import Redirect from "./standalone/Redirect";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.type === "dark" && theme.palette.primary.light};
@@ -18,7 +19,7 @@ const Wrapper = styled.div`
 const dialogs = {
   "404": <div>Hello 404</div>,
   moreSettings: <div>Hello More Settings</div>,
-  github: <div>Hello github</div>
+  github: <Redirect to={"https://github.com/AvivSe/Aviv-Segal-17-12-2019"} name={'github.com'}/>,
 };
 
 export default function Main() {

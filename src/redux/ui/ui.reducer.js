@@ -1,4 +1,4 @@
-import { CLOSE_SNACKBAR, NAVIGATE, OPEN_SNACKBAR, TOGGLE_DARK_MODE, CLOSE_DIALOG, OPEN_DIALOG } from "./ui.actions";
+import {CLOSE_DIALOG, CLOSE_SNACKBAR, NAVIGATE, OPEN_DIALOG, OPEN_SNACKBAR, TOGGLE_DARK_MODE} from "./ui.actions";
 
 export const uiInitialState = {
   snackbar: { open: false, message: "", duration: 3000 },

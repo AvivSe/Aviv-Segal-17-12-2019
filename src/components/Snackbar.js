@@ -1,19 +1,20 @@
-import React  from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {getSnackbar} from "../redux/ui/ui.selectors";
 import {closeSnackbar} from "../redux/ui/ui.actions";
-import { ThumbUp, Close } from "@material-ui/icons"
+import {ThumbUp} from "@material-ui/icons"
 import {StyledIconButton, StyledMuiSnackbar} from "./styled";
+import Button from "@material-ui/core/Button";
 
 export default function Snackbar (){
   const dispatch = useDispatch();
-  const { open, message, duration , onDismiss, onAccept} = useSelector(getSnackbar);
+  const { open, message, duration , onUndo, onAccept} = useSelector(getSnackbar);
 
   const handleCloseSnackbarClick = () => {dispatch(closeSnackbar())};
 
-  const handleDismissClick = () => {
-    if(onDismiss) {
-      onDismiss();
+  const handleUndoClick = () => {
+    if(onUndo) {
+      onUndo();
     }
     dispatch(closeSnackbar());
   };
@@ -34,7 +35,7 @@ export default function Snackbar (){
       message={message}
       action={[
         !!onAccept && <StyledIconButton onClick={handleAcceptClick}><ThumbUp/></StyledIconButton>,
-        !!onDismiss && <StyledIconButton onClick={handleDismissClick}><Close/></StyledIconButton>
+        !!onUndo && <Button onClick={handleUndoClick}>UNDO</Button>
       ]}
     >
     </StyledMuiSnackbar>

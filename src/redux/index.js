@@ -1,4 +1,4 @@
-import { combineReducers } from "redux";
+import {combineReducers} from "redux";
 import uiReducer from "./ui/ui.reducer";
 import weatherReducer from "./weather/weather.reducer"
 

@@ -121,6 +121,11 @@ export const StyledCard = styled(Card)`
     height: 240px;
   }
 
+  .head {
+    text-align: end;
+    height: 5px;
+  }
+
   .mainSvg {
     height: 50vh;
     margin: auto;
@@ -128,7 +133,7 @@ export const StyledCard = styled(Card)`
 
   width: 100%;
 
-  background-color: ${lowTransparent}; // TODO: Blur
+  background-color: ${lowTransparent};
 `;
 
 export const IconHelper = styled.svg`
@@ -137,7 +142,7 @@ export const IconHelper = styled.svg`
 `;
 
 export const FavoriteIconHelper = styled.svg`
-    fill: ${({ theme: { type, palette } }) => type==="dark" ? "#ff374a" : palette.primary.main};
+  fill: ${({ theme: { type, palette } }) => (type === "dark" ? "#ff374a" : palette.primary.main)};
 `;
 
 export const StyledMainIcon = styled.svg`
@@ -293,7 +298,6 @@ export const LookingAhead = styled.div`
 
     ${({ theme }) => theme.breakpoints.up("md")} {
       margin-top: -1rem;
-     
     }
   }
 `;

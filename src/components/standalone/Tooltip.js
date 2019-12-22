@@ -1,4 +1,4 @@
-import {Tooltip as MuiTooltip, withStyles } from "@material-ui/core";
+import {Tooltip as MuiTooltip, withStyles} from "@material-ui/core";
 import React from "react";
 
 const LightTooltip = withStyles(theme => ({

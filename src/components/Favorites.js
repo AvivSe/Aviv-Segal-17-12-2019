@@ -1,14 +1,13 @@
 import React from "react";
 import styled from "styled-components";
-import { useDispatch, useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import CurrentWeather from "./CurrentWeather";
 import Zoom from "@material-ui/core/Zoom";
-import { Favorite } from "@material-ui/icons";
+import {Favorite} from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
-import { addToFavorites } from "../redux/weather/weather.actions";
+import {addToFavorites} from "../redux/weather/weather.actions";
 import {getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity} from "../redux/weather/weather.selectors";
 import Grid from "@material-ui/core/Grid";
-import weatherService from '../AccuWeatherService'
 import Typography from "@material-ui/core/Typography";
 
 const Flex = styled.div`
@@ -18,7 +17,7 @@ const Flex = styled.div`
   height: 70vh;
   justify-content: center;
   > * {
-    margin: .5rem;
+    margin: 0.5rem;
   }
 `;
 
@@ -47,7 +46,9 @@ export default function Favorites() {
               <Fab onClick={handleAddSelectedAsFavorite} color="primary">
                 <Favorite />
               </Fab>
-              <Typography variant={'body2'} color={"secondary"}>Add {city.name} as your first favorite!</Typography>
+              <Typography variant={"body2"} color={"secondary"}>
+                Add {city.name} as your first favorite!
+              </Typography>
             </Flex>
           )}
         </Flex>
