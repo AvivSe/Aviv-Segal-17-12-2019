@@ -6,7 +6,10 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Paper from "@material-ui/core/Paper";
 import { ErrorOutline } from "@material-ui/icons";
 import Card from "@material-ui/core/Card";
+import { Typography } from "@material-ui/core";
 
+const lowTransparent = "rgba(0,0,0,.05)";
+const transparent = "rgba(0,0,0,.2)";
 export const ResponsiveText = styled.span`
   font-size: ${({ fontSize = 2 }) => `${fontSize}rem`};
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -22,6 +25,11 @@ export const Row = styled.div`
   align-items: ${({ alignItems }) => alignItems};
   justify-content: ${({ justifyContent }) => justifyContent};
   align-content: ${({ alignContent }) => alignContent};
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    > .getterBottom {
+      margin-top: -3rem;
+    }
+  }
 `;
 export const DailyForecastsHelper = styled.div`
   background-color: rgba(0, 0, 0, 0.01);
@@ -115,9 +123,13 @@ export const StyledCard = styled(Card)`
 
   width: 100%;
 
-  background-color: rgba(0, 0, 0, 0.04); // TODO: Blur
+  background-color: ${lowTransparent}; // TODO: Blur
 `;
 
+export const IconHelper = styled.svg`
+  width: ${({ size }) => size || 2}rem;
+  fill: ${({ theme, fill }) => fill || theme.palette.primary.contrastText};
+`;
 export const StyledMainIcon = styled.svg`
   width: 7rem;
   height: unset;
@@ -164,12 +176,7 @@ export const DailyForecasts = styled.div`
     flex-direction: column;
     align-content: center;
   }
-  
-  .contrast {
-    color:  ${({ theme }) => theme.palette.primary.contrastText} !important;
-     background-color:  ${({ theme }) => theme.palette.primary.main} !important;
-   }
-   
+
   .day {
     display: flex;
     flex-direction: column;
@@ -179,16 +186,19 @@ export const DailyForecasts = styled.div`
     justify-content: flex-start;
     align-items: center;
 
-    background-color: rgba(0, 0, 0, 0.05);
+    background-color: ${({ theme }) => (theme.type === "dark" ? transparent : lowTransparent)};
     border-radius: 0.4rem;
-    
+
     ${({ theme }) => theme.breakpoints.up("sm")} {
       width: 300px;
       height: 350px;
     }
 
     .dayHeader {
-      font-size: .9rem;
+      font-size: 0.9rem;
+    }
+    .today {
+      font-weight: bold;
     }
     .dayName {
       font-size: 1.1rem;
@@ -197,13 +207,9 @@ export const DailyForecasts = styled.div`
       font-weight: bold;
     }
     .withRadius {
-      border-radius: .3rem;
+      border-radius: 0.3rem;
     }
-    
-    .primary {
-      color:  ${({ theme }) => theme.palette.primary.main};
-    }
-    
+
     .dayTime,
     .nightTime {
       margin-block-start: 0.5rem;
@@ -211,7 +217,7 @@ export const DailyForecasts = styled.div`
       ${({ theme }) => theme.breakpoints.up("sm")} {
         min-height: 150px;
         min-width: unset;
-        border-block-start: 1px solid  rgba(0,0,0,0.3);
+        border-block-start: 1px solid ${({ theme }) => theme.palette.secondary.dark};
       }
     }
 
@@ -219,13 +225,13 @@ export const DailyForecasts = styled.div`
       .dailyTimeLabel {
         text-align: start;
         :first-child {
-          font-size: .9rem;
+          font-size: 0.9rem;
           font-weight: lighter;
-          border-bottom: 1px solid rgba(0,0,0,0.3);
-          border-right: 1px solid  rgba(0,0,0,0.3);
-          border-bottom-right-radius: 0.5rem;
-          width: 35px !important;
-          padding: .2rem;
+          text-align: center;
+          background-color: ${({ theme }) => theme.palette.secondary.dark};
+          color: ${({ theme }) => theme.palette.primary.contrastText} !important;
+          width: 60px !important;
+          padding: 0.2rem;
         }
       }
     }
@@ -251,5 +257,25 @@ export const FlexibleColumn = styled.div`
   flex-direction: column;
   ${({ theme }) => theme.breakpoints.down("xs")} {
     flex-direction: row;
+  }
+`;
+
+export const LookingAhead = styled(Typography)`
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: flex-start;
+  background-color: ${({ theme }) => (theme.type === "dark" ? transparent : lowTransparent)};
+  margin: 0.5rem;
+  border-top: 1px solid ${({ theme }) => theme.palette.secondary.dark};
+  border-bottom: 1px solid ${({ theme }) => theme.palette.secondary.dark};
+  > :first-child {
+    color: ${({ theme }) => theme.palette.primary.contrastText};
+    background-color: ${({ theme }) => theme.palette.secondary.dark};
+    padding: 0.5rem;
+  }
+  > :not(:first-child) {
+    text-align: center;
+    width: 100%;
   }
 `;

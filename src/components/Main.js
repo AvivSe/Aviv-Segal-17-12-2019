@@ -6,12 +6,12 @@ import React from "react";
 import styled from "styled-components";
 import Dialog from "./standalone/Dialog";
 import { useDispatch, useSelector } from "react-redux";
-import {getDialog, getIsSomeOnePending} from "../redux/ui/ui.selectors";
+import { getDialog, getIsSomeOnePending } from "../redux/ui/ui.selectors";
 import { closeDialog } from "../redux/ui/ui.actions";
 import LinearProgress from "./standalone/LinearProgress";
 
 const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.palette.primary.contrastText};
+  background-color: ${({ theme }) => theme.type === "dark" && theme.palette.primary.light};
   min-height: 100vh;
 `;
 

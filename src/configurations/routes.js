@@ -2,13 +2,13 @@ import Home from "../components/Home";
 import {
   Favorite as FavoritesIcon,
   FavoriteOutlined as FavoritesOutlinedIcon,
-  Home as HomeIcon,
-  HomeOutlined as HomeIconOutlined
+  Search as HomeIcon,
+  SearchOutlined as HomeIconOutlined
 } from "@material-ui/icons";
 import Favorites from "../components/Favorites";
 
 export const pathMap = {
-  "/": { label: "Home", component: Home },
+  "/": { label: "Search", component: Home },
   "/favorites": { label: "Favorites", component: Favorites }
 };
 
