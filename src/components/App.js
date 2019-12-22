@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { create } from "jss";
 import { ThemeProvider as ScThemeProvider } from "styled-components";
 import { BrowserRouter } from "react-router-dom";
@@ -7,10 +7,18 @@ import { createMuiTheme, jssPreset, StylesProvider, ThemeProvider as MuiThemePro
 import { useSelector } from "react-redux";
 import { getIsDarkMode } from "../redux/ui/ui.selectors";
 import { darkThemeOptions, lightThemeOptions } from "../configurations/theme";
+import {getSelectedCity} from "../redux/weather/weather.selectors";
 
 export default function App() {
   const isDarkTheme = useSelector(getIsDarkMode);
   const theme = createMuiTheme(isDarkTheme ? darkThemeOptions : lightThemeOptions);
+
+  // //TODO: Use geo location
+  // //const geolocation = useGeolocation();
+  //
+  // useEffect(function() {
+  //
+  // }, [])
 
   return (
     <StylesProvider jss={create({ plugins: [...jssPreset().plugins] })}>

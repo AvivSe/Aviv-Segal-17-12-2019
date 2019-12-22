@@ -13,7 +13,7 @@ const FIVE_DAYS_OF_DAILY_FORECASTS_API = `${ACCU_WEATHER_API_ROOT}/forecasts/v1/
 class AccuWeatherService {
   async autocompleteSearchCities(q) {
     return axios.get(`${LOCATIONS_API}/autocomplete`, { params: { q, apikey } }).then(response => {
-      return response.data.map(accWeatherCityToMyCity);
+      return response.data && Array.isArray(response.data) ? response.data.map(accWeatherCityToMyCity) : [];
     });
   }
 

@@ -16,7 +16,7 @@ import IOSSwitch from "./standalone/IOSSwitch";
 import Tooltip from "./standalone/Tooltip";
 import { getIsFahrenheit } from "../redux/weather/weather.selectors";
 import { toggleIsFahrenheit } from "../redux/weather/weather.actions";
-import { Row } from "./styled";
+import {Row, StyledLink} from "./styled";
 
 const StyledToolBar = styled(Toolbar)`
   display: flex;
@@ -78,16 +78,9 @@ function Header() {
   return (
     <AppBar position="static">
       <StyledToolBar>
-        <Row>
-          <Tooltip title={"redirect to git repo"} aria-label="go to avivse git repo">
-            <IconButton color="inherit" onClick={handleGithubClick}>
-              <GitHub />
-            </IconButton>
-          </Tooltip>
-          <Typography variant="h6" style={{ cursor: "pointer" }} onClick={() => navigate("/")}>
-            Weather
-          </Typography>
-        </Row>
+        <StyledLink  href="/" >
+          Weather Client
+        </StyledLink>
         <Row>
           <UpperNavigation>
             {pathNames.map(pathname => {

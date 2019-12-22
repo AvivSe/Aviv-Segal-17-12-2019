@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentWeather from "./CurrentWeather";
@@ -8,7 +8,7 @@ import Fab from "@material-ui/core/Fab";
 import { addToFavorites } from "../redux/weather/weather.actions";
 import {getFavoriteCities, getSelectedCity} from "../redux/weather/weather.selectors";
 import Grid from "@material-ui/core/Grid";
-
+import weatherService from '../AccuWeatherService'
 const Flex = styled.div`
   display: flex;
   flex-direction: column;
@@ -25,8 +25,7 @@ export default function Favorites() {
   const dispatch = useDispatch();
   const city = useSelector(getSelectedCity);
   const favoriteCities = useSelector(getFavoriteCities);
-  console.log(favoriteCities);
-  
+
   function handleAddSelectedAsFavorite() {
     dispatch(addToFavorites(city.key));
   }
@@ -46,7 +45,7 @@ export default function Favorites() {
             )}
             <Grid container>
               {favoriteCities.map(city => {
-                return <CurrentWeather miniature city={city} />;
+                return <CurrentWeather key={city.key} miniature city={city} />;
               })}
             </Grid>
           </div>

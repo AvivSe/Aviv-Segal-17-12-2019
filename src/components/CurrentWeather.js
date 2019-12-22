@@ -26,7 +26,7 @@ export function CurrentWeather({ city, miniature }) {
             setWeather(await weatherService.fetchCurrentWeather(city));
             dispatch(addToHistory(city));
           } catch (e) {
-            dispatch(openSnackbar(e.message));
+            dispatch(openSnackbar(e));
           }
         })();
       }

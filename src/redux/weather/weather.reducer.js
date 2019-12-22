@@ -14,7 +14,7 @@ export const INITIAL_STATE = {
   selectedCity: "215854",
 
   //on follow
-  ids: [],
+  ids: ["215854"],
   history: [],
   favorites: [], // cityKey
 

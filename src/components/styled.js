@@ -145,3 +145,111 @@ export const MainContentHelper = styled.div`
     }
   }
 `;
+
+export const StyledLink = styled.a`
+  color: ${({ theme }) => theme.palette.primary.contrastText};
+  text-decoration: none;
+  font-size: 1.5rem;
+  :visited {
+    color: ${({ theme }) => theme.palette.primary.contrastText};
+  }
+`;
+
+export const DailyForecasts = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    flex-direction: column;
+    align-content: center;
+  }
+  
+  .contrast {
+    color:  ${({ theme }) => theme.palette.primary.contrastText} !important;
+     background-color:  ${({ theme }) => theme.palette.primary.main} !important;
+   }
+   
+  .day {
+    display: flex;
+    flex-direction: column;
+    padding: 0.5rem 0;
+    margin: 0.25rem;
+    text-align: center;
+    justify-content: flex-start;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 0.4rem;
+    
+    ${({ theme }) => theme.breakpoints.up("sm")} {
+      width: 300px;
+      height: 350px;
+    }
+
+    .dayHeader {
+      font-size: .9rem;
+    }
+    .dayName {
+      font-size: 1.1rem;
+    }
+    .bold {
+      font-weight: bold;
+    }
+    .withRadius {
+      border-radius: .3rem;
+    }
+    
+    .primary {
+      color:  ${({ theme }) => theme.palette.primary.main};
+    }
+    
+    .dayTime,
+    .nightTime {
+      margin-block-start: 0.5rem;
+      min-width: 100px;
+      ${({ theme }) => theme.breakpoints.up("sm")} {
+        min-height: 150px;
+        min-width: unset;
+        border-block-start: 1px solid  rgba(0,0,0,0.3);
+      }
+    }
+
+    ${({ theme }) => theme.breakpoints.up("sm")} {
+      .dailyTimeLabel {
+        text-align: start;
+        :first-child {
+          font-size: .9rem;
+          font-weight: lighter;
+          border-bottom: 1px solid rgba(0,0,0,0.3);
+          border-right: 1px solid  rgba(0,0,0,0.3);
+          border-bottom-right-radius: 0.5rem;
+          width: 35px !important;
+          padding: .2rem;
+        }
+      }
+    }
+
+    .dailyText {
+      min-height: 25px;
+    }
+    .degree {
+      font-size: 1.2rem;
+    }
+    .degreeLetter {
+      font-size: 0.9rem;
+    }
+    > * {
+      width: 100%;
+    }
+  }
+`;
+
+export const FlexibleColumn = styled.div`
+  display: flex;
+  justify-content: space-around;
+  flex-direction: column;
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    flex-direction: row;
+  }
+`;

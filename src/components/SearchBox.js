@@ -27,10 +27,6 @@ export default function SearchBox() {
 
   const dispatch = useDispatch();
 
-  //TODO: Use geo location
-  //const selectedCity = useSelector(getSelectedCity);
-  // const geolocation = useGeolocation();
-
   const zeroErrors = useCallback(() => {
     setError(null);
     dispatch(closeSnackbar());
@@ -87,9 +83,7 @@ export default function SearchBox() {
   }, [searchTerm, isValid]);
 
   function handleOptionChange(event, value) {
-    if (!value) {
-      dispatch(setSelectedCity(null));
-    } else if (options.find(validWord => validWord.toLowerCase() === value.toLowerCase())) {
+    if (!!value && options.find(validWord => validWord.toLowerCase() === value.toLowerCase())) {
       dispatch(setSelectedCity(cityLabelToKeyMap[value]));
       setLocked(true);
       zeroErrors();
