@@ -29,6 +29,12 @@ class AccuWeatherService {
       .get(`${FIVE_DAYS_OF_DAILY_FORECASTS_API}/${city.key}`, { params: { apikey } })
       .then(res => accWeatherFiveDayOfDailyForecastsToMyForecast(res.data));
   }
+
+  async searchCityByGeoPosition(latitude, longitude) {
+    return axios.get(`${LOCATIONS_API}/geoposition/search`, { params: { q: `${latitude},${longitude}`, apikey } }).then(response => {
+      return response.data ? accWeatherCityToMyCity(response.data) : null;
+    });
+  }
 }
 const instance = new AccuWeatherService();
 export default Object.freeze(instance);

@@ -11,7 +11,7 @@ import {getDialog, getIsDarkMode} from "../redux/ui/ui.selectors";
 import {closeDialog, openDialog, toggleDarkTheme} from "../redux/ui/ui.actions";
 import Tooltip from "./standalone/Tooltip";
 import {getIsFahrenheit} from "../redux/weather/weather.selectors";
-import {setSelectedCity, toggleIsFahrenheit} from "../redux/weather/weather.actions";
+import {toggleIsFahrenheit} from "../redux/weather/weather.actions";
 import {IconHelper, Row} from "./styled";
 import {ReactComponent as CelsiusIcon} from "../assets/celsius.svg";
 import {ReactComponent as FahrenheitIcon} from "../assets/fahrenheit.svg";

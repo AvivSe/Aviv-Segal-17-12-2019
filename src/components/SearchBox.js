@@ -11,7 +11,6 @@ import Popper from "@material-ui/core/Popper";
 import {addToMap, setSelectedCity} from "../redux/weather/weather.actions";
 import {PaperContent, StyledAutocomplete, StyledLocationCity} from "./styled";
 import {getCityDisplayName} from "../utils/tiny";
-import {Clear} from "@material-ui/icons";
 
 export default function SearchBox() {
   const tooltipEnchorElRef = React.useRef();
