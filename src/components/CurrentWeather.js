@@ -61,7 +61,7 @@ export function CurrentWeather({ city, miniature }) {
             </Slide>
             <Column>
               <Slide in timeout={750} direction={"down"}>
-                <Typography variant="h5" color={"secondary"} style={{ fontWeight: "bold" }}>
+                <Typography variant="h5" color={"secondary"}>
                   {city.name}, {city.countryName}
                 </Typography>
               </Slide>

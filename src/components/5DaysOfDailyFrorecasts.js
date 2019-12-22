@@ -99,7 +99,7 @@ export default function FiveDaysOfDailyForecasts() {
 
                   <FlexibleColumn>
                     <div className={"dayTime"}>
-                      <div className={"dailyTimeLabel"}>Day</div>
+                      <Typography variant={'h6'} className={"dailyTimeLabel"}>Day</Typography>
                       {renderDailyText(dayTimeText, maximumFahrenheit, dayTimeIcon)}
                     </div>
                     <div className={"nightTime"}>

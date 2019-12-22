@@ -197,7 +197,7 @@ export const DailyForecasts = styled.div`
     align-items: center;
 
     background-color: ${({ theme }) => (theme.type === "dark" ? transparent : lowTransparent)};
-    border-radius: 0.4rem;
+    border-radius: 0.1rem;
 
     ${({ theme }) => theme.breakpoints.up("sm")} {
       width: 300px;
@@ -236,7 +236,7 @@ export const DailyForecasts = styled.div`
       .dailyTimeLabel {
         text-align: start;
         :first-child {
-          font-size: 0.9rem;
+          font-size: 0.7rem;
           font-weight: lighter;
           text-align: center;
           background-color: ${({ theme }) => theme.palette.secondary.dark};
@@ -254,7 +254,7 @@ export const DailyForecasts = styled.div`
       font-size: 1.2rem;
     }
     .degreeLetter {
-      font-size: 0.9rem;
+      font-size: 0.7rem;
     }
     > * {
       width: 100%;
@@ -280,6 +280,7 @@ export const LookingAhead = styled.div`
   margin: 0.5rem;
   border-top: 1px solid ${({ theme }) => theme.palette.secondary.dark};
   border-bottom: 1px solid ${({ theme }) => theme.palette.secondary.dark};
+  padding-bottom: 1rem;
   > :first-child {
     color: ${({ theme }) => theme.palette.primary.contrastText};
     background-color: ${({ theme }) => theme.palette.secondary.dark};
@@ -292,6 +293,7 @@ export const LookingAhead = styled.div`
 
     ${({ theme }) => theme.breakpoints.up("md")} {
       margin-top: -1rem;
+     
     }
   }
 `;

@@ -31,15 +31,14 @@ const roboto = {
 const extraProps = {
   typography: {
     fontFamily: "Lora, Arial",
+
     h5: {
       fontFamily: "Roboto, sans-serif"
     },
     h6: {
       fontFamily: "Roboto, sans-serif"
     },
-    body1: {
-      fontFamily: "Roboto, sans-serif"
-    },
+
   },
   overrides: {
     MuiCssBaseline: {
@@ -56,14 +55,14 @@ export const lightThemeOptions = {
       main: '#673ab7',
       dark: '#4527a0',
       text: '#1a1a1a',
-      contrastText: '#ffffff',
+      contrastText: '#fafafa',
     },
     secondary: {
       light: '#7e57c2',
       main: '#1a1a1a',
       dark: '#4527a0',
-      text: '#ffffff',
-      contrastText: '#ffffff',
+      text: '#fafafa',
+      contrastText: '#fafafa',
     }
   },
   ...extraProps
@@ -74,16 +73,16 @@ export const darkThemeOptions = {
   palette: {
     primary: {
       light: "#212121",
-      main: "#333333",
+      main: "#282828",
       dark: "#151515",
-      text: "#ffffff",
-      contrastText: "#ffffff",
+      text: "#d0d0d0",
+      contrastText: "#d0d0d0",
     },
     secondary: {
       light: "#212121",
-      main: "#ffffff",
-      dark: "#606060",
-      text: "#ffffff",
+      main: "#d0d0d0",
+      dark: "#2c2c2c",
+      text: "#d0d0d0",
       contrastText: "#b9b9b9",
     },  },
   ...extraProps
