@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
 import { addToFavorites, addToHistory, removeFromFavorites } from "../redux/weather/weather.actions";
-import { Favorite, FavoriteBorder, Refresh } from "@material-ui/icons";
+import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Refresh } from "@material-ui/icons";
 import { openSnackbar, setNotPending, setOnPending } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
@@ -62,7 +62,7 @@ export function CurrentWeather({ city, miniature }) {
     } else {
       dispatch(addToFavorites(city.key));
       dispatch(openSnackbar(`${city.name} added to your favorites`));
-      navigate('/favorites')
+      navigate("/favorites");
     }
   }
 
@@ -119,17 +119,17 @@ export function CurrentWeather({ city, miniature }) {
               </Slide>
             </Column>
           </Row>
-            <Slide direction={"left"} in timeout={500}>
-              <div>
-                <Tooltip
-                  title={isOneOfMyFavorites ? `Remove ${city.name} from favorites` : `Save ${city.name} as a favorite`}
-                >
-                  <Button onClick={handleFavoriteToggled} size="large" color="primary">
-                    <FavoriteIconHelper as={FavoriteIcon} />
-                  </Button>
-                </Tooltip>
-              </div>
-            </Slide>
+          <Slide direction={"left"} in timeout={500}>
+            <div>
+              <Tooltip
+                title={isOneOfMyFavorites ? `Remove ${city.name} from favorites` : `Save ${city.name} as a favorite`}
+              >
+                <Button onClick={handleFavoriteToggled} size="large" color="primary">
+                  <FavoriteIconHelper as={miniature && isOneOfMyFavorites ? DeleteOutlineOutlined : FavoriteIcon} />
+                </Button>
+              </Tooltip>
+            </div>
+          </Slide>
         </Row>
         {!miniature && (
           <Slide unmountOnExit in timeout={500} direction={"up"}>

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentWeather from "./CurrentWeather";
 import Zoom from "@material-ui/core/Zoom";
-import { Add, ArrowBack } from "@material-ui/icons";
+import { Add, ArrowBack, DeleteOutlineOutlined} from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
 import { addToFavorites, setSelectedCity } from "../redux/weather/weather.actions";
 import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";

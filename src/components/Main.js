@@ -12,7 +12,7 @@ import Redirect from "./standalone/Redirect";
 
 const Wrapper = styled.div`
   background-color: ${({ theme }) => theme.type === "dark" && theme.palette.primary.light};
-  min-height: 100vh;
+  height: 100%;
 `;
 
 const dialogs = {
