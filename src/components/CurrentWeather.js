@@ -9,14 +9,7 @@ import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
 import Slide from "@material-ui/core/Slide";
-import {
-  Column,
-  CurrentWeatherHelper,
-  FavoriteIconHelper,
-  Row,
-  SearchIconHelper,
-  StyledMainIcon
-} from "./styled";
+import { Column, CurrentWeatherHelper, FavoriteIconHelper, Row, SearchIconHelper, StyledMainIcon } from "./styled";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import useNavigator from "../hooks/useNavigator";
@@ -115,49 +108,53 @@ export function CurrentWeather({ city, miniature }) {
                       <span>{date.toLocaleTimeString()}</span>
                     </Typography>
                   </Tooltip>
-                  {!miniature && <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
-                    <Typography variant="body2" color={"secondary"}>
-                      <span>
-                        <IconButton onClick={handleRefresh} color={"primary"}>
-                          <Refresh className={isScopedPending ? "circularAnimation" : null} />
-                        </IconButton>
-                      </span>
-                    </Typography>
-                  </Tooltip>}
-                  {miniature && <Tooltip title={`Search again`}>
-                    <Typography variant="body2" color={"secondary"}>
-                      <span>
-                        <IconButton onClick={handleSearchAgain} color={"primary"}>
-                          <SearchIconHelper as={Search}/>
-                        </IconButton>
-                      </span>
-                    </Typography>
-                  </Tooltip>}
+                  {!miniature && (
+                    <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
+                      <Typography variant="body2" color={"secondary"}>
+                        <span>
+                          <IconButton onClick={handleRefresh} color={"primary"}>
+                            <Refresh className={isScopedPending ? "circularAnimation" : null} />
+                          </IconButton>
+                        </span>
+                      </Typography>
+                    </Tooltip>
+                  )}
+                  {miniature && (
+                    <Tooltip title={`Search again`}>
+                      <Typography variant="body2" color={"secondary"}>
+                        <span>
+                          <IconButton onClick={handleSearchAgain} color={"primary"}>
+                            <SearchIconHelper as={Search} />
+                          </IconButton>
+                        </span>
+                      </Typography>
+                    </Tooltip>
+                  )}
                 </Row>
               </Slide>
             </Column>
           </Row>
-          {!miniature && <Slide direction={"left"} in timeout={500}>
-            <div>
-              <Tooltip
-                title={isOneOfMyFavorites ? `Remove ${city.name} from favorites` : `Save ${city.name} as a favorite`}
-              >
-                <Button onClick={handleFavoriteToggled} size="large" color="primary">
-                  <FavoriteIconHelper as={FavoriteIcon} />
-                </Button>
-              </Tooltip>
-            </div>
-          </Slide>}
+          {!miniature && (
+            <Slide direction={"left"} in timeout={500}>
+              <div>
+                <Tooltip
+                  title={isOneOfMyFavorites ? `Remove ${city.name} from favorites` : `Save ${city.name} as a favorite`}
+                >
+                  <Button onClick={handleFavoriteToggled} size="large" color="primary">
+                    <FavoriteIconHelper as={FavoriteIcon} />
+                  </Button>
+                </Tooltip>
+              </div>
+            </Slide>
+          )}
         </Row>
-        {!miniature && (
-          <Slide unmountOnExit in timeout={500} direction={"up"}>
-            <Row justifyContent={"center"}>
-              <Typography className={"getterBottom"} variant={"h4"} color={"secondary"}>
-                {weather.text}
-              </Typography>
-            </Row>
-          </Slide>
-        )}
+        <Slide unmountOnExit in timeout={500} direction={"up"}>
+          <Row justifyContent={"center"}>
+            <Typography className={"getterBottom"} variant={"h4"} color={"secondary"}>
+              {weather.text}
+            </Typography>
+          </Row>
+        </Slide>
       </CurrentWeatherHelper>
     )
   );
