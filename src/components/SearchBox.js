@@ -29,9 +29,8 @@ export default function SearchBox() {
 
   const zeroErrors = useCallback(() => {
     setError(null);
-    dispatch(closeSnackbar());
     setIsAutocompleteOpen(false);
-  }, [dispatch]);
+  }, []);
 
   const isValid = useCallback(
     function(searchTerm) {

@@ -1,5 +1,3 @@
-export const SET_ON_PENDING = "SET_ON_PENDING";
-
 export const ADD_TO_MAP = "ADD_TO_MAP";
 
 export const ADD_TO_FAVORITES = "ADD_TO_FAVORITES";
@@ -11,20 +9,12 @@ export const REMOVE_FROM_HISTORY = "REMOVE_FROM_HISTORY";
 export const SET_SELECTED_CITY = "SET_SELECTED_CITY";
 export const TOGGLE_IS_FAHRENHEIT = "TOGGLE_IS_FAHRENHEIT";
 
-export const setOnPending = requestId => {
-  return { type: SET_ON_PENDING, payload: requestId }
-};
-
 export const addToMap = city => {
   return ({ type: ADD_TO_MAP, payload: city });
 };
 
 export const addToHistory = city => {
   return ({ type: ADD_TO_HISTORY, payload: city.key });
-};
-
-export const removeFromHistory = key => {
-  return ({ type: REMOVE_FROM_HISTORY, payload: key });
 };
 
 export const addToFavorites = key => {

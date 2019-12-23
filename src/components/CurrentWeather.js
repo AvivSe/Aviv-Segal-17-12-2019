@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
 import { addToFavorites, addToHistory, removeFromFavorites } from "../redux/weather/weather.actions";
 import { Favorite, FavoriteBorder , Refresh} from "@material-ui/icons";
-import { openSnackbar } from "../redux/ui/ui.actions";
+import {openSnackbar, setNotPending, setOnPending} from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
@@ -24,11 +24,15 @@ export function CurrentWeather({ city, miniature }) {
     function() {
       if (!!city) {
         (async function() {
+          const requestId = `${city.name}, ${new Date().toLocaleString()}`;
           try {
+            dispatch(setOnPending(requestId));
             setWeather(await weatherService.fetchCurrentWeather(city));
             dispatch(addToHistory(city));
           } catch (e) {
-            dispatch(openSnackbar(e));
+            dispatch(openSnackbar("Failed fetch data"));
+          } finally {
+            dispatch(setNotPending(requestId));
           }
         })();
       }

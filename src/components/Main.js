@@ -6,7 +6,7 @@ import React from "react";
 import styled from "styled-components";
 import Dialog from "./standalone/Dialog";
 import {useDispatch, useSelector} from "react-redux";
-import {getDialog, getIsSomeOnePending} from "../redux/ui/ui.selectors";
+import {getDialog, getIsGloballyPending} from "../redux/ui/ui.selectors";
 import {closeDialog} from "../redux/ui/ui.actions";
 import LinearProgress from "./standalone/LinearProgress";
 import Redirect from "./standalone/Redirect";
@@ -25,7 +25,7 @@ const dialogs = {
 export default function Main() {
   const dialog = useSelector(getDialog);
   const dispatch = useDispatch();
-  const isSomeOnePending = useSelector(getIsSomeOnePending);
+  const isGloballyPending = useSelector(getIsGloballyPending);
 
   function handleDialogClose() {
     dispatch(closeDialog());
@@ -34,7 +34,7 @@ export default function Main() {
   return (
     <Wrapper>
       <Header />
-      {isSomeOnePending && <LinearProgress />}
+      {isGloballyPending && <LinearProgress />}
       <MainContent />
       <Snackbar />
       <Dialog

@@ -9,7 +9,6 @@ import {
 } from "./weather.actions";
 
 export const INITIAL_STATE = {
-  onPending: { home: false },
   isFahrenheit: false,
   selectedCity: "215854",
 

@@ -27,7 +27,7 @@ export default function App() {
             dispatch(setSelectedCity(city.key));
             dispatch(addToMap(city));
           } catch (e) {
-            dispatch(openSnackbar(e));
+            dispatch(openSnackbar("Geo Location FAILED"));
           }
         })();
       }

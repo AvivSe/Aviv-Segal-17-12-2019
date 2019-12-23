@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIsFahrenheit, getSelectedCity} from "../redux/weather/weather.selectors";
 import {toCelsius, weekDay} from "../utils/tiny";
 import weatherService from "../AccuWeatherService";
-import {openSnackbar} from "../redux/ui/ui.actions";
+import {openSnackbar, setNotPending, setOnPending} from "../redux/ui/ui.actions";
 import moment from "moment";
 import Tooltip from "./standalone/Tooltip";
 import Typography from "@material-ui/core/Typography";
@@ -21,10 +21,15 @@ export default function FiveDaysOfDailyForecasts() {
     function() {
       if (!!city) {
         (async function() {
+          const requestId = `${city.name}, ${new Date().toLocaleString()}`;
           try {
+            console.log(requestId);
+            dispatch(setOnPending(requestId));
             setForecast(await weatherService.fetchFiveDaysOfDailyForecasts(city));
           } catch (e) {
             dispatch(openSnackbar("5DaysForecasts Can't init: " + e));
+          } finally {
+            dispatch(setNotPending(requestId));
           }
         })();
       }
