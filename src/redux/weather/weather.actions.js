@@ -25,7 +25,7 @@ export const removeFromFavorites = key => {
   return ({ type: REMOVE_FROM_FAVORITES, payload: key });
 };
 
-export const setSelectedCity = (city, requestId) => {
+export const setSelectedCity = (city) => {
   return ({ type: SET_SELECTED_CITY, payload: city});
 };
 

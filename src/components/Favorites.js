@@ -37,7 +37,7 @@ export default function Favorites() {
           <div>
             <Grid container>
               {favoriteCities.map(city => {
-                return <CurrentWeather key={city.key} miniature city={city} />;
+                return <CurrentWeather miniature city={city} />;
               })}
             </Grid>
           </div>

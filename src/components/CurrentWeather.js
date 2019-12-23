@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
-import { addToFavorites, addToHistory, removeFromFavorites } from "../redux/weather/weather.actions";
-import { Favorite, FavoriteBorder , Refresh} from "@material-ui/icons";
+import {addToFavorites, addToHistory, removeFromFavorites, setSelectedCity} from "../redux/weather/weather.actions";
+import { Favorite, Search, FavoriteBorder , Refresh} from "@material-ui/icons";
 import {openSnackbar, setNotPending, setOnPending} from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
@@ -12,12 +12,13 @@ import Slide from "@material-ui/core/Slide";
 import { Column, CurrentWeatherHelper, FavoriteIconHelper, Row, StyledMainIcon } from "./styled";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
+import useNavigator from "../hooks/useNavigator";
 
 export function CurrentWeather({ city, miniature }) {
   const dispatch = useDispatch();
   const [version, setVersion] = useState(0);
   const [weather, setWeather] = useState(null);
-
+  const [,navigate] = useNavigator();
   const isFahrenheit = useSelector(getIsFahrenheit);
 
   useEffect(
@@ -72,6 +73,12 @@ export function CurrentWeather({ city, miniature }) {
       dispatch(openSnackbar(`${city.name} added to your favorites`));
     }
   }
+
+  function handleSearchAgain() {
+    dispatch(setSelectedCity(weather.cityKey));
+    navigate('/');
+  }
+
   const date = !!weather && new Date(weather.localObservationDateTime);
 
   return (
@@ -105,12 +112,20 @@ export function CurrentWeather({ city, miniature }) {
               </Slide>
               <Slide in timeout={750} direction={"right"}>
                 <div>
-                  <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
+                  {!miniature && <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
                       <span>{date.toLocaleTimeString()}</span>
-                      <span><IconButton onClick={handleRefresh} color={"primary"}><Refresh /></IconButton></span>
+                      {!miniature && <span><IconButton onClick={handleRefresh} color={"primary"}><Refresh /></IconButton></span>}
                     </Typography>
-                  </Tooltip>
+                  </Tooltip>}
+                  {miniature &&
+                  <Tooltip title={`Explore`}>
+                    <Typography variant="body2" color={"secondary"}>
+                      <span>{date.toLocaleTimeString()}</span>
+                      {miniature && <span><IconButton onClick={handleSearchAgain} color={"primary"}><Search /></IconButton></span>}
+                    </Typography>
+                  </Tooltip>}
+
                 </div>
               </Slide>
             </Column>
