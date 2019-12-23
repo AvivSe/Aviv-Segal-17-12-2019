@@ -34,7 +34,7 @@ export default function Main() {
   return (
     <Wrapper>
       <Header />
-      {isGloballyPending && <LinearProgress />}
+      {/*{isGloballyPending && <LinearProgress />}*/}
       <MainContent />
       <Snackbar />
       <Dialog
