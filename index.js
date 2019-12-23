@@ -3,7 +3,6 @@ const http = require('http');
 const path = require('path');
 let app = express();
 
-console.log((path.join(__dirname, 'build')));
 app.use(express.static(path.join(__dirname, 'build')));
 // Handles any requests that don't match the ones above
 app.get('*', (req,res) =>{
