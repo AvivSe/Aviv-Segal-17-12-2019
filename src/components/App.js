@@ -28,7 +28,7 @@ export default function App() {
             dispatch(addToMap(city));
           }
           function onGetGeoLocationError() {
-            dispatch(openSnackbar("Geo Location FAILED"));
+            dispatch(openSnackbar("Can't use your location, try again later.."));
           }
           navigator.geolocation.getCurrentPosition(onGetGeoLocationSuccess, onGetGeoLocationError);
         } catch (e) {}
