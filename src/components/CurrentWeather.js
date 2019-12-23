@@ -134,7 +134,6 @@ export function CurrentWeather({ city, miniature }) {
               </Slide>
             </Column>
           </Row>
-          {!miniature && (
             <Slide direction={"left"} in timeout={500}>
               <div>
                 <Tooltip
@@ -146,7 +145,6 @@ export function CurrentWeather({ city, miniature }) {
                 </Tooltip>
               </div>
             </Slide>
-          )}
         </Row>
         {!miniature && (
           <Slide unmountOnExit in timeout={500} direction={"up"}>
