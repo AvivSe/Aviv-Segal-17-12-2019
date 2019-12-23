@@ -28,10 +28,13 @@ export default function App() {
             dispatch(addToMap(city));
           }
           function onGetGeoLocationError() {
-            dispatch(openSnackbar("Can't use your location, try again later.."));
+            const howToEnableGeoLocationInstructionUrl = "https://docs.buddypunch.com/en/articles/919258-how-to-enable-location-services-for-chrome-safari-and-android-ios-devices-gps-setting";
+            dispatch(openSnackbar(<div>Using location is disabled, <a style={{color:"white"}} href={howToEnableGeoLocationInstructionUrl}> How to enable it?</a></div>));
           }
           navigator.geolocation.getCurrentPosition(onGetGeoLocationSuccess, onGetGeoLocationError);
-        } catch (e) {}
+        } catch (e) {
+          dispatch(openSnackbar("Can't find your city by the given location"));
+        }
       })();
     },
     [dispatch, position, error]
