@@ -54,9 +54,6 @@ export default function Favorites() {
     dispatch(addToFavorites(city.key));
   }
 
-  function handleDragStart(e, cityKey) {
-    console.log(e);
-  }
   const showAddCity = city && !isSelectedCityFavorite;
   return (
     <div className={"mainContent"}>
@@ -64,7 +61,7 @@ export default function Favorites() {
         <Container>
           <Flex>
             {favoriteCities.map(city => {
-              return <Draggable key={city.key} onStart={e=>handleDragStart(e, city.key)} handle=".handle">
+              return <Draggable key={city.key} handle=".handle">
                 <div className={"handle"}>
                   <StyledButton><div/></StyledButton>
                   <CurrentWeather miniature city={city} />
