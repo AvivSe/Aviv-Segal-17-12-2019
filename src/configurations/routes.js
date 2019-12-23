@@ -1,11 +1,16 @@
+import React from "react";
 import Search from "../components/Search";
 import {
-  Favorite as FavoritesIcon,
-  FavoriteOutlined as FavoritesOutlinedIcon,
   Search as HomeIcon,
   SearchOutlined as HomeIconOutlined
 } from "@material-ui/icons";
 import Favorites from "../components/Favorites";
+import {ReactComponent as FolderFavoriteSvg } from "../assets/folder-favorites.svg";
+import {IconHelper} from "../components/styled";
+
+function FavoriteFolder(props){
+  return <IconHelper as={FolderFavoriteSvg} {...props}/>
+}
 
 export const pathMap = {
   "/": { label: "Search", component: Search },
@@ -14,7 +19,7 @@ export const pathMap = {
 
 export const pathnameToIcon = {
   "/": { default: HomeIconOutlined, selected: HomeIcon },
-  "/favorites": { default: FavoritesOutlinedIcon, selected: FavoritesIcon }
+  "/favorites": { default: FavoriteFolder, selected: FavoriteFolder }
 };
 
-export const pathNames = Object.keys(pathMap);
+export const pathNames = ["/favorites"];

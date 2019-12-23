@@ -1,7 +1,6 @@
 import Header from "./Header";
 import MainContent from "./MainContent";
 import Snackbar from "./Snackbar";
-import BottomNavigation from "./BottomNavigation";
 import React from "react";
 import styled from "styled-components";
 import Dialog from "./standalone/Dialog";
@@ -43,7 +42,7 @@ export default function Main() {
         content={dialogs[dialog.name]}
         onClose={handleDialogClose}
       />
-      <BottomNavigation />
+      {/*<BottomNavigation />*/}
     </Wrapper>
   );
 }

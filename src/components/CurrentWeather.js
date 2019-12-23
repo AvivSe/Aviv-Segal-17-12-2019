@@ -62,12 +62,8 @@ export function CurrentWeather({ city, miniature }) {
     } else {
       dispatch(addToFavorites(city.key));
       dispatch(openSnackbar(`${city.name} added to your favorites`));
+      navigate('/favorites')
     }
-  }
-
-  function handleSearchAgain() {
-    dispatch(setSelectedCity(weather.cityKey));
-    navigate("/");
   }
 
   const date = !!weather && new Date(weather.localObservationDateTime);
@@ -114,17 +110,6 @@ export function CurrentWeather({ city, miniature }) {
                         <span>
                           <IconButton onClick={handleRefresh} color={"secondary"}>
                             <Refresh className={isScopedPending ? "circularAnimation" : null} />
-                          </IconButton>
-                        </span>
-                      </Typography>
-                    </Tooltip>
-                  )}
-                  {miniature && (
-                    <Tooltip title={`Search again`}>
-                      <Typography variant="body2" color={"secondary"}>
-                        <span>
-                          <IconButton onClick={handleSearchAgain} color={"primary"}>
-                            <SearchIconHelper as={Search} />
                           </IconButton>
                         </span>
                       </Typography>
