@@ -9,7 +9,14 @@ import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
 import Slide from "@material-ui/core/Slide";
-import { Column, CurrentWeatherHelper, FavoriteIconHelper, Row, StyledMainIcon } from "./styled";
+import {
+  Column,
+  CurrentWeatherHelper,
+  FavoriteIconHelper,
+  Row,
+  SearchIconHelper,
+  StyledMainIcon
+} from "./styled";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import useNavigator from "../hooks/useNavigator";
@@ -65,10 +72,10 @@ export function CurrentWeather({ city, miniature }) {
     }
   }
 
-  // function handleSearchAgain() {
-  //   dispatch(setSelectedCity(weather.cityKey));
-  //   navigate("/");
-  // }
+  function handleSearchAgain() {
+    dispatch(setSelectedCity(weather.cityKey));
+    navigate("/");
+  }
 
   const date = !!weather && new Date(weather.localObservationDateTime);
 
@@ -108,7 +115,7 @@ export function CurrentWeather({ city, miniature }) {
                       <span>{date.toLocaleTimeString()}</span>
                     </Typography>
                   </Tooltip>
-                  <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
+                  {!miniature && <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
                       <span>
                         <IconButton onClick={handleRefresh} color={"primary"}>
@@ -116,7 +123,16 @@ export function CurrentWeather({ city, miniature }) {
                         </IconButton>
                       </span>
                     </Typography>
-                  </Tooltip>
+                  </Tooltip>}
+                  {miniature && <Tooltip title={`Search again`}>
+                    <Typography variant="body2" color={"secondary"}>
+                      <span>
+                        <IconButton onClick={handleSearchAgain} color={"primary"}>
+                          <SearchIconHelper as={Search}/>
+                        </IconButton>
+                      </span>
+                    </Typography>
+                  </Tooltip>}
                 </Row>
               </Slide>
             </Column>

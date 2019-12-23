@@ -8,7 +8,9 @@ import Fab from "@material-ui/core/Fab";
 import { addToFavorites } from "../redux/weather/weather.actions";
 import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";
 import Typography from "@material-ui/core/Typography";
-import {Column, ColumnCentered} from "./styled";
+import {ColumnCentered} from "./styled";
+import Button from "@material-ui/core/Button";
+import Draggable from "react-draggable";
 
 const Container = styled.div`
   display: flex;
@@ -24,6 +26,18 @@ const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
 `;
+
+const StyledButton = styled(Button)`
+  height: 150px;
+  margin-bottom: -150px;
+  width: 100%;
+  cursor: grab;
+  
+  :active {
+    cursor: grabbing;
+
+  }
+`;
 export default function Favorites() {
   const dispatch = useDispatch();
   const city = useSelector(getSelectedCity);
@@ -35,11 +49,16 @@ export default function Favorites() {
   const showAddCity = city && !isSelectedCityFavorite;
   return (
     <div className={"mainContent"}>
-      <Zoom in timeout={1500}>
+      <Zoom in timeout={250}>
         <Container>
           <Flex>
             {favoriteCities.map(city => {
-              return <CurrentWeather key={city.key} miniature city={city} />;
+              return <Draggable key={city.key} handle=".handle">
+                <div className={"handle"}>
+                  <StyledButton><div/></StyledButton>
+                  <CurrentWeather miniature city={city} />
+                </div>
+              </Draggable>;
             })}
           </Flex>
           {showAddCity && (

@@ -148,6 +148,9 @@ export const IconHelper = styled.svg`
 export const FavoriteIconHelper = styled.svg`
   fill: ${({ theme: { type, palette } }) => (type === "dark" ? "#ff374a" : palette.primary.main)};
 `;
+export const SearchIconHelper = styled.svg`
+  fill: ${({ theme: { type, palette } }) => (type === "dark" ? "#ececec" : palette.primary.main)};
+`;
 
 export const StyledMainIcon = styled.svg`
   width: 7rem;
