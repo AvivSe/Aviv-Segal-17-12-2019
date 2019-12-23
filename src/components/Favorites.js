@@ -93,8 +93,8 @@ export default function Favorites() {
         </Zoom>
       </div>
       <Slide in direction={"right"}>
-        <StyledBackFab onClick={handleAddSelectedAsFavorite} color="primary">
-          <IconHelper as={ArrowBack} color={"primary"} onClick={() => navigate("/")} />
+        <StyledBackFab onClick={() => navigate("/")} color="primary">
+          <IconHelper as={ArrowBack} color={"primary"}  />
         </StyledBackFab>
       </Slide>
     </>
