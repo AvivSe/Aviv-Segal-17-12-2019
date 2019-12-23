@@ -148,13 +148,15 @@ export function CurrentWeather({ city, miniature }) {
             </Slide>
           )}
         </Row>
-        <Slide unmountOnExit in timeout={500} direction={"up"}>
-          <Row justifyContent={"center"}>
-            <Typography className={"getterBottom"} variant={"h4"} color={"secondary"}>
-              {weather.text}
-            </Typography>
-          </Row>
-        </Slide>
+        {!miniature && (
+          <Slide unmountOnExit in timeout={500} direction={"up"}>
+            <Row justifyContent={"center"}>
+              <Typography className={"getterBottom"} variant={"h4"} color={"secondary"}>
+                {weather.text}
+              </Typography>
+            </Row>
+          </Slide>
+        )}
       </CurrentWeatherHelper>
     )
   );

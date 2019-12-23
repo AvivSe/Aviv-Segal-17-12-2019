@@ -10,6 +10,7 @@ import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../red
 import Typography from "@material-ui/core/Typography";
 import {ColumnCentered} from "./styled";
 import Button from "@material-ui/core/Button";
+import Draggable from "react-draggable";
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,10 +55,12 @@ export default function Favorites() {
         <Container>
           <Flex>
             {favoriteCities.map(city => {
-              return <div key={city.key}>
+              return <Draggable key={city.key} handle=".handle">
+                <div className={"handle"}>
                   <StyledButton><div/></StyledButton>
                   <CurrentWeather miniature city={city} />
-                </div>;
+                </div>
+              </Draggable>;
             })}
           </Flex>
           {showAddCity && (
