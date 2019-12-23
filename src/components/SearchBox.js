@@ -1,16 +1,16 @@
-import React, {useCallback, useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import weatherService from "../AccuWeatherService";
-import {useDebounce} from "../hooks/useDebounce";
-import {useDispatch} from "react-redux";
-import {openSnackbar} from "../redux/ui/ui.actions";
+import { useDebounce } from "../hooks/useDebounce";
+import { useDispatch } from "react-redux";
+import { openSnackbar } from "../redux/ui/ui.actions";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
-import {addToMap, setSelectedCity} from "../redux/weather/weather.actions";
-import {PaperContent, StyledAutocomplete, StyledLocationCity} from "./styled";
-import {getCityDisplayName} from "../utils/tiny";
+import { addToMap, setSelectedCity } from "../redux/weather/weather.actions";
+import { PaperContent, StyledAutocomplete, StyledLocationCity } from "./styled";
+import { getCityDisplayName } from "../utils/tiny";
 
 export default function SearchBox() {
   const tooltipEnchorElRef = React.useRef();
@@ -18,7 +18,6 @@ export default function SearchBox() {
   const [options, setOptions] = useState([]);
   const [cityLabelToKeyMap, setCityLabelToNameMap] = useState({});
 
-  const [locked, setLocked] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -27,23 +26,12 @@ export default function SearchBox() {
 
   const dispatch = useDispatch();
 
-  const zeroErrors = useCallback(() => {
-    setError(null);
-    setIsAutocompleteOpen(false);
-  }, []);
-
-  const isValid = useCallback(
-    function(searchTerm) {
-      return options.find(validWord => !searchTerm || validWord.toLowerCase() === searchTerm.toLowerCase());
-    },
-    [options]
-  );
   useEffect(
     function() {
       if (!!debouncedSearchTerm && debouncedSearchTerm !== "") {
         async function fetchCities() {
           setLoading(true);
-          const cities = await weatherService.autocompleteSearchCities(debouncedSearchTerm);
+          const cities = await weatherService.autocompleteSearchCities(debouncedSearchTerm.toString().split(",")[0]);
           if (!!cities && Array.isArray(cities)) {
             const _cityLabelToKeyMap = {};
             setOptions(
@@ -66,34 +54,17 @@ export default function SearchBox() {
     [debouncedSearchTerm, dispatch]
   );
 
-  useEffect(() => {
-    if (!isValid(debouncedSearchTerm)) {
-      setError("Please select from list");
-      setIsAutocompleteOpen(true);
-    } else {
-      zeroErrors();
-    }
-  }, [debouncedSearchTerm, setIsAutocompleteOpen, zeroErrors, isValid, locked]);
-
-  useEffect(() => {
-    if (isValid(searchTerm)) {
-      setError(null);
-    }
-  }, [searchTerm, isValid]);
-
   function handleOptionChange(event, value) {
-    if (!!value && options.find(validWord => validWord.toLowerCase() === value.toLowerCase())) {
+    if(!value) {
+      setOptions([]);
+    } else if (options.some(validWord => validWord.toLowerCase() === value.toLowerCase())) {
       dispatch(setSelectedCity(cityLabelToKeyMap[value]));
-      setLocked(true);
-      zeroErrors();
     } else {
       setError("Please select from list");
     }
   }
 
   function handleInputChange({ target: { value: searchTerm } }) {
-    setLocked(false);
-    zeroErrors();
     setSearchTerm(searchTerm);
   }
 
@@ -101,11 +72,25 @@ export default function SearchBox() {
     setIsAutocompleteOpen(true);
   }
 
-  const isTooltipOpen = !locked && !!error && !!options && options.length !== 0;
+  function handleInputKeyPress(e) {
+    if (e.key === "Enter" && !!options[0]) {
+      handleOptionChange(e, options[0]);
+      setIsAutocompleteOpen(false);
+    }
+  }
+
+  function handleAutoCompleteOpen() {
+    setIsAutocompleteOpen( true);
+  }
+  function handleAutoCompleteClose() {
+    setOptions([]);
+    setIsAutocompleteOpen( false);
+  }
+  const isPopperOpen = Boolean(isAutocompleteOpen && error);
 
   return (
     <>
-      <Popper open={isTooltipOpen} anchorEl={tooltipEnchorElRef.current} placement={"top"} transition>
+      <Popper open={isPopperOpen} anchorEl={tooltipEnchorElRef.current} placement={"top"} transition>
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Paper>
@@ -120,12 +105,8 @@ export default function SearchBox() {
       <StyledAutocomplete
         ref={tooltipEnchorElRef}
         open={isAutocompleteOpen}
-        onOpen={() => {
-          setIsAutocompleteOpen(true);
-        }}
-        onClose={() => {
-          setIsAutocompleteOpen(false);
-        }}
+        onOpen={handleAutoCompleteOpen}
+        onClose={handleAutoCompleteClose}
         value={searchTerm}
         getOptionSelected={(option, value) => option.indexOf(value) !== -1}
         getOptionLabel={option => option}
@@ -141,6 +122,7 @@ export default function SearchBox() {
             variant="outlined"
             onChange={handleInputChange}
             onClick={handleInputClick}
+            onKeyPress={handleInputKeyPress}
             InputProps={{
               ...params.InputProps,
               endAdornment: (

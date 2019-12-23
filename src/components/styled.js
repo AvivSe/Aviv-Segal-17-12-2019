@@ -26,7 +26,11 @@ export const Column = styled.div`
   display: flex;
   flex-direction: column;
 `;
-
+export const ColumnCentered = styled(Column)`
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+`;
 export const StyledDailyIcon = styled.svg`
   max-width: 5rem;
   height: unset;

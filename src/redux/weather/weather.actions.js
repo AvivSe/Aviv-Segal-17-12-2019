@@ -10,23 +10,23 @@ export const SET_SELECTED_CITY = "SET_SELECTED_CITY";
 export const TOGGLE_IS_FAHRENHEIT = "TOGGLE_IS_FAHRENHEIT";
 
 export const addToMap = city => {
-  return ({ type: ADD_TO_MAP, payload: city });
+  return { type: ADD_TO_MAP, payload: city };
 };
 
 export const addToHistory = city => {
-  return ({ type: ADD_TO_HISTORY, payload: city.key });
+  return { type: ADD_TO_HISTORY, payload: city.key };
 };
 
 export const addToFavorites = key => {
-  return ({ type: ADD_TO_FAVORITES, payload: key });
+  return { type: ADD_TO_FAVORITES, payload: key };
 };
 
 export const removeFromFavorites = key => {
-  return ({ type: REMOVE_FROM_FAVORITES, payload: key });
+  return { type: REMOVE_FROM_FAVORITES, payload: key };
 };
 
-export const setSelectedCity = (city) => {
-  return ({ type: SET_SELECTED_CITY, payload: city});
+export const setSelectedCity = key => {
+  return { type: SET_SELECTED_CITY, payload: key };
 };
 
 export const toggleIsFahrenheit = () => {

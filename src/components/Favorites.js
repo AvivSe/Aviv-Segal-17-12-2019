@@ -8,6 +8,7 @@ import Fab from "@material-ui/core/Fab";
 import { addToFavorites } from "../redux/weather/weather.actions";
 import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";
 import Typography from "@material-ui/core/Typography";
+import {Column, ColumnCentered} from "./styled";
 
 const Container = styled.div`
   display: flex;
@@ -22,7 +23,6 @@ const Container = styled.div`
 const Flex = styled.div`
   display: flex;
   flex-wrap: wrap;
-  
 `;
 export default function Favorites() {
   const dispatch = useDispatch();
@@ -43,14 +43,14 @@ export default function Favorites() {
             })}
           </Flex>
           {showAddCity && (
-            <Flex>
+            <ColumnCentered>
               <Fab onClick={handleAddSelectedAsFavorite} color="primary">
                 <Favorite />
               </Fab>
               <Typography variant={"body2"} color={"secondary"}>
                 Add {city.name} as your first favorite!
               </Typography>
-            </Flex>
+            </ColumnCentered>
           )}
         </Container>
       </Zoom>
