@@ -112,7 +112,7 @@ export function CurrentWeather({ city, miniature }) {
                     <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                       <Typography variant="body2" color={"secondary"}>
                         <span>
-                          <IconButton onClick={handleRefresh} color={"primary"}>
+                          <IconButton onClick={handleRefresh} color={"secondary"}>
                             <Refresh className={isScopedPending ? "circularAnimation" : null} />
                           </IconButton>
                         </span>
