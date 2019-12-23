@@ -2,8 +2,8 @@ import Search from "../components/Search";
 import {
   Favorite as FavoritesIcon,
   FavoriteOutlined as FavoritesOutlinedIcon,
-  Search as SearchIcon,
-  SearchOutlined as SearchIconOutlined
+  Search as HomeIcon,
+  SearchOutlined as HomeIconOutlined
 } from "@material-ui/icons";
 import Favorites from "../components/Favorites";
 
@@ -13,7 +13,7 @@ export const pathMap = {
 };
 
 export const pathnameToIcon = {
-  "/": { default: SearchIconOutlined, selected: SearchIcon },
+  "/": { default: HomeIconOutlined, selected: HomeIcon },
   "/favorites": { default: FavoritesOutlinedIcon, selected: FavoritesIcon }
 };
 

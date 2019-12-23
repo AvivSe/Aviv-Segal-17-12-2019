@@ -3,5 +3,5 @@ import React from "react";
 
 export default function LinearProgress() {
 
-  return <MuiLinearProgress color={"primary"} />
+  return <MuiLinearProgress />
 }

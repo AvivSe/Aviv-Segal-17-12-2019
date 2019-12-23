@@ -91,12 +91,12 @@ export function CurrentWeather({ city, miniature }) {
               </div>
             </Slide>
             <Column>
-              <Slide in timeout={750} direction={"down"}>
+              <Slide in timeout={750} unmountOnExit direction={"down"}>
                 <Typography variant="h5" color={"secondary"}>
                   {city.name}, {city.countryName}
                 </Typography>
               </Slide>
-              <Slide in timeout={500} direction={"down"}>
+              <Slide in timeout={500} unmountOnExit direction={"down"}>
                 <div>
                   <Tooltip
                     title={`${!isFahrenheit ? weather.imperial : weather.metric} °${!isFahrenheit ? "F" : "c"}`}
@@ -108,7 +108,7 @@ export function CurrentWeather({ city, miniature }) {
                   </Tooltip>
                 </div>
               </Slide>
-              <Slide in timeout={750} direction={"right"}>
+              <Slide in timeout={750} unmountOnExit direction={"right"}>
                 <Row alignItems={"center"}>
                   <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
@@ -137,7 +137,7 @@ export function CurrentWeather({ city, miniature }) {
               </Slide>
             </Column>
           </Row>
-          <Slide direction={"left"} in timeout={500}>
+          {!miniature && <Slide direction={"left"} in timeout={500}>
             <div>
               <Tooltip
                 title={isOneOfMyFavorites ? `Remove ${city.name} from favorites` : `Save ${city.name} as a favorite`}
@@ -147,10 +147,10 @@ export function CurrentWeather({ city, miniature }) {
                 </Button>
               </Tooltip>
             </div>
-          </Slide>
+          </Slide>}
         </Row>
         {!miniature && (
-          <Slide in timeout={500} direction={"up"}>
+          <Slide unmountOnExit in timeout={500} direction={"up"}>
             <Row justifyContent={"center"}>
               <Typography className={"getterBottom"} variant={"h4"} color={"secondary"}>
                 {weather.text}
