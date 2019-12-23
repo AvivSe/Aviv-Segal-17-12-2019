@@ -252,7 +252,6 @@ export const DailyForecasts = styled.div`
         }
       }
     }
-
     .dailyText {
       min-height: 25px;
     }
@@ -270,7 +269,7 @@ export const DailyForecasts = styled.div`
 
 export const FlexibleColumn = styled.div`
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   flex-direction: column;
   ${({ theme }) => theme.breakpoints.down("xs")} {
     flex-direction: row;
