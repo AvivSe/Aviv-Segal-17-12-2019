@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
-import { addToFavorites, addToHistory, removeFromFavorites } from "../redux/weather/weather.actions";
+import {
+  addToFavorites,
+  addToHistory,
+  removeFromFavorites,
+  setNotPending,
+  setOnPending
+} from "../redux/weather/weather.actions";
 import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Refresh } from "@material-ui/icons";
-import { openSnackbar, setNotPending, setOnPending } from "../redux/ui/ui.actions";
+import { openSnackbar } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";

@@ -9,6 +9,9 @@ export const REMOVE_FROM_HISTORY = "REMOVE_FROM_HISTORY";
 export const SET_SELECTED_CITY = "SET_SELECTED_CITY";
 export const TOGGLE_IS_FAHRENHEIT = "TOGGLE_IS_FAHRENHEIT";
 
+export const SET_ON_PENDING = "SET_ON_PENDING";
+export const SET_NOT_PENDING = "SET_NOT_PENDING";
+
 export const addToMap = city => {
   return { type: ADD_TO_MAP, payload: city };
 };
@@ -31,4 +34,12 @@ export const setSelectedCity = key => {
 
 export const toggleIsFahrenheit = () => {
   return { type: TOGGLE_IS_FAHRENHEIT };
+};
+
+export const setOnPending = requestId => {
+  return { type: SET_ON_PENDING, payload: requestId }
+};
+
+export const setNotPending = requestId => {
+  return { type: SET_NOT_PENDING, payload: requestId }
 };

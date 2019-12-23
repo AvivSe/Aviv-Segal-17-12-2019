@@ -8,7 +8,6 @@ import {composeWithDevTools} from "redux-devtools-extension";
 const persistConfig = {
   key: 'root',
   storage: storage,
-  blacklist: ['ui'],
   stateReconciler: autoMergeLevel2
 };
 

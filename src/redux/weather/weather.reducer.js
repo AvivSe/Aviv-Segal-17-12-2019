@@ -3,12 +3,13 @@ import {
   ADD_TO_HISTORY,
   ADD_TO_MAP,
   REMOVE_FROM_FAVORITES,
-  REMOVE_FROM_HISTORY,
+  REMOVE_FROM_HISTORY, SET_NOT_PENDING, SET_ON_PENDING,
   SET_SELECTED_CITY,
   TOGGLE_IS_FAHRENHEIT
 } from "./weather.actions";
 
 export const INITIAL_STATE = {
+  onPending: [],
   isFahrenheit: false,
   selectedCity: "215854",
 
@@ -56,6 +57,10 @@ function weatherReducer(state = INITIAL_STATE, { type, payload }) {
       return { ...state };
     case TOGGLE_IS_FAHRENHEIT:
       return { ...state, isFahrenheit: !state.isFahrenheit };
+    case SET_ON_PENDING:
+      return { ...state, onPending: [...state.onPending, payload] }; // the payload is used as request id
+    case SET_NOT_PENDING:
+      return {...state, onPending: state.onPending.filter(requestId => requestId !== payload)};
 
     default:
       return state;

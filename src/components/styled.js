@@ -148,9 +148,6 @@ export const IconHelper = styled.svg`
 export const FavoriteIconHelper = styled.svg`
   fill: ${({ theme: { type, palette } }) => (type === "dark" ? "#ff374a" : palette.primary.main)};
 `;
-export const SearchIconHelper = styled.svg`
-  fill: ${({ theme: { type, palette } }) => (type === "dark" ? "#ececec" : palette.primary.main)};
-`;
 
 export const StyledMainIcon = styled.svg`
   width: 7rem;
@@ -169,14 +166,11 @@ export const MainContentHelper = styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100%;
+    height: 100%;
   }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
     padding: 0 0.5rem;
-    .mainContent {
-      padding-block-end: 56px;
-    }
   }
 `;
 

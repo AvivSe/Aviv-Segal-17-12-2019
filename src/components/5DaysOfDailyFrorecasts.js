@@ -6,10 +6,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {getIsFahrenheit, getSelectedCity} from "../redux/weather/weather.selectors";
 import {toCelsius, weekDay} from "../utils/tiny";
 import weatherService from "../AccuWeatherService";
-import {openSnackbar, setNotPending, setOnPending} from "../redux/ui/ui.actions";
+import {openSnackbar} from "../redux/ui/ui.actions";
 import moment from "moment";
 import Tooltip from "./standalone/Tooltip";
 import Typography from "@material-ui/core/Typography";
+import {setNotPending, setOnPending} from "../redux/weather/weather.actions";
 
 export default function FiveDaysOfDailyForecasts() {
   const dispatch = useDispatch();
