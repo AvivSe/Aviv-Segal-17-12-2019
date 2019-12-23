@@ -23,7 +23,6 @@ export default function FiveDaysOfDailyForecasts() {
         (async function() {
           const requestId = `${city.name}, ${new Date().toLocaleString()}`;
           try {
-            console.log(requestId);
             dispatch(setOnPending(requestId));
             setForecast(await weatherService.fetchFiveDaysOfDailyForecasts(city));
           } catch (e) {

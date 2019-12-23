@@ -10,7 +10,7 @@ import { darkThemeOptions, lightThemeOptions } from "../configurations/theme";
 import { useCurrentPosition } from "react-use-geolocation";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
-import {addToMap, setSelectedCity} from "../redux/weather/weather.actions";
+import { addToMap, setSelectedCity } from "../redux/weather/weather.actions";
 
 export default function App() {
   const isDarkTheme = useSelector(getIsDarkMode);
@@ -20,17 +20,19 @@ export default function App() {
 
   useEffect(
     function() {
-      if (position && !error) {
-        (async function() {
-          try {
-            const city = await weatherService.searchCityByGeoPosition(position.coords.latitude, position.coords.longitude);
+      (function() {
+        try {
+          async function onGetGeoLocationSuccess({ coords: { latitude, longitude } }) {
+            const city = await weatherService.searchCityByGeoPosition(latitude, longitude);
             dispatch(setSelectedCity(city.key));
             dispatch(addToMap(city));
-          } catch (e) {
+          }
+          function onGetGeoLocationError() {
             dispatch(openSnackbar("Geo Location FAILED"));
           }
-        })();
-      }
+          navigator.geolocation.getCurrentPosition(onGetGeoLocationSuccess, onGetGeoLocationError);
+        } catch (e) {}
+      })();
     },
     [dispatch, position, error]
   );

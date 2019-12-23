@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
-import {addToFavorites, addToHistory, removeFromFavorites, setSelectedCity} from "../redux/weather/weather.actions";
-import { Favorite, Search, FavoriteBorder , Refresh} from "@material-ui/icons";
-import {openSnackbar, setNotPending, setOnPending} from "../redux/ui/ui.actions";
+import { addToFavorites, addToHistory, removeFromFavorites, setSelectedCity } from "../redux/weather/weather.actions";
+import { Favorite, Search, FavoriteBorder, Refresh } from "@material-ui/icons";
+import { openSnackbar, setNotPending, setOnPending } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
@@ -15,17 +15,17 @@ import IconButton from "@material-ui/core/IconButton";
 import useNavigator from "../hooks/useNavigator";
 
 export function CurrentWeather({ city, miniature }) {
+  const requestId = `${city.name}, ${new Date().toLocaleString()}`;
   const dispatch = useDispatch();
-  const [version, setVersion] = useState(0);
   const [weather, setWeather] = useState(null);
-  const [,navigate] = useNavigator();
+  const [, navigate] = useNavigator();
   const isFahrenheit = useSelector(getIsFahrenheit);
+  const [isScopedPending, setIsScopedPending] = useState(false);
 
   useEffect(
     function() {
       if (!!city) {
         (async function() {
-          const requestId = `${city.name}, ${new Date().toLocaleString()}`;
           try {
             dispatch(setOnPending(requestId));
             setWeather(await weatherService.fetchCurrentWeather(city));
@@ -38,30 +38,21 @@ export function CurrentWeather({ city, miniature }) {
         })();
       }
     },
-    [dispatch, city]
-  );
-
-  useEffect(
-    function() {
-      if (!!city && version !== 0) {
-        (async function() {
-          try {
-            setWeather(await weatherService.fetchCurrentWeather(city));
-            dispatch(openSnackbar("Fetching data"));
-          } catch (e) {
-            dispatch(openSnackbar(e));
-          }
-        })();
-      }
-    },
-    [dispatch, city, version]
+    [dispatch, city, requestId]
   );
 
   const isOneOfMyFavorites = useSelector(getIsOneOfMyFavorite(city));
   const FavoriteIcon = isOneOfMyFavorites ? Favorite : FavoriteBorder;
 
-  function handleRefresh() {
-    setVersion(version+1)
+  async function handleRefresh() {
+    try {
+      setIsScopedPending(true);
+      setWeather(await weatherService.fetchCurrentWeather(city));
+    } catch (e) {
+      dispatch(openSnackbar("failed refresh data"));
+    } finally {
+      setIsScopedPending(false);
+    }
   }
 
   function handleFavoriteToggled() {
@@ -74,17 +65,17 @@ export function CurrentWeather({ city, miniature }) {
     }
   }
 
-  function handleSearchAgain() {
-    dispatch(setSelectedCity(weather.cityKey));
-    navigate('/');
-  }
+  // function handleSearchAgain() {
+  //   dispatch(setSelectedCity(weather.cityKey));
+  //   navigate("/");
+  // }
 
   const date = !!weather && new Date(weather.localObservationDateTime);
 
   return (
     !!weather &&
     !!city && (
-      <CurrentWeatherHelper>
+      <CurrentWeatherHelper miniature={miniature}>
         <Row justifyContent={"space-between"}>
           <Row>
             <Slide in timeout={500} direction={"right"}>
@@ -111,22 +102,22 @@ export function CurrentWeather({ city, miniature }) {
                 </div>
               </Slide>
               <Slide in timeout={750} direction={"right"}>
-                <div>
-                  {!miniature && <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
+                <Row alignItems={"center"}>
+                  <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
                       <span>{date.toLocaleTimeString()}</span>
-                      {!miniature && <span><IconButton onClick={handleRefresh} color={"primary"}><Refresh /></IconButton></span>}
                     </Typography>
-                  </Tooltip>}
-                  {miniature &&
-                  <Tooltip title={`Explore`}>
+                  </Tooltip>
+                  <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
-                      <span>{date.toLocaleTimeString()}</span>
-                      {miniature && <span><IconButton onClick={handleSearchAgain} color={"primary"}><Search /></IconButton></span>}
+                      <span>
+                        <IconButton onClick={handleRefresh} color={"primary"}>
+                          <Refresh className={isScopedPending ? "circularAnimation" : null} />
+                        </IconButton>
+                      </span>
                     </Typography>
-                  </Tooltip>}
-
-                </div>
+                  </Tooltip>
+                </Row>
               </Slide>
             </Column>
           </Row>

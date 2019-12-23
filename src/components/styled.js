@@ -113,7 +113,7 @@ export const StyledLocationCity = styled(ErrorOutline)`
 
 export const CurrentWeatherHelper = styled.div`
   padding: ${({ miniature }) => (miniature ? 0.5 : 2)}rem;
-  max-width: ${({ miniature }) => (miniature ? "320px" : null)};
+  min-width: ${({ miniature }) => (miniature ? "320px" : null)};
 `;
 export const StyledCard = styled(Card)`
   margin: 0.5rem;

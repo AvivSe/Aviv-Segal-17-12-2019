@@ -1,26 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import {useDispatch, useSelector} from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CurrentWeather from "./CurrentWeather";
 import Zoom from "@material-ui/core/Zoom";
-import {Favorite} from "@material-ui/icons";
+import { Favorite } from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
-import {addToFavorites} from "../redux/weather/weather.actions";
-import {getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity} from "../redux/weather/weather.selectors";
-import Grid from "@material-ui/core/Grid";
+import { addToFavorites } from "../redux/weather/weather.actions";
+import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";
 import Typography from "@material-ui/core/Typography";
 
-const Flex = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 70vh;
   justify-content: center;
   > * {
     margin: 0.5rem;
   }
 `;
 
+const Flex = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  
+`;
 export default function Favorites() {
   const dispatch = useDispatch();
   const city = useSelector(getSelectedCity);
@@ -33,14 +36,12 @@ export default function Favorites() {
   return (
     <div className={"mainContent"}>
       <Zoom in timeout={1500}>
-        <Flex>
-          <div>
-            <Grid container>
-              {favoriteCities.map(city => {
-                return <CurrentWeather miniature city={city} />;
-              })}
-            </Grid>
-          </div>
+        <Container>
+          <Flex>
+            {favoriteCities.map(city => {
+              return <CurrentWeather key={city.key} miniature city={city} />;
+            })}
+          </Flex>
           {showAddCity && (
             <Flex>
               <Fab onClick={handleAddSelectedAsFavorite} color="primary">
@@ -51,7 +52,7 @@ export default function Favorites() {
               </Typography>
             </Flex>
           )}
-        </Flex>
+        </Container>
       </Zoom>
     </div>
   );

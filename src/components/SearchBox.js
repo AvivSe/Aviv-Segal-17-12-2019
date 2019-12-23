@@ -4,7 +4,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import weatherService from "../AccuWeatherService";
 import {useDebounce} from "../hooks/useDebounce";
 import {useDispatch} from "react-redux";
-import {closeSnackbar, openSnackbar} from "../redux/ui/ui.actions";
+import {openSnackbar} from "../redux/ui/ui.actions";
 import Fade from "@material-ui/core/Fade";
 import Paper from "@material-ui/core/Paper";
 import Popper from "@material-ui/core/Popper";
