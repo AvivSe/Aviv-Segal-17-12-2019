@@ -5,12 +5,11 @@ import CurrentWeather from "./CurrentWeather";
 import Zoom from "@material-ui/core/Zoom";
 import { Favorite, ArrowBack } from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
-import {addToFavorites, setSelectedCity} from "../redux/weather/weather.actions";
+import { addToFavorites, setSelectedCity } from "../redux/weather/weather.actions";
 import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";
 import Typography from "@material-ui/core/Typography";
-import {ColumnCentered, IconHelper} from "./styled";
+import { ColumnCentered, IconHelper } from "./styled";
 import Button from "@material-ui/core/Button";
-import Draggable from "react-draggable";
 import Slide from "@material-ui/core/Slide";
 import useNavigator from "../hooks/useNavigator";
 
@@ -43,8 +42,8 @@ const StyledButton = styled(Button)`
 const StyledBackFab = styled(Fab)`
   background-color: ${({ theme: { type, palette } }) => (type === "dark" ? "#ff374a" : palette.primary.main)};
   position: absolute;
-  bottom: 4rem;
-  left: 3rem;
+  bottom: 2rem;
+  left: 2rem;
 `;
 
 export default function Favorites() {
@@ -71,14 +70,12 @@ export default function Favorites() {
                 }
 
                 return (
-                  <Draggable key={city.key} handle=".handle">
-                    <div className={"handle"}>
-                      <StyledButton onClick={handleSearchAgain}>
-                        <div />
-                      </StyledButton>
-                      <CurrentWeather miniature city={city} />
-                    </div>
-                  </Draggable>
+                  <>
+                    <StyledButton onClick={handleSearchAgain}>
+                      <div />
+                    </StyledButton>
+                    <CurrentWeather miniature city={city} />
+                  </>
                 );
               })}
             </Flex>
@@ -97,7 +94,7 @@ export default function Favorites() {
       </div>
       <Slide in direction={"right"}>
         <StyledBackFab onClick={handleAddSelectedAsFavorite} color="primary">
-          <IconHelper as={ArrowBack} color={"primary"}  onClick={()=>navigate('/')} />
+          <IconHelper as={ArrowBack} color={"primary"} onClick={() => navigate("/")} />
         </StyledBackFab>
       </Slide>
     </>
