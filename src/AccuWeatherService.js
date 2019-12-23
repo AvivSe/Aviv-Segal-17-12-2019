@@ -12,7 +12,7 @@ const CURRENT_WEATHER_API = `${ACCU_WEATHER_API_ROOT}/currentconditions/v1`;
 const FIVE_DAYS_OF_DAILY_FORECASTS_API = `${ACCU_WEATHER_API_ROOT}/forecasts/v1/daily/5day`;
 
 const smoothUi = true;
-function stallTime(duration=100) {
+function stallTime(duration=400) {
   return new Promise(resolve => {
     setTimeout(resolve,duration);
   })

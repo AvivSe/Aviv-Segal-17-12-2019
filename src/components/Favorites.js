@@ -10,8 +10,6 @@ import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../red
 import Typography from "@material-ui/core/Typography";
 import {ColumnCentered} from "./styled";
 import Button from "@material-ui/core/Button";
-import Draggable from "react-draggable";
-import { Delete } from "@material-ui/icons"
 const Container = styled.div`
   display: flex;
   flex-direction: column;
@@ -39,11 +37,6 @@ const StyledButton = styled(Button)`
   }
 `;
 
-const StyledFab = styled(Fab)`
-  position: absolute;
-  bottom: 5rem;
-  right: 5rem;
-`;
 export default function Favorites() {
   const dispatch = useDispatch();
   const city = useSelector(getSelectedCity);
@@ -61,12 +54,10 @@ export default function Favorites() {
         <Container>
           <Flex>
             {favoriteCities.map(city => {
-              return <Draggable key={city.key} handle=".handle">
-                <div className={"handle"}>
+              return <div key={city.key}>
                   <StyledButton><div/></StyledButton>
                   <CurrentWeather miniature city={city} />
-                </div>
-              </Draggable>;
+                </div>;
             })}
           </Flex>
           {showAddCity && (
@@ -80,15 +71,6 @@ export default function Favorites() {
             </ColumnCentered>
           )}
         </Container>
-      </Zoom>
-      <Zoom
-        in
-        timeout={500}
-        unmountOnExit
-      >
-        <StyledFab id={"Garbage"} aria-label={"Garbage"} color={"primary"}>
-          <Delete/>
-        </StyledFab>
       </Zoom>
     </div>
   );
