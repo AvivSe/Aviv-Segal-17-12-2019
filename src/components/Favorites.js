@@ -32,7 +32,7 @@ const StyledButton = styled(Button)`
   height: 150px;
   margin-bottom: -150px;
   width: 100%;
-  cursor: grab;
+  cursor: pointer;
 
   :active {
     cursor: grabbing;
