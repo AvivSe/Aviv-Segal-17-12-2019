@@ -93,7 +93,7 @@ export default function FiveDaysOfDailyForecasts() {
             const isToday = date.getDay() === new Date().getDay();
             return (
               <Grow in timeout={500 * (i + 1)} key={`${i}_${date}`}>
-                <div className={`day`}>
+                <div className={"day"}>
                   <Typography
                     variant={"body1"}
                     color={"secondary"}
@@ -104,11 +104,11 @@ export default function FiveDaysOfDailyForecasts() {
 
                   <FlexibleColumn>
                     <div className={"dayTime"}>
-                      <Typography variant={'h6'} className={"dailyTimeLabel"}>Day</Typography>
+                      <Typography variant={'h6'} color={"secondary"}  className={"dailyTimeLabel"}>Day</Typography>
                       {renderDailyText(dayTimeText, maximumFahrenheit, dayTimeIcon)}
                     </div>
                     <div className={"nightTime"}>
-                      <div className={"dailyTimeLabel"}>Night</div>
+                      <Typography variant={'h6'} color={"secondary"} className={"dailyTimeLabel"}>Night</Typography>
                       {renderDailyText(nightTimeText, minimumFahrenheit, nightTimeIcon)}
                     </div>
                   </FlexibleColumn>

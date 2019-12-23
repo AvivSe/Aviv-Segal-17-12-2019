@@ -205,7 +205,7 @@ export const DailyForecasts = styled.div`
     background-color: ${({ theme }) => (theme.type === "dark" ? transparent : lowTransparent)};
     border-radius: 0.1rem;
 
-    ${({ theme }) => theme.breakpoints.up("sm")} {
+    ${({ theme }) => theme.breakpoints.up("md")} {
       width: 300px;
       height: 350px;
     }
@@ -231,14 +231,14 @@ export const DailyForecasts = styled.div`
     .nightTime {
       margin-block-start: 0.5rem;
       min-width: 100px;
-      ${({ theme }) => theme.breakpoints.up("sm")} {
+      ${({ theme }) => theme.breakpoints.up("md")} {
         min-height: 150px;
         min-width: unset;
         border-block-start: 1px solid ${({ theme }) => theme.palette.secondary.dark};
       }
     }
 
-    ${({ theme }) => theme.breakpoints.up("sm")} {
+    ${({ theme }) => theme.breakpoints.up("md")} {
       .dailyTimeLabel {
         text-align: start;
         :first-child {
