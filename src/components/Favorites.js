@@ -48,13 +48,12 @@ export default function Favorites() {
   const dispatch = useDispatch();
   const city = useSelector(getSelectedCity);
   const favoriteCities = useSelector(getFavoriteCities);
-  const isSelectedCityFavorite = useSelector(getIsOneOfMyFavorite(city));
   const [, navigate] = useNavigator();
   function handleAddSelectedAsFavorite() {
     dispatch(addToFavorites(city.key));
   }
 
-  const showAddCity = city && !isSelectedCityFavorite;
+  const showAddCity = city && favoriteCities.length === 0;
   return (
     <>
       <div className={"mainContent"}>

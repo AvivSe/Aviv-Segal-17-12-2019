@@ -117,7 +117,7 @@ export default function SearchBox() {
         renderInput={params => (
           <TextField
             {...params}
-            label="Select City"
+            label="Search City"
             fullWidth
             variant="outlined"
             onChange={handleInputChange}

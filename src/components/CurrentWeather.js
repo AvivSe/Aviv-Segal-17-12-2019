@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
-import { Check } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
 import {
@@ -10,7 +9,7 @@ import {
   setNotPending,
   setOnPending
 } from "../redux/weather/weather.actions";
-import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Refresh } from "@material-ui/icons";
+import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Check, Sync } from "@material-ui/icons";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
@@ -108,17 +107,17 @@ export function CurrentWeather({ city, miniature }) {
             </Slide>
             <Slide in timeout={750} unmountOnExit direction={"right"}>
               <Row alignItems={"center"}>
-                <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
+                <Tooltip title={`Updated to: ${date.toLocaleString()}`}>
                   <Typography variant="body2" color={"secondary"}>
                     <span>{date.toLocaleTimeString()}</span>
                   </Typography>
                 </Tooltip>
                 {!miniature && (
-                  <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
+                  <Tooltip title={`Check for new data`}>
                     <Typography variant="body2" color={"secondary"}>
                       <span>
                         {!showRefreshSuccessIcon && <IconButton onClick={handleRefresh} color={"secondary"}>
-                          <Refresh className={isScopedPending ? "circularAnimation" : null} />
+                          <Sync className={isScopedPending ? "circularAnimation" : null} />
                         </IconButton>}
                         {showRefreshSuccessIcon && <IconButton><Check color={"secondary"}/></IconButton>}
                       </span>
