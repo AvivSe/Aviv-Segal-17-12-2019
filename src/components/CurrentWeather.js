@@ -79,52 +79,52 @@ export function CurrentWeather({ city, miniature }) {
     !!city && (
       <CurrentWeatherHelper miniature={miniature}>
         <Row justifyContent={"space-between"}>
-          <Row>
-            <Slide in timeout={500} direction={"right"}>
+          <Column>
+            <Slide in timeout={750} unmountOnExit direction={"down"}>
+              <Typography variant="h5" color={"secondary"}>
+                {city.name}, {city.countryName}
+              </Typography>
+            </Slide>
+            <Slide in timeout={500} unmountOnExit direction={"down"}>
               <div>
-                <StyledMainIcon as={iconMap[weather.iconId]} />
+                <Tooltip
+                  title={`${!isFahrenheit ? weather.imperial : weather.metric} °${!isFahrenheit ? "F" : "c"}`}
+                  aria-label="celsius / fahrenheit"
+                >
+                  <Typography variant="h4" color={"secondary"}>
+                    {isFahrenheit ? weather.imperial : weather.metric}° {isFahrenheit ? "F" : "c"}
+                  </Typography>
+                </Tooltip>
               </div>
             </Slide>
-            <Column>
-              <Slide in timeout={750} unmountOnExit direction={"down"}>
-                <Typography variant="h5" color={"secondary"}>
-                  {city.name}, {city.countryName}
-                </Typography>
-              </Slide>
-              <Slide in timeout={500} unmountOnExit direction={"down"}>
-                <div>
-                  <Tooltip
-                    title={`${!isFahrenheit ? weather.imperial : weather.metric} °${!isFahrenheit ? "F" : "c"}`}
-                    aria-label="celsius / fahrenheit"
-                  >
-                    <Typography variant="h4" color={"secondary"}>
-                      {isFahrenheit ? weather.imperial : weather.metric}° {isFahrenheit ? "F" : "c"}
-                    </Typography>
-                  </Tooltip>
-                </div>
-              </Slide>
-              <Slide in timeout={750} unmountOnExit direction={"right"}>
-                <Row alignItems={"center"}>
+            <Slide in timeout={750} unmountOnExit direction={"right"}>
+              <Row alignItems={"center"}>
+                <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
+                  <Typography variant="body2" color={"secondary"}>
+                    <span>{date.toLocaleTimeString()}</span>
+                  </Typography>
+                </Tooltip>
+                {!miniature && (
                   <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
-                      <span>{date.toLocaleTimeString()}</span>
+                      <span>
+                        <IconButton onClick={handleRefresh} color={"secondary"}>
+                          <Refresh className={isScopedPending ? "circularAnimation" : null} />
+                        </IconButton>
+                      </span>
                     </Typography>
                   </Tooltip>
-                  {!miniature && (
-                    <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
-                      <Typography variant="body2" color={"secondary"}>
-                        <span>
-                          <IconButton onClick={handleRefresh} color={"secondary"}>
-                            <Refresh className={isScopedPending ? "circularAnimation" : null} />
-                          </IconButton>
-                        </span>
-                      </Typography>
-                    </Tooltip>
-                  )}
-                </Row>
-              </Slide>
-            </Column>
-          </Row>
+                )}
+              </Row>
+            </Slide>
+          </Column>
+          <Slide unmountOnExit in timeout={500} direction={"up"}>
+            <div>
+              <Tooltip title={weather.text}>
+                <StyledMainIcon as={iconMap[weather.iconId]} />
+              </Tooltip>
+            </div>
+          </Slide>
           <Slide direction={"left"} in timeout={500}>
             <div>
               <Tooltip
@@ -137,15 +137,6 @@ export function CurrentWeather({ city, miniature }) {
             </div>
           </Slide>
         </Row>
-        {!miniature && (
-          <Slide unmountOnExit in timeout={500} direction={"up"}>
-            <Row justifyContent={"center"}>
-              <Typography className={"getterBottom"} variant={"h4"} color={"secondary"}>
-                {weather.text}
-              </Typography>
-            </Row>
-          </Slide>
-        )}
       </CurrentWeatherHelper>
     )
   );

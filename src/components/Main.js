@@ -4,21 +4,26 @@ import Snackbar from "./Snackbar";
 import React from "react";
 import styled from "styled-components";
 import Dialog from "./standalone/Dialog";
-import {useDispatch, useSelector} from "react-redux";
-import {getDialog} from "../redux/ui/ui.selectors";
-import {closeDialog} from "../redux/ui/ui.actions";
+import { useDispatch, useSelector } from "react-redux";
+import { getDialog } from "../redux/ui/ui.selectors";
+import { closeDialog } from "../redux/ui/ui.actions";
 // import LinearProgress from "./standalone/LinearProgress";
 import Redirect from "./standalone/Redirect";
 
 const Wrapper = styled.div`
-  background-color: ${({ theme }) => theme.type === "dark" && theme.palette.primary.light};
+  ${({ theme: { type, palette } }) =>
+    type === "dark"
+      ? `background-color: ${palette.primary.dark};
+         background-image: linear-gradient(315deg, ${palette.primary.dark} 25%, ${palette.secondary.dark} 100%);`
+      : `background-color: ${palette.primary.contrastText};
+         background-image: linear-gradient(315deg, rgba(0, 0, 0, 0.1) 25%, rgba(0, 0, 0, 0.02) 100%);`};
   min-height: 100vh;
 `;
 
 const dialogs = {
   "404": <div>Hello 404</div>,
   moreSettings: <div>Hello More Settings</div>,
-  github: <Redirect to={"https://github.com/AvivSe/Aviv-Segal-17-12-2019"} name={'github.com'}/>,
+  github: <Redirect to={"https://github.com/AvivSe/Aviv-Segal-17-12-2019"} name={"github.com"} />
 };
 
 export default function Main() {

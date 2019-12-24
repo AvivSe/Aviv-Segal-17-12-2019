@@ -150,12 +150,11 @@ export const FavoriteIconHelper = styled.svg`
 `;
 
 export const StyledMainIcon = styled.svg`
-  width: 7rem;
+  width: 8rem;
   height: unset;
-  margin-inline-end: 2.5rem;
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    width: 3rem;
+    width: 5rem;
     margin-inline-end: 0.5rem;
   }
 `;
@@ -167,6 +166,7 @@ export const MainContentHelper = styled.div`
     flex-direction: column;
     align-items: center;
     height: 100%;
+    min-width: 300px;
   }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
