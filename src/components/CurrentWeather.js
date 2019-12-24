@@ -9,7 +9,7 @@ import {
   setNotPending,
   setOnPending
 } from "../redux/weather/weather.actions";
-import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Refresh, LocationOn } from "@material-ui/icons";
+import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Refresh } from "@material-ui/icons";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
@@ -67,7 +67,7 @@ export function CurrentWeather({ city, miniature }) {
       dispatch(openSnackbar(`${city.name} removed from favorites`));
     } else {
       dispatch(addToFavorites(city.key));
-      dispatch(openSnackbar(`${city.name} added to your favorites`));
+      //dispatch(openSnackbar(`${city.name} added to your favorites`));
       navigate("/favorites");
     }
   }
@@ -82,7 +82,6 @@ export function CurrentWeather({ city, miniature }) {
           <Column>
             <Slide in timeout={750} unmountOnExit direction={"down"}>
               <Row>
-                <LocationOn style={{ marginRight: ".5rem" }} color={"secondary"} />
                 <Typography variant="h5" color={"secondary"}>
                   {city.name}, {city.countryName}
                 </Typography>
@@ -124,7 +123,7 @@ export function CurrentWeather({ city, miniature }) {
           <Slide unmountOnExit in timeout={500} direction={"down"}>
             <div>
               <Tooltip title={weather.text}>
-                <StyledMainIcon as={iconMap[weather.iconId]} />
+                <StyledMainIcon as={iconMap[weather.iconId]} miniature={miniature} />
               </Tooltip>
             </div>
           </Slide>

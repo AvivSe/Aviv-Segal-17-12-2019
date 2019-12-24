@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentWeather from "./CurrentWeather";
 import Zoom from "@material-ui/core/Zoom";
-import { Add, ArrowBack} from "@material-ui/icons";
+import { Add, ArrowBack } from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
 import { addToFavorites, setSelectedCity } from "../redux/weather/weather.actions";
 import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";
@@ -12,6 +12,7 @@ import { ColumnCentered, IconHelper } from "./styled";
 import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
 import useNavigator from "../hooks/useNavigator";
+import { specialColors as specialColor } from "../configurations/theme";
 
 const Container = styled.div`
   display: flex;
@@ -28,19 +29,14 @@ const Flex = styled.div`
   flex-wrap: wrap;
 `;
 
-const StyledButton = styled(Button)`
+const CurrentWeatherWrapper = styled.div`
+  width: 280px;
   height: 150px;
-  margin-bottom: -150px;
-  width: 100%;
   cursor: pointer;
-
-  :active {
-    cursor: grabbing;
-  }
 `;
-
 const StyledBackFab = styled(Fab)`
-  background-color: ${({ theme: { type, palette } }) => (type === "dark" ? "#ff374a" : palette.primary.main)};
+  background-color: ${({ theme: { type, palette } }) =>
+    type === "dark" ? specialColor.attention : palette.primary.main};
   position: absolute;
   bottom: 2rem;
   left: 2rem;
@@ -70,12 +66,9 @@ export default function Favorites() {
                 }
 
                 return (
-                  <>
-                    <StyledButton onClick={handleSearchAgain}>
-                      <div />
-                    </StyledButton>
-                    <CurrentWeather miniature city={city} />
-                  </>
+                  <CurrentWeatherWrapper >
+                    <CurrentWeather key={city.key} onClick={handleSearchAgain} miniature city={city} />
+                  </CurrentWeatherWrapper>
                 );
               })}
             </Flex>
@@ -94,7 +87,7 @@ export default function Favorites() {
       </div>
       <Slide in direction={"right"}>
         <StyledBackFab onClick={() => navigate("/")} color="primary">
-          <IconHelper as={ArrowBack} color={"primary"}  />
+          <IconHelper as={ArrowBack} color={"primary"} />
         </StyledBackFab>
       </Slide>
     </>

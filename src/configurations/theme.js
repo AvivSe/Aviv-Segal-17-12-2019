@@ -1,6 +1,9 @@
 import Lora from "../assets/Lora.ttf";
 import Roboto from "../assets/Roboto-Regular.ttf";
 
+export const specialColors = {
+  attention: "#ff374a"
+};
 const lora = {
   fontFamily: "Lora",
   fontStyle: "normal",

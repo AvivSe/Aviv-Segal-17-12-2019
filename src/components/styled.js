@@ -6,6 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Paper from "@material-ui/core/Paper";
 import { ErrorOutline } from "@material-ui/icons";
 import Card from "@material-ui/core/Card";
+import {specialColors as specialColor} from "../configurations/theme";
 
 const lowTransparent = "rgba(0,0,0,.05)";
 const transparent = "rgba(0,0,0,.2)";
@@ -117,7 +118,7 @@ export const StyledLocationCity = styled(ErrorOutline)`
 
 export const CurrentWeatherHelper = styled.div`
   padding: ${({ miniature }) => (miniature ? 0.5 : 2)}rem;
-  min-width: ${({ miniature }) => (miniature ? "320px" : null)};
+  width: ${({ miniature }) => (miniature ? "280px" : null)};
 `;
 export const StyledCard = styled(Card)`
   margin: 0.5rem;
@@ -146,15 +147,15 @@ export const IconHelper = styled.svg`
 `;
 
 export const FavoriteIconHelper = styled.svg`
-  fill: ${({ theme: { type, palette } }) => (type === "dark" ? "#ff374a" : palette.primary.main)};
+  fill: ${({ theme: { type, palette } }) => (type === "dark" ? specialColor.attention : palette.primary.main)};
 `;
 
 export const StyledMainIcon = styled.svg`
-  width: 8rem;
+  width: ${({ miniature }) => miniature ? 5 : 8 }rem;
   height: unset;
-
+  
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    width: 5rem;
+    width: 3rem;
     margin-inline-end: 0.5rem;
   }
 `;
