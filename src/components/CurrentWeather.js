@@ -9,7 +9,7 @@ import {
   setNotPending,
   setOnPending
 } from "../redux/weather/weather.actions";
-import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Check, Sync } from "@material-ui/icons";
+import { Favorite, FavoriteBorder, Check, Sync } from "@material-ui/icons";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
@@ -25,13 +25,11 @@ import {
 } from "./styled";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-import useNavigator from "../hooks/useNavigator";
 
 export function CurrentWeather({ city, miniature }) {
   const requestId = `${city.name}, ${new Date().toLocaleString()}`;
   const dispatch = useDispatch();
   const [weather, setWeather] = useState(null);
-  const [, navigate] = useNavigator();
   const isFahrenheit = useSelector(getIsFahrenheit);
   const [isScopedPending, setIsScopedPending] = useState(false);
   const [showSyncSuccessIcon, setShowSyncSuccessIcon] = useState(false);
@@ -80,8 +78,7 @@ export function CurrentWeather({ city, miniature }) {
       dispatch(openSnackbar(`${city.name} removed from favorites`));
     } else {
       dispatch(addToFavorites(city.key));
-      //dispatch(openSnackbar(`${city.name} added to your favorites`));
-      navigate("/favorites");
+      dispatch(openSnackbar(`${city.name} added to your favorites`));
     }
   }
 
@@ -96,7 +93,7 @@ export function CurrentWeather({ city, miniature }) {
             <Slide in timeout={750} unmountOnExit direction={"down"}>
               <Row>
                 <Typography variant="h5" color={"secondary"}>
-                  {city.name}, {city.countryName}
+                  {city.name}{!miniature && <span style={{fontSize: '1rem'}}>, {city.countryName}</span>}
                 </Typography>
               </Row>
             </Slide>
@@ -142,8 +139,8 @@ export function CurrentWeather({ city, miniature }) {
           </Column>
           <Tooltip title={weather.text}>
             <Slide unmountOnExit in timeout={500} direction={"down"}>
-              <StyleMainIconWrapper>
-                <Typography variant={"h6"} color={"secondary"}>{weather.text}</Typography>
+              <StyleMainIconWrapper miniature={miniature}>
+                {!miniature && <Typography variant={"h6"} color={"secondary"}>{weather.text}</Typography>}
                 <StyledMainIcon as={iconMap[weather.iconId]} miniature={miniature} />
               </StyleMainIconWrapper>
             </Slide>
@@ -151,10 +148,10 @@ export function CurrentWeather({ city, miniature }) {
           <Slide direction={"left"} in timeout={500}>
             <div>
               <Tooltip
-                title={isOneOfMyFavorites ? `Remove ${city.name} from favorites` : `Save ${city.name} as a favorite`}
+                title={isOneOfMyFavorites ? `Remove ${city.name} from Favorites` : `Add ${city.name} to Favorites`}
               >
                 <Button onClick={handleFavoriteToggled} size="large" color="primary">
-                  <FavoriteIconHelper as={miniature && isOneOfMyFavorites ? DeleteOutlineOutlined : FavoriteIcon} />
+                  <FavoriteIconHelper as={FavoriteIcon} />
                 </Button>
               </Tooltip>
             </div>

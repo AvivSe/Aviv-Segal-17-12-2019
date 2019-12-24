@@ -6,7 +6,7 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import Paper from "@material-ui/core/Paper";
 import { ErrorOutline } from "@material-ui/icons";
 import Card from "@material-ui/core/Card";
-import {specialColors as specialColor} from "../configurations/theme";
+import { specialColors as specialColor } from "../configurations/theme";
 
 const lowTransparent = "rgba(0,0,0,.05)";
 const transparent = "rgba(0,0,0,.2)";
@@ -160,7 +160,7 @@ export const StyledMainIcon = styled.svg`
 
 export const StyleMainIconWrapper = styled.div`
   text-align: center;
-  margin-inline-start: -3rem;
+  margin-inline-start: ${({ miniature }) => (miniature ? null : "-3rem")};
 `;
 
 export const MainContentHelper = styled.div`

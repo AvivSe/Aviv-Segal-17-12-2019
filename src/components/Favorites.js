@@ -65,7 +65,6 @@ export default function Favorites() {
                   dispatch(setSelectedCity(city.key));
                   navigate("/");
                 }
-
                 return (
                   <div key={city.key}>
                     <StyledButton onClick={handleSearchAgain}><div/></StyledButton>
