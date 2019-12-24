@@ -68,8 +68,8 @@ export default function Favorites() {
                 }
 
                 return (
-                  <div>
-                    <StyledButton key={city.key} onClick={handleSearchAgain}><div/></StyledButton>
+                  <div key={city.key}>
+                    <StyledButton onClick={handleSearchAgain}><div/></StyledButton>
                     <CurrentWeather miniature city={city} />
                   </div>
                 );

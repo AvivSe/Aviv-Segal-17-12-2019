@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Button from "@material-ui/core/Button";
+import { Check } from "@material-ui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { getIsFahrenheit, getIsOneOfMyFavorite } from "../redux/weather/weather.selectors";
 import {
@@ -27,6 +28,7 @@ export function CurrentWeather({ city, miniature }) {
   const [, navigate] = useNavigator();
   const isFahrenheit = useSelector(getIsFahrenheit);
   const [isScopedPending, setIsScopedPending] = useState(false);
+  const [showRefreshSuccessIcon, setShowRefreshSuccessIcon] = useState(false);
 
   useEffect(
     function() {
@@ -53,7 +55,12 @@ export function CurrentWeather({ city, miniature }) {
   async function handleRefresh() {
     try {
       setIsScopedPending(true);
+      await new Promise(resolve => setTimeout(resolve,750));
       setWeather(await weatherService.fetchCurrentWeather(city));
+      setShowRefreshSuccessIcon(true);
+      setTimeout(function () {
+        setShowRefreshSuccessIcon(false)
+      }, 3000)
     } catch (e) {
       dispatch(openSnackbar("failed refresh data"));
     } finally {
@@ -110,9 +117,10 @@ export function CurrentWeather({ city, miniature }) {
                   <Tooltip title={`Recently updated: ${date.toLocaleString()}`}>
                     <Typography variant="body2" color={"secondary"}>
                       <span>
-                        <IconButton onClick={handleRefresh} color={"secondary"}>
+                        {!showRefreshSuccessIcon && <IconButton onClick={handleRefresh} color={"secondary"}>
                           <Refresh className={isScopedPending ? "circularAnimation" : null} />
-                        </IconButton>
+                        </IconButton>}
+                        {showRefreshSuccessIcon && <IconButton><Check color={"secondary"}/></IconButton>}
                       </span>
                     </Typography>
                   </Tooltip>
