@@ -119,6 +119,8 @@ export const StyledLocationCity = styled(ErrorOutline)`
 export const CurrentWeatherHelper = styled.div`
   padding: ${({ miniature }) => (miniature ? 0.5 : 2)}rem;
   width: ${({ miniature }) => (miniature ? "280px" : null)};
+  background-color: ${({ miniature }) => (miniature ? "rgba(0,0,0,0.035)" : null)};
+  border-radius: 1rem;
 `;
 export const StyledCard = styled(Card)`
   margin: 0.5rem;
@@ -154,13 +156,16 @@ export const StyledMainIcon = styled.svg`
   width: 8rem;
   height: unset;
   ${({ theme }) => theme.breakpoints.down("xs")} {
-    width: 6.5rem;
+    width: 3.5rem;
   }
 `;
 
 export const StyleMainIconWrapper = styled.div`
   text-align: center;
   margin-inline-start: ${({ miniature }) => (miniature ? null : "-3rem")};
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    display: none;
+  }
 `;
 
 export const MainContentHelper = styled.div`
@@ -172,6 +177,7 @@ export const MainContentHelper = styled.div`
     height: 100%;
     min-width: 300px;
     padding-bottom: 5rem;
+    padding-top: 5rem;
   }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
@@ -301,6 +307,12 @@ export const LookingAhead = styled.div`
     text-align: center;
     width: 100%;
 
+    font-size: 1.2rem;
+    
+    ${({ theme }) => theme.breakpoints.down("sm")} {
+      font-size: 0.9rem;
+    }
+    
     ${({ theme }) => theme.breakpoints.up("md")} {
       margin-top: -1rem;
     }

@@ -22,4 +22,4 @@ export const pathnameToIcon = {
   "/favorites": { default: FavoriteFolder, selected: FavoriteFolder }
 };
 
-export const pathNames = ["/favorites"];
+export const pathNames = ["/", "/favorites"];

@@ -3,15 +3,13 @@ import styled from "styled-components";
 import { useDispatch, useSelector } from "react-redux";
 import CurrentWeather from "./CurrentWeather";
 import Zoom from "@material-ui/core/Zoom";
-import { Add, ArrowBack } from "@material-ui/icons";
+import { Add } from "@material-ui/icons";
 import Fab from "@material-ui/core/Fab";
 import { addToFavorites, setSelectedCity } from "../redux/weather/weather.actions";
-import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";
+import { getFavoriteCities, getSelectedCity } from "../redux/weather/weather.selectors";
 import Typography from "@material-ui/core/Typography";
-import { ColumnCentered, IconHelper } from "./styled";
-import Slide from "@material-ui/core/Slide";
+import { ColumnCentered } from "./styled";
 import useNavigator from "../hooks/useNavigator";
-import { specialColors as specialColor } from "../configurations/theme";
 import Button from "@material-ui/core/Button";
 
 const Container = styled.div`
@@ -19,6 +17,7 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  min-height: 60vh;
   > * {
     margin: 0.5rem;
   }
@@ -30,18 +29,14 @@ const Flex = styled.div`
 `;
 
 const StyledButton = styled(Button)`
-  width: 280px;
+  width: 298px;
   height: 150px;
-  margin-bottom: -150px;
+  margin-bottom: -167px;
+  border-radius: 1rem;
 `;
 
-
-const StyledBackFab = styled(Fab)`
-  background-color: ${({ theme: { type, palette } }) =>
-    type === "dark" ? specialColor.attention : palette.primary.main};
-  position: fixed;
-  bottom: 2rem;
-  left: 2rem;
+const Favorite = styled.div`
+  margin: 0.3rem;
 `;
 
 export default function Favorites() {
@@ -55,42 +50,37 @@ export default function Favorites() {
 
   const showAddCity = city && favoriteCities.length === 0;
   return (
-    <>
-      <div className={"mainContent"}>
-        <Zoom in timeout={250}>
-          <Container>
-            <Flex>
-              {favoriteCities.map(city => {
-                function handleSearchAgain() {
-                  dispatch(setSelectedCity(city.key));
-                  navigate("/");
-                }
-                return (
-                  <div key={city.key}>
-                    <StyledButton onClick={handleSearchAgain}><div/></StyledButton>
-                    <CurrentWeather miniature city={city} />
-                  </div>
-                );
-              })}
-            </Flex>
-            {showAddCity && (
-              <ColumnCentered>
-                <Fab onClick={handleAddSelectedAsFavorite} color="primary">
-                  <Add />
-                </Fab>
-                <Typography variant={"body2"} color={"secondary"}>
-                  Add {city.name} as your first favorite!
-                </Typography>
-              </ColumnCentered>
-            )}
-          </Container>
-        </Zoom>
-      </div>
-      <Slide in direction={"right"}>
-        <StyledBackFab onClick={() => navigate("/")} color="primary">
-          <IconHelper as={ArrowBack} color={"primary"} />
-        </StyledBackFab>
-      </Slide>
-    </>
+    <div className={"mainContent"}>
+      <Zoom in timeout={250}>
+        <Container>
+          <Flex>
+            {favoriteCities.map(city => {
+              function handleSearchAgain() {
+                dispatch(setSelectedCity(city.key));
+                navigate("/");
+              }
+              return (
+                <Favorite key={city.key}>
+                  <StyledButton onClick={handleSearchAgain}>
+                    <div />
+                  </StyledButton>
+                  <CurrentWeather miniature city={city} />
+                </Favorite>
+              );
+            })}
+          </Flex>
+          {showAddCity && (
+            <ColumnCentered>
+              <Fab onClick={handleAddSelectedAsFavorite} color="primary">
+                <Add />
+              </Fab>
+              <Typography variant={"body2"} color={"secondary"}>
+                Add {city.name} as your first favorite!
+              </Typography>
+            </ColumnCentered>
+          )}
+        </Container>
+      </Zoom>
+    </div>
   );
 }

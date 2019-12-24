@@ -9,6 +9,7 @@ import { getDialog } from "../redux/ui/ui.selectors";
 import { closeDialog } from "../redux/ui/ui.actions";
 // import LinearProgress from "./standalone/LinearProgress";
 import Redirect from "./standalone/Redirect";
+import BottomNavigation from "./BottomNavigation";
 
 const Wrapper = styled.div`
   ${({ theme: { type, palette } }) =>
@@ -47,7 +48,7 @@ export default function Main() {
         content={dialogs[dialog.name]}
         onClose={handleDialogClose}
       />
-      {/*<BottomNavigation />*/}
+      <BottomNavigation />
     </Wrapper>
   );
 }

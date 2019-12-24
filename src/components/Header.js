@@ -42,7 +42,7 @@ const StyledIconButton = styled(IconButton)`
 const UpperNavigation = styled.div`
   display: block;
   ${({ theme }) => theme.breakpoints.down("sm")} {
-    //display: none;
+    display: none;
   }
 
   border-inline-end: 1px solid rgba(0, 0, 0, 0.16);
@@ -79,7 +79,7 @@ function Header() {
     navigate("/");
   }
   return (
-    <AppBar position="static">
+    <AppBar position="fixed">
       <StyledToolBar>
         <Typography className={"logo"} variant={"h3"} onClick={handleLogoClick}>
           Weather

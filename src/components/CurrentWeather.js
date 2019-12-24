@@ -25,7 +25,12 @@ import {
 } from "./styled";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
-
+import styled from "styled-components";
+const MobileOnly = styled.div`
+  ${({ theme }) => theme.breakpoints.up("sm")} {
+    display: none;
+  }
+`;
 export function CurrentWeather({ city, miniature }) {
   const requestId = `${city.name}, ${new Date().toLocaleString()}`;
   const dispatch = useDispatch();
@@ -89,6 +94,9 @@ export function CurrentWeather({ city, miniature }) {
     !!city && (
       <CurrentWeatherHelper miniature={miniature}>
         <Row justifyContent={"space-between"}>
+          <MobileOnly>
+              <StyledMainIcon as={iconMap[weather.iconId]}/>
+          </MobileOnly>
           <Column>
             <Slide in timeout={750} unmountOnExit direction={"down"}>
               <Row>
@@ -141,7 +149,7 @@ export function CurrentWeather({ city, miniature }) {
             <Slide unmountOnExit in timeout={500} direction={"down"}>
               <StyleMainIconWrapper miniature={miniature}>
                 {!miniature && <Typography variant={"h6"} color={"secondary"}>{weather.text}</Typography>}
-                <StyledMainIcon as={iconMap[weather.iconId]} miniature={miniature} />
+                <StyledMainIcon as={iconMap[weather.iconId]}  />
               </StyleMainIconWrapper>
             </Slide>
           </Tooltip>
