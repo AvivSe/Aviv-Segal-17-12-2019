@@ -12,6 +12,7 @@ import { ColumnCentered, IconHelper } from "./styled";
 import Slide from "@material-ui/core/Slide";
 import useNavigator from "../hooks/useNavigator";
 import { specialColors as specialColor } from "../configurations/theme";
+import Button from "@material-ui/core/Button";
 
 const Container = styled.div`
   display: flex;
@@ -28,11 +29,13 @@ const Flex = styled.div`
   flex-wrap: wrap;
 `;
 
-const CurrentWeatherWrapper = styled.div`
+const StyledButton = styled(Button)`
   width: 280px;
   height: 150px;
-  cursor: pointer;
+  margin-bottom: -150px;
 `;
+
+
 const StyledBackFab = styled(Fab)`
   background-color: ${({ theme: { type, palette } }) =>
     type === "dark" ? specialColor.attention : palette.primary.main};
@@ -65,9 +68,10 @@ export default function Favorites() {
                 }
 
                 return (
-                  <CurrentWeatherWrapper >
-                    <CurrentWeather key={city.key} onClick={handleSearchAgain} miniature city={city} />
-                  </CurrentWeatherWrapper>
+                  <div>
+                    <StyledButton key={city.key} onClick={handleSearchAgain}><div/></StyledButton>
+                    <CurrentWeather miniature city={city} />
+                  </div>
                 );
               })}
             </Flex>
