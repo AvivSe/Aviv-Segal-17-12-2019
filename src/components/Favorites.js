@@ -9,7 +9,6 @@ import { addToFavorites, setSelectedCity } from "../redux/weather/weather.action
 import { getFavoriteCities, getIsOneOfMyFavorite, getSelectedCity } from "../redux/weather/weather.selectors";
 import Typography from "@material-ui/core/Typography";
 import { ColumnCentered, IconHelper } from "./styled";
-import Button from "@material-ui/core/Button";
 import Slide from "@material-ui/core/Slide";
 import useNavigator from "../hooks/useNavigator";
 import { specialColors as specialColor } from "../configurations/theme";
@@ -37,7 +36,7 @@ const CurrentWeatherWrapper = styled.div`
 const StyledBackFab = styled(Fab)`
   background-color: ${({ theme: { type, palette } }) =>
     type === "dark" ? specialColor.attention : palette.primary.main};
-  position: absolute;
+  position: fixed;
   bottom: 2rem;
   left: 2rem;
 `;

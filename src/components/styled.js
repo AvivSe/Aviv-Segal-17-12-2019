@@ -168,6 +168,7 @@ export const MainContentHelper = styled.div`
     align-items: center;
     height: 100%;
     min-width: 300px;
+    padding-bottom: 5rem;
   }
 
   ${({ theme }) => theme.breakpoints.down("sm")} {
