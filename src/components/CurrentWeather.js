@@ -9,7 +9,7 @@ import {
   setNotPending,
   setOnPending
 } from "../redux/weather/weather.actions";
-import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Refresh } from "@material-ui/icons";
+import { DeleteOutlineOutlined, Favorite, FavoriteBorder, Refresh, LocationOn } from "@material-ui/icons";
 import { openSnackbar } from "../redux/ui/ui.actions";
 import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
@@ -81,9 +81,12 @@ export function CurrentWeather({ city, miniature }) {
         <Row justifyContent={"space-between"}>
           <Column>
             <Slide in timeout={750} unmountOnExit direction={"down"}>
-              <Typography variant="h5" color={"secondary"}>
-                {city.name}, {city.countryName}
-              </Typography>
+              <Row>
+                <LocationOn style={{ marginRight: ".5rem" }} color={"secondary"} />
+                <Typography variant="h5" color={"secondary"}>
+                  {city.name}, {city.countryName}
+                </Typography>
+              </Row>
             </Slide>
             <Slide in timeout={500} unmountOnExit direction={"down"}>
               <div>
@@ -118,7 +121,7 @@ export function CurrentWeather({ city, miniature }) {
               </Row>
             </Slide>
           </Column>
-          <Slide unmountOnExit in timeout={500} direction={"up"}>
+          <Slide unmountOnExit in timeout={500} direction={"down"}>
             <div>
               <Tooltip title={weather.text}>
                 <StyledMainIcon as={iconMap[weather.iconId]} />
