@@ -30,7 +30,7 @@ const roboto = {
 };
 const extraProps = {
   typography: {
-    fontFamily: "Lora, Arial",
+    fontFamily: "Roboto, sans-serif", //"Lora, Arial",
 
     h5: {
       fontFamily: "Roboto, sans-serif"
@@ -51,16 +51,16 @@ const extraProps = {
 export const lightThemeOptions = {
   palette: {
     primary: {
-      light: '#7e57c2',
-      main: '#673ab7',
-      dark: '#4527a0',
+      light: '#4dabf5',
+      main: '#2196f3',
+      dark: '#1769aa',
       text: '#1a1a1a',
       contrastText: '#fafafa',
     },
     secondary: {
-      light: '#7e57c2',
+      light: '#4dabf5',
       main: '#1a1a1a',
-      dark: '#4527a0',
+      dark: '#2196f3',
       text: '#fafafa',
       contrastText: '#fafafa',
     }
