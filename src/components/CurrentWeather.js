@@ -15,7 +15,14 @@ import weatherService from "../AccuWeatherService";
 import Tooltip from "./standalone/Tooltip";
 import { iconMap } from "./standalone/AccuWeatherIcons";
 import Slide from "@material-ui/core/Slide";
-import { Column, CurrentWeatherHelper, FavoriteIconHelper, Row, StyledMainIcon } from "./styled";
+import {
+  Column,
+  CurrentWeatherHelper,
+  FavoriteIconHelper,
+  Row,
+  StyledMainIcon,
+  StyleMainIconWrapper
+} from "./styled";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import useNavigator from "../hooks/useNavigator";
@@ -27,7 +34,7 @@ export function CurrentWeather({ city, miniature }) {
   const [, navigate] = useNavigator();
   const isFahrenheit = useSelector(getIsFahrenheit);
   const [isScopedPending, setIsScopedPending] = useState(false);
-  const [showRefreshSuccessIcon, setShowRefreshSuccessIcon] = useState(false);
+  const [showSyncSuccessIcon, setShowSyncSuccessIcon] = useState(false);
 
   useEffect(
     function() {
@@ -51,17 +58,17 @@ export function CurrentWeather({ city, miniature }) {
   const isOneOfMyFavorites = useSelector(getIsOneOfMyFavorite(city));
   const FavoriteIcon = isOneOfMyFavorites ? Favorite : FavoriteBorder;
 
-  async function handleRefresh() {
+  async function handleSync() {
     try {
       setIsScopedPending(true);
-      await new Promise(resolve => setTimeout(resolve,750));
+      await new Promise(resolve => setTimeout(resolve, 750));
       setWeather(await weatherService.fetchCurrentWeather(city));
-      setShowRefreshSuccessIcon(true);
-      setTimeout(function () {
-        setShowRefreshSuccessIcon(false)
-      }, 3000)
+      setShowSyncSuccessIcon(true);
+      setTimeout(function() {
+        setShowSyncSuccessIcon(false);
+      }, 3000);
     } catch (e) {
-      dispatch(openSnackbar("failed refresh data"));
+      dispatch(openSnackbar("Sync failed"));
     } finally {
       setIsScopedPending(false);
     }
@@ -113,13 +120,19 @@ export function CurrentWeather({ city, miniature }) {
                   </Typography>
                 </Tooltip>
                 {!miniature && (
-                  <Tooltip title={`Check for new data`}>
+                  <Tooltip title={showSyncSuccessIcon ? "Succeeded" : "Check for update"}>
                     <Typography variant="body2" color={"secondary"}>
                       <span>
-                        {!showRefreshSuccessIcon && <IconButton onClick={handleRefresh} color={"secondary"}>
-                          <Sync className={isScopedPending ? "circularAnimation" : null} />
-                        </IconButton>}
-                        {showRefreshSuccessIcon && <IconButton><Check color={"secondary"}/></IconButton>}
+                        {!showSyncSuccessIcon && (
+                          <IconButton onClick={handleSync} color={"secondary"}>
+                            <Sync className={isScopedPending ? "circularAnimation" : null} />
+                          </IconButton>
+                        )}
+                        {showSyncSuccessIcon && (
+                          <IconButton>
+                            <Check color={"secondary"} />
+                          </IconButton>
+                        )}
                       </span>
                     </Typography>
                   </Tooltip>
@@ -127,13 +140,14 @@ export function CurrentWeather({ city, miniature }) {
               </Row>
             </Slide>
           </Column>
-          <Slide unmountOnExit in timeout={500} direction={"down"}>
-            <div>
-              <Tooltip title={weather.text}>
+          <Tooltip title={weather.text}>
+            <Slide unmountOnExit in timeout={500} direction={"down"}>
+              <StyleMainIconWrapper>
+                <Typography variant={"h6"} color={"secondary"}>{weather.text}</Typography>
                 <StyledMainIcon as={iconMap[weather.iconId]} miniature={miniature} />
-              </Tooltip>
-            </div>
-          </Slide>
+              </StyleMainIconWrapper>
+            </Slide>
+          </Tooltip>
           <Slide direction={"left"} in timeout={500}>
             <div>
               <Tooltip

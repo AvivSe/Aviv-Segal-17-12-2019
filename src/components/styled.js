@@ -151,13 +151,16 @@ export const FavoriteIconHelper = styled.svg`
 `;
 
 export const StyledMainIcon = styled.svg`
-  width: ${({ miniature }) => miniature ? 5 : 8 }rem;
+  width: 8rem;
   height: unset;
-  
-  ${({ theme }) => theme.breakpoints.down("sm")} {
-    width: 3rem;
-    margin-inline-end: 0.5rem;
+  ${({ theme }) => theme.breakpoints.down("xs")} {
+    width: 6.5rem;
   }
+`;
+
+export const StyleMainIconWrapper = styled.div`
+  text-align: center;
+  margin-inline-start: -3rem;
 `;
 
 export const MainContentHelper = styled.div`
