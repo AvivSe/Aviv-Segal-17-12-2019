@@ -1,5 +1,13 @@
 ## Deployed on https://simple-weather-client.herokuapp.com
 
+# On mobile
+<img width="280" src="https://i.ibb.co/WvbCQFG/Screen-Shot-2019-12-28-at-12-15-09.png" alt="Mobile">
+
+# Dark mode (screen shot taken by desktop)
+<img src="https://i.ibb.co/swFjGs9/Screen-Shot-2019-12-28-at-12-15-40.png" alt="Desktop">
+
+
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
