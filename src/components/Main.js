@@ -24,7 +24,7 @@ const Wrapper = styled.div`
 const dialogs = {
   "404": <div>Hello 404</div>,
   moreSettings: <div>Hello More Settings</div>,
-  github: <Redirect to={"https://github.com/AvivSe/Aviv-Segal-17-12-2019"} name={"github.com"} />
+  github: <Redirect to={"https://github.com/AvivSe/simple-weather-client"} name={"github.com"} />
 };
 
 export default function Main() {

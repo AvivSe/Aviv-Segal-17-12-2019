@@ -5,7 +5,7 @@ import {
   accWeatherFiveDayOfDailyForecastsToMyForecast
 } from "./utils/tiny";
 
-const apikey = "HyA6A3Q5IRGMw6uMxao1GEyB5KLpMRV3";
+const apikey = "5gBVTyGGGITyydaQ3o39JbRLX9HUV9SW";
 const ACCU_WEATHER_API_ROOT = "https://dataservice.accuweather.com";
 const LOCATIONS_API = `${ACCU_WEATHER_API_ROOT}/locations/v1/cities`;
 const CURRENT_WEATHER_API = `${ACCU_WEATHER_API_ROOT}/currentconditions/v1`;

@@ -47,7 +47,7 @@ export default function SearchBox() {
           setLoading(false);
         }
         fetchCities().catch(e => {
-          dispatch(openSnackbar(e));
+          dispatch(openSnackbar(e.message));
         });
       }
     },
