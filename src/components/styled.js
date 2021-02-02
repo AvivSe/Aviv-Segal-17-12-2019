@@ -118,7 +118,7 @@ export const StyledLocationCity = styled(ErrorOutline)`
 
 export const CurrentWeatherHelper = styled.div`
   padding: ${({ miniature }) => (miniature ? 0.5 : 2)}rem;
-  width: ${({ miniature }) => (miniature ? "280px" : null)};
+  width: ${({ miniature }) => (miniature ? "320px" : null)};
   background-color: ${({ miniature }) => (miniature ? "rgba(0,0,0,0.035)" : null)};
   border-radius: 1rem;
 `;

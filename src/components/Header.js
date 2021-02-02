@@ -109,8 +109,6 @@ function Header() {
               <ToggleDarkModeIcon />
             </IconButton>
           </Tooltip>
-          <CelsiusIcon />
-          <FahrenheitIcon />
           <Tooltip
             title={`Switch to ${isFahrenheit ? "celsius" : "fahrenheits"}`}
             aria-label="toggle dark mode on / off"
