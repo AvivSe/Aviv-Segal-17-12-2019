@@ -68,7 +68,7 @@ function Header() {
   }
 
   function handleGithubClick() {
-    dispatch(!!dialogContent ? closeDialog() : openDialog("github", true));
+    window.location.href = "https://github.com/AvivSe/simple-weather-client";
   }
 
   function handleFahrenheitToggle() {
